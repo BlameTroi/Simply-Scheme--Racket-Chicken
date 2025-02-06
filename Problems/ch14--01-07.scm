@@ -2,23 +2,9 @@
 ;;; Simply Scheme
 ;;; Chapter 14 Common Patters in Recursive Procedures
 
-;;; Chapter 13 had no interesting code problems.
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -122,8 +108,9 @@
 
 
 ;; ----------------------------------------------
-;; 14.5 Write `letter-count' that takes a sentence and returns the total
-;;      number of letters in the sentence. This is an accumulate.
+;; 14.5 Write `letter-count' that takes a sentence and returns
+;;      the total number of letters in the sentence. This is an
+;;      accumulate.
 
 (define (lower-case? x)
   (member? x '(a b c d e f g h i j k l m n o p q r s t u v w x y z)))
@@ -173,9 +160,10 @@
 
 ;; ----------------------------------------------
 ;; 14.7 Write `differences' which takes a sentence of numbers and
-;;      returns a sentence of the differences between adjacent numbers
-;;      (first subtracted from second, second from third, ...). There
-;;      will be one fewer items in the new sentence than the original.
+;;      returns a sentence of the differences between adjacent
+;;      numbers (first subtracted from second, second from third,
+;;      ...). There will be one fewer items in the new sentence
+;;      than the original.
 ;;
 ;;      Accumulator over every.
 

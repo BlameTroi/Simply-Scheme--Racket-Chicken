@@ -2,27 +2,9 @@
 ;;; Simply Scheme
 ;;; Chapter 15 Advanced Recursion
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
-;; Do this manually via (load "required.scm"), which currently
-;; loads:
-;;
-;; (load "simply.scm")
-;; (import srfi-78)
-;; (import trace) <----- needed for some exercises in ch 13
-;; (load "my-helpers.scm")
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
+;; The #lang command loads the racket language definition for
+;; the text. Then we just need srfi-78.
 (require srfi/78)
-;;(load "my-helpers.scm")
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -31,7 +13,6 @@
 (print "Chapter 15 problems 1, 2, 3, 4, plus preamble start...")
 
 ;; ----------------------------------------------
-
 ;; Work along text examples....
 
 ;; A good quick introductory example that will lead to a merge sort
@@ -61,8 +42,8 @@
 
 
 ;; I really didn't like how they explained the binary to decimal
-;; conversion. Their walk through takes something easy and mangles it
-;; into something difficult to follow.
+;; conversion. Their walk through takes something easy and mangles
+;; it into something difficult to follow.
 
 (define (binary-r accum xs)
   (cond ((empty? xs)     accum)
@@ -229,13 +210,12 @@
 
 
 ;; ----------------------------------------------
-;; 15.2 Write predicate (palindrome? sent) that determines
-;;      if a sentence reads the same forwards and backwards
-;;      by letters.
+;; 15.2 Write predicate (palindrome? sent) that determines if a
+;; sentence reads the same forwards and backwards by letters.
 
 ;; (sentence->word sent)
 ;;
-;; Concatenate all the words that make up sent into one
+;; Concatenate all the words that make up the sentence into one
 ;; long word.
 
 (define (sentence->word sent)
@@ -275,10 +255,10 @@
 
 
 ;; ----------------------------------------------
-
 ;; 15.3 Write (substrings wd) which returns a sentence of all the
 ;;      possible substrings in the word. Not subsets, but substrings.
-;;      rat and at are substrings of brat, ar is a subset, as is btra.
+;;      rat and at are substrings of brat, ar is a subset, as is
+;;      btra.
 
 ;; (substrings-r wd)
 ;;

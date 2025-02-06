@@ -7,28 +7,15 @@
 ;;; Simply Scheme
 ;;; Chapter 9 Lambda Land
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
 ;;; Problem set:
 
-(print "Chapter 09 problem 11, 12, 13, 14 start...")
+(print "Chapter 9 problem 11, 12, 13, 14 start...")
 
 
 ;; ----------------------------------------------
@@ -36,8 +23,8 @@
 ;;      sentence to un-abbreviate, and the second is a sentence with
 ;;      replacements for any numbers found in the first.
 ;;
-;;      The number 1 gets the first word from the second sentence, and
-;;      number 5 gets the fifth, and so on.
+;;      The number 1 gets the first word from the second sentence,
+;;      and number 5 gets the fifth, and so on.
 ;;
 ;;      `item' is defined in the standard environment but I did my
 ;;      own implementation.
@@ -81,11 +68,10 @@
 
 
 ;; ----------------------------------------------
-;; 9.14 Write `substitute' taking three parameters, new-word,
-;;      old-word, and target-sent. Replace every occurance of old-word
-;;      with new-word. I'd prefer a different ordering, but meh. It's
-;;      a variation the above, with `letterwords' being a good
-;;      template.
+;; 9.14 Write `substitute' taking three parameters, new-word, old-word,
+;;      and target-sent. Replace every occurance of old-word with
+;;      new-word. I'd prefer a different ordering, but meh. It's a
+;;      variation the above, with `letterwords' being a good template.
 
 (define (substitute new-word old-word sent)
   (every
@@ -107,4 +93,4 @@
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-(print "Chapter 09 problem 11, 12, 13, 14 start...")
+(print "Chapter 9 problem 11, 12, 13, 14 start...")

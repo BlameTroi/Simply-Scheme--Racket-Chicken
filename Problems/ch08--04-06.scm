@@ -7,30 +7,15 @@
 ;;; Simply Scheme
 ;;; Chapter 8 High Order Functions
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
 ;;; Problem set:
 
-(print "Chapter 08 problems 4, 5, and 6 start...")
-
-;;; These are short enough to bundle up.
+(print "Chapter 8 problems 4, 5, and 6 start...")
 
 
 ;; ----------------------------------------------
@@ -89,4 +74,4 @@
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-(print "Chapter 08 problems 4, 5, and 6 end...")
+(print "Chapter 8 problems 4, 5, and 6 end...")

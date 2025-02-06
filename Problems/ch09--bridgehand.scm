@@ -7,22 +7,9 @@
 ;;; Simply Scheme
 ;;; Interlude project between chapters 9 and 10, bridge hand scoring
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -30,6 +17,7 @@
 ;;; bottom up manner.
 
 (print "Chapter 9 -- bridge hand start...")
+
 ;; Bridge hands are sentences of 13 cards. A card is suit and rank, h5
 ;; for 5 of hearts, c10 for 10 of clubs, sq for quean of spades, etc.
 
@@ -50,8 +38,8 @@
 (check (card-val 'ha) => 4)
 
 
-;; `high-card-points' takes a hand (sentence) and totals the
-;; points for ranks. No distribution points are considered.
+;; `high-card-points' takes a hand (sentence) and totals the points
+;; for ranks. No distribution points are considered.
 
 (define (high-card-points xs)
   (accumulate + (every card-val xs)))
@@ -71,8 +59,8 @@
 (check (count-suit 'd '(h3 d7 sk s3 c10 dq d8 s9 s4 d10 c7 d4 s2)) => 5)
 
 
-;; `suit-counts' given a hand, return a sentence of (#spades #hearts #clubs
-;; #diamonds).
+;; `suit-counts' given a hand, return a sentence of (#spades #hearts
+;; #clubs #diamonds).
 
 (define (suit-counts xs)
   (se (count-suit 's xs)
@@ -85,8 +73,8 @@
 (check (suit-counts '(h3 d7 sk s3 c10 dq d8 s9 s4 d10 c7 d4 s2)) => '(5 1 2 5))
 
 
-;; `suit-dist-points' takes a number of cards and returns the points for
-;; having that many cards of a particular suit.
+;; `suit-dist-points' takes a number of cards and returns the points
+;; for having that many cards of a particular suit.
 
 (define (suit-dist-points n)
   (cond ((= n 2) 1)

@@ -5,18 +5,16 @@
 ;; Troy Brumley, blametroi@gmail.com, early 2025.
 
 ;;; Simply Scheme
-;;; Chapter 06-various
+;;; Chapter 6
 
-;; These were work along through the text and not
-;; from a specific problem set. Future problem sets
-;; will be better structured.
+;; These were work along through the text and not from a specific
+;; problem set. Future problem sets will be better structured.
 ;;
-;; Several of the procedures here can and will be
-;; reused in later problems. In strictly file based
-;; Chicken Scheme I would just load a file of helpers,
-;; but that doesn't work with Racket. Modules are the
-;; correct solution but they don't fit with the level
-;; we are supposed to be working from in these texts.
+;; Several of the procedures here can and will be reused in later
+;; problems. In strictly file based Chicken Scheme I would just load
+;; a file of helpers, but that doesn't work with Racket. Modules are
+;; the correct solution but they don't fit with the level we are
+;; supposed to be working from in these texts.
 ;;
 ;; There will be copy-and-paste reuse. Sorry-not sorry.
 
@@ -26,12 +24,12 @@
 (check-set-mode! 'report-failed)
 
 ;;; Problem(s) and Solution(s) here:
-(print "CH06 various start...")
+(print "Chapter 6 various start...")
 
 
 ;; ----------------------------------------------
-;; Create a more readable list by inserting 'and' between
-;; the last items.
+;; Create a more readable list by inserting 'and' between the last
+;; items.
 
 (define (insert-and sl)
   (se (butlast sl) 'and (last sl)))
@@ -43,8 +41,8 @@
 
 
 ;; ----------------------------------------------
-;; Write a responder for a game of 'buzz'. Count numbers
-;; and when any number is divisible by 7, say 'buzz'.
+;; Write a responder for a game of 'buzz'. Count numbers and when any
+;; number is divisible by 7, say 'buzz'.
 
 (define (divisible? dividend divisor)
   (= 0 (remainder dividend divisor)))
@@ -64,8 +62,8 @@
 
 
 ;; ----------------------------------------------
-;; Convert a declarative sentence into a query by swapping
-;; the first two words and add a ? to the last word.
+;; Convert a declarative sentence into a query by swapping the first
+;; two words and add a ? to the last word.
 
 (define (second sent) (first (butfirst sent)))
 (define (declarative->query sent)
@@ -91,10 +89,9 @@
 
 
 ;; ----------------------------------------------
-;; Scientific notation for those numbers with a lot
-;; of zeros. This can be tricky depending upon your
-;; Scheme's handling of rational, exact, and inexact
-;; numbers.
+;; Scientific notation for those numbers with a lot of zeros. This
+;; can be tricky depending upon your Scheme's handling of exact and
+;; inexact numbers.
 
 (define (scientific b p)
   (* b (expt 10 p)))
@@ -118,12 +115,12 @@
 
 
 ;; ----------------------------------------------
-;; Time conversion routines for America <-> European time
-;; formats, hours only. Watch for edge cases.
+;; Time conversion routines for America <-> European time formats,
+;; hours only. Watch for edge cases.
 ;;
-;; Style note. I almost always use guards to keep bad input
-;; out of processing logic, it may require more procedures
-;; but the clarity is worth it.
+;; Style note. I almost always use guards to keep bad input out of
+;; processing logic, it may require more procedures but the clarity
+;; is worth it.
 
 ;; helpers for ranges [) and (] and such.
 (define (in-open?   a b x)       (and (<= a x) (>= b x)))
@@ -131,8 +128,7 @@
 (define (in-right-open? a b x)   (and (< a x) (>= b x)))
 (define (in-right-closed? a b x) (and (<= a x) (> b x)))
 
-;; Is a time such as '(13 PM) a valid American formatted
-;; time?
+;; Is a time such as '(13 PM) a valid American formatted time?
 (define (american-time? ts)
   (cond
     ((equal? 'noon ts)          #t)
@@ -151,8 +147,7 @@
 (check (american-time? 'noon) => #t)
 (check (american-time? 'midnight) => #t)
 
-;; Is a time such as noon or 17 a valid Europena
-;; formatted time?
+;; Is a time such as noon or 17 a valid European formatted time?
 (define (european-time? ts)
   (cond
     ((equal? 'noon ts)          #t)
@@ -175,7 +170,6 @@
 
 ;; Now that we can verify input validity, convert an American
 ;; formatted time to European format.
-
 (define (european-time ts)
   (if (not (american-time? ts))
       #f
@@ -201,7 +195,7 @@
 (check (european-time '(13 am)) => #f)
 (check (european-time '(13 pm)) => #f)
 
-;; And now a European formatted time to American format:
+;; And now a European formatted time to American format.
 (define (american-time ts)
   (if (not (european-time? ts))
       #f
@@ -225,9 +219,9 @@
 ;; ----------------------------------------------
 ;; Return the type of an object, as defined in "simply.scm". Note that
 ;; the "simply.scm" environment thinks '() is a sentence, I disagree
-;; in principle but will go along with their definition. I also debate
-;; if a single word sentence is a sentence or a word,
-;; but I'll accept their definition.
+;; in principle but will go along with their definition. I also
+;; debate if a single word sentence is a sentence or a word, but I'll
+;; accept their definition.
 
 (define (type-of x)
   (cond ((and (word? x) (not (number? x))) 'word)
@@ -304,8 +298,8 @@
 ;; for the `thismany' problem.
 ;;
 ;; I'm cheating by using a recursive call for a sentence, which isn't
-;; in the spec but it's for a case that wouldn't be used at this point
-;; in the text.
+;; in the spec but it's for a case that wouldn't be used at this
+;; point in the text.
 ;;
 ;; To make a plural noun, add 's' most of the time, but if a noun ends
 ;; in 's', 'x', 'z', 'sh', 'ch' add 'es', nouns ending in '<consonant>
@@ -371,8 +365,8 @@
 
 
 ;; ----------------------------------------------
-;; Write a date validation predicate for numerical
-;; dates '(mm dd yyyy).
+;; Write a date validation predicate for numerical dates '(mm dd
+;; yyyy).
 ;;
 ;; There is a lot of (probably too much) functional decomposition
 ;; here. It isn't as bad as it initially appears, there are a lot
@@ -394,8 +388,9 @@
 (check (year '(1 2 1930)) => 1930)
 
 ;; There are some quick checks I can perform for each unit of the
-;; date. Doing so allows me to ignore error checking within the actual
-;; validation. Think of this as checking syntax before semantics.
+;; date. Doing so allows me to ignore error checking within the
+;; actual validation. Think of this as checking syntax before
+;; semantics.
 (define (obviously-bad-month? mdy)
   (or (not (number? (month mdy)))
       (< (month mdy) 1)
@@ -423,8 +418,8 @@
 (check (obviously-bad-year? '(7 15 1943)) => #f)
 (check (obviously-bad-year? '(7 15 0)) => #t)
 
-;; Here the accessors and unit checks are combined with some
-;; basic formatting checks. Throw out the malformed dates.
+;; Here the accessors and unit checks are combined with some basic
+;; formatting checks. Throw out the malformed dates.
 (define (obviously-bad-date? mdy)
   (or (not (sentence? mdy))
       (not (equal? (count mdy) 3))
@@ -470,8 +465,8 @@
 (define (days-in-february mdy)
   (if (leap-year? (year mdy)) 29 28))
 
-;; Thirty days hath September ... table lookups are more readable than
-;; `if' or `cond' chains.
+;; "Thirty days hath September..." table lookups are more readable
+;;  than `if' or `cond' chains.
 (define (thirty-day-month? mdy) (member? (month mdy) '(9 4 6 11)))
 (define (thirty-one-day-month? mdy) (member? (month mdy) '(1 3 5 7 8 9 10 12)))
 
@@ -567,8 +562,9 @@
 
 
 ;; ----------------------------------------------
-;; Convert an absolutely silly duration in seconds to a more meaningful
-;; duration for human consumption. IE, bigger units, smaller numbers.
+;; Convert an absolutely silly duration in seconds to a more
+;; meaningful duration for human consumption. IE, bigger units,
+;; smaller numbers.
 
 (define sec/min 60)
 (define sec/hour (* sec/min 60))
@@ -604,4 +600,4 @@
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-(print "CH06  various end...")
+(print "Chapter 6 various end...")

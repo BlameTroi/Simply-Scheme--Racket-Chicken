@@ -7,36 +7,23 @@
 ;;; Simply Scheme
 ;;; Chapter 9 Lambda Land
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
 ;;; Problem set:
 
-(print "Chapter 09 problem 15, 16, 17 start...")
+(print "Chapter 9 problem 15, 16, 17 start...")
 
 
 ;; ----------------------------------------------
 ;; 9.15 Write a function `type-check' that takes a function and a
 ;;      predicate checks an argument for correct type. Return a
-;;      function that wraps the call to `function' and only calls it
-;;      if an argument satisfies `predicate'. Return #f if the type is
-;;      invalid.
+;;      function that wraps the call to `function' and only calls
+;;      it if an argument satisfies `predicate'. Return #f if the
+;;      type is invalid.
 
 (define (type-check func pred)
   (lambda (arg)
@@ -86,4 +73,4 @@
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-(print "Chapter 09 problem 15, 16, 17 end...")
+(print "Chapter 9 problem 15, 16, 17 end...")

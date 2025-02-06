@@ -2,22 +2,9 @@
 ;;; Simply Scheme
 ;;; Chapter 12 The Leap of Faith
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -27,11 +14,12 @@
 
 
 ;; ----------------------------------------------
-;; 12.13 Rewrite chapter 6 `describe-time' to produce more
-;;       human readable output.
+;; 12.13 Rewrite chapter 6 `describe-time' to produce more human
+;;       readable output.
 ;;
-;; Convert an absolutely silly duration in seconds to a more meaningful
-;; duration for human consumption. IE, bigger units, smaller numbers.
+;; Convert an absolutely silly duration in seconds to a more
+;; meaningful duration for human consumption. IE, bigger units,
+;; smaller numbers.
 
 (define sec/sec       1)
 (define sec/min       60)
@@ -70,8 +58,8 @@
 (check (describe-time 4967189641)
        => '(1 centuries 57 years 20 weeks 6 days 8 hours 54 minutes 1 seconds))
 
-;; I had to drop months and add 1/4 dayto year to match their result, but
-;; the code works.
+;; I had to drop months and add 1/4 dayto year to match their result,
+;; but the code works.
 
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

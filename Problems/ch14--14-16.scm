@@ -2,21 +2,9 @@
 ;;; Simply Scheme
 ;;; Chapter 14 Common Patters in Recursive Procedures
 
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -30,8 +18,8 @@
 ;;       arguments. It should return #tif two conditions are met:
 ;;
 ;;       (1) the sentences have the same number of words.
-;;       (2) the corresponding words in each sentence have the same
-;;           number of letters.
+;;       (2) the corresponding words in each sentence have the
+;;           same number of letters.
 
 ;; Accumulate. Again, they want more recursion than I would probably
 ;; use, I prefer guard clauses, but I'm doing it their way.

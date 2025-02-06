@@ -2,22 +2,9 @@
 ;;; Simply Scheme
 ;;; Chapter 12 The Leap of Faith
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -41,9 +28,9 @@
 
 
 ;; ----------------------------------------------
-;; 12.6 (8.11) Write GPA as defined in 8.11.
-;; 8.11 Write a GPA procedure that takes a sentence of letter +/-
-;;      grades and returns the correct GPA.
+;; 12.6 (8.11) Write GPA as defined in 8.11: Write a GPA procedure
+;; that takes a sentence of letter +/- grades and returns the correct
+;; GPA.
 ;;
 ;;      (a-d) 4-0
 ;;      + adds 0.33, - subtracts 0.33
@@ -90,8 +77,8 @@
 
 ;; ----------------------------------------------
 ;; 12.7 Write `spell-number' that takes a number and returns a
-;;      sentence of the digits spelled out. The authors provide a
-;;      helper function (meh).
+;;      sentence of the digits spelled out. The authors provide
+;;      a helper function (meh).
 
 (define (spell-digit digit)
   (item (+ 1 digit)
@@ -105,7 +92,6 @@
 (check (spell-number 1971) => '(one nine seven one))
 (check (spell-number '007) => '(seven))
 (check (spell-number "007") => '(zero zero seven))
-
 
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

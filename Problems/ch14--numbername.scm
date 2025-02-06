@@ -2,22 +2,9 @@
 ;;; Simply Scheme
 ;;; Chapter 14-15 interlude --- spelling names of huge numbers
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -31,8 +18,8 @@
 ;; well here.
 ;;
 ;; Groupings of three digits for long numbers are called periods. A
-;; natural approach is to speak each period with its magnitude (10^3 =
-;; thousand, 10^6 = million, and so on).
+;; natural approach is to speak each period with its magnitude (10^3
+;; = thousand, 10^6 = million, and so on).
 ;;
 ;; There are two irregularities, but only the handling for values in
 ;; the teens is at all tedius. The magnitude for units (10^0) is not
@@ -62,8 +49,8 @@
 (check (one 3) => 'three)
 (check (one 11) => 'ERROR)
 
-;; Hundred's are suffixed 'hundred' later in the process. Here they are
-;; the same as digits.
+;; Hundred's are suffixed 'hundred' later in the process. Here they
+;; are the same as digits.
 
 (define (hundred n)
   (one n))
@@ -306,9 +293,6 @@
     (normalize-periods
      (create-periods n)))))
 
-
-;; (humanize-periods (normalize-periods (list 124 3)))
-;; => (one hundred twenty four FM three FM)
 
 ;; ----------------------------------------------
 ;; Tests from the text:

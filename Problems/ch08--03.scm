@@ -7,49 +7,34 @@
 ;;; Simply Scheme
 ;;; Chapter 8 High Order Functions
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
 ;;; Problem set:
 
-(print "Chapter 08 problem 3 start...")
+(print "Chapter 8 problem 3 start...")
 
 ;; ----------------------------------------------
 ;; 8.3 Describe each of the following functions in English. Include
 ;;     the domain and range of each.
 
-;; This will lead into a discussion of the authors'
-;; recursion helpers. I've left those notes in with
-;; 8.3.
+;; This will lead into a discussion of the authors' recursion helpers.
+;; I've left those notes in with 8.3.
 
 (define (f a)
   (keep even? a))
 
-;; The above is a selection of all the elements in `a' that are
-;; even numbers. The domain of `a' is a sentence (list) of only numbers.
+;; The above is a selection of all the elements in `a' that are even
+;; numbers. The domain of `a' is a sentence (list) of only numbers.
 ;; The range of `f' is all the even numbers in 'a'.
 
 (define (g b)
   (every b '(blue jay way)))
 
 (check (g first) => '(b j w))
-
 
 ;; The above returns the result of applying function `b' to each item
 ;; in the sentence '(blue jay way). The domain of `g' is any function
@@ -146,8 +131,6 @@
 ;;; and so ends the word problems ;;;
 
 
-
-
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; And that's the end of this section. Report test results and reset
 ;;; counters.
@@ -156,4 +139,4 @@
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-(print "Chapter 08 problem 3 end...")
+(print "Chapter 8 problem 3 end...")

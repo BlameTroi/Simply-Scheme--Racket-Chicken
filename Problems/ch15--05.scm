@@ -2,27 +2,8 @@
 ;;; Simply Scheme
 ;;; Chapter 15 Advanced Recursion
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
-;; Do this manually via (load "required.scm"), which currently
-;; loads:
-;;
-;; (load "simply.scm")
-;; (import srfi-78)
-;; (import trace) <----- needed for some exercises in ch 13
-;; (load "my-helpers.scm")
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-(require srfi/78)
-;;(load "my-helpers.scm")
-;; This should already be done, but just in case:
-
+;; The #lang command loads the racket language definition for
+;; the text. Then we just need srfi-78.(require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -40,6 +21,7 @@
 ;; (check (phone-spell 22235766) => '(aadjpmm aadjpmn ... ccflsoo))
 ;;
 ;; (check (phone-spell 23) => '(ad ae af bd be bf cd ce cf)
+;;
 ;;                            a   d
 ;;                            a    e
 ;;                            a     f

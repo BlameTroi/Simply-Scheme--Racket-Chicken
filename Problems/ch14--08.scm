@@ -2,23 +2,9 @@
 ;;; Simply Scheme
 ;;; Chapter 14 Common Patters in Recursive Procedures
 
-;;; Chapter 13 had no interesting code problems.
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -96,7 +82,8 @@
 (check (expand-r 'tail '()) => '(tail))
 (check (expand-r '() '()) => '())
 
-;; `expand' is part of Chicken as <procedure (chicken.syntax#expand exp . rest)>
+;; `expand' is part of Chicken as:
+;; <procedure (chicken.syntax#expand exp . rest)>
 ;; so I renamed it.
 
 (define (s-expand sent)
@@ -125,8 +112,8 @@
 (check (s-expand '(0 zero one two))
        => '(one two))
 
-;; The following are not defined in the problem statement, but here's what I
-;; think they should do.
+;; The following are not defined in the problem statement, but here's
+;; what I think they should do.
 
 (check (s-expand '(one two 3 four 5))
        => '(one two four four four))

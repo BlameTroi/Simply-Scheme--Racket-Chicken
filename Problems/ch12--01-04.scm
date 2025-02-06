@@ -2,22 +2,9 @@
 ;;; Simply Scheme
 ;;; Chapter 12 The Leap of Faith
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -69,8 +56,8 @@
 
 
 ;; ----------------------------------------------
-;; 12.3 Can `factorial' have its base case reduced to -1 instead of 0?
-;;      If not, why? If so, show it:
+;; 12.3 Can `factorial' have its base case reduced to -1 instead
+;;      of 0? If not, why? If so, show it:
 
 (define (factorial n)              ;; original
   (if (= n 0)
@@ -88,8 +75,8 @@
 ;; f(sent) = {
 ;;            sentence(f(butfirst(sent)),first(sent))
 ;;
-;; Implement in Scheme. What does the function do?
-;; This looks to reverse the words in a sentence.
+;; Implement in Scheme. What does the function do? This looks to
+;; reverse the words in a sentence.
 
 (define (f sent)
   (if (empty? sent)

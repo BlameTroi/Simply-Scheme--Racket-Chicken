@@ -7,22 +7,9 @@
 ;;; Simply Scheme
 ;;; Chapter 9 Lambda Land
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -46,8 +33,8 @@
 
 
 ;; ----------------------------------------------
-;; 9.8 Write a display function for a game of hangman that takes
-;;     a word and the letters guessed so far by the player. Display
+;; 9.8 Write a display function for a game of hangman that takes a
+;;     word and the letters guessed so far by the player. Display
 ;;     the word with blanks (underscores) in the positions not
 ;;     exposed by the player guesses.
 
@@ -85,8 +72,7 @@
 ;; ----------------------------------------------
 ;; 9.10 Implement `appearances' from chapter two. How many times
 ;;      does the first argument appear in the second? This is a
-;;      variation of the `character-count' problem from chapter
-;;      8.
+;;      variation of the `character-count' problem from chapter 8.
 
 (define (appearances-p x xs)
   (accumulate +
@@ -106,4 +92,4 @@
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-(print "Chapter 09 problem 7, 8, 9, 10 end...")
+(print "Chapter 9 problem 7, 8, 9, 10 end...")

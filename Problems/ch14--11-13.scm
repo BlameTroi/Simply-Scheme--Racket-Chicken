@@ -2,21 +2,9 @@
 ;;; Simply Scheme
 ;;; Chapter 14 Common Patters in Recursive Procedures
 
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -26,9 +14,9 @@
 
 
 ;; ----------------------------------------------
-;; 14.11 Write `remove-adjacent-duplicates' to remove any word from a
-;;       sentence that is immediately followed by the same word. Note
-;;       the ordering.
+;; 14.11 Write `remove-adjacent-duplicates' to remove any word from
+;;       a sentence that is immediately followed by the same word.
+;;       Note the ordering.
 ;;
 ;; This is a keep operation.
 
@@ -69,8 +57,8 @@
 
 
 ;; ----------------------------------------------
-;; 14.13 What does `pigl' from chapter 11 do when given a word with no
-;;       vowels, such as 'frzzmlpt? Fix it so that it returns
+;; 14.13 What does `pigl' from chapter 11 do when given a word with
+;;       no vowels, such as 'frzzmlpt? Fix it so that it returns
 ;;       'frzzmlptay.
 ;;
 ;; It goes into an infinite loop. The way I would fix this is to check

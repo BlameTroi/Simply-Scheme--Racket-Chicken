@@ -2,21 +2,9 @@
 ;;; Simply Scheme
 ;;; Chapter 14 Common Patters in Recursive Procedures
 
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -28,8 +16,8 @@
 ;; ----------------------------------------------
 ;; 14.9 Write `location' taking a word and a sentence. Return the
 ;;      position of the word within the sentence or #f. Report only
-;;      the first occurrence. I could be convinced this is an accumulate
-;;      or a keep.
+;;      the first occurrence. I could be convinced this is an
+;;      accumulate or a keep.
 
 (define (location-r n x xs)
   (cond ((empty? xs)              #f)
@@ -51,8 +39,9 @@
 
 
 ;; ----------------------------------------------
-;; 14.10 Write `count-adjacent-duplicates' which reports the words in
-;;       the sentence that are immediately followed by the same word.
+;; 14.10 Write `count-adjacent-duplicates' which reports the words
+;;       in the sentence that are immediately followed by the same
+;;       word.
 ;;
 ;;       The behavior of 'a b b b b a' could be isn't clearly stated
 ;;       but that should be a 3.

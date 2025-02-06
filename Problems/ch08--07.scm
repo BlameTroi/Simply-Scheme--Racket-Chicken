@@ -7,28 +7,15 @@
 ;;; Simply Scheme
 ;;; Chapter 8 High Order Functions
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
 ;;; Problem set:
 
-(print "Chapter 08 problem 7 start...")
+(print "Chapter 8 problem 7 start...")
 
 
 ;; ----------------------------------------------
@@ -52,8 +39,9 @@
 ;; Chicken w/breadline, quite a mess, but this should demonstrate the
 ;; idea.
 ;;
-;; The period is expanded out of word->characters as "." and not ., which
-;; makes sense as with a naked . it would be a botched pair syntax.
+;; The period is expanded out of word->characters as "." and not .,
+;; which makes sense as with a naked . it would be a botched pair
+;; syntax.
 
 ;; Character selection predicates:
 
@@ -105,4 +93,4 @@
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-(print "Chapter 08 problem 7 end...")
+(print "Chapter 8 problem 7 end...")

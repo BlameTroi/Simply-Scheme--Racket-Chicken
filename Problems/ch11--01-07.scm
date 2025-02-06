@@ -7,29 +7,15 @@
 ;;; Simply Scheme
 ;;; Chapter 11 Introduction to Recursion
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
 
-;;; Chapter 10 was a code walkthrough. Chapter 11
-;;; is rather small and all the problems fit in one
-;;; file.
+;; Chapter 10 was a code walkthrough. Chapter 11 is rather small and
+;; all the problems fit in one file.
 
 
 ;;; Scratch pad:
@@ -137,8 +123,8 @@
 
 ;; ----------------------------------------------
 ;; 11.5 Write a procedure `initials' that takes a sentence as its
-;;      argument and returns a sentence of the first letters in each
-;;      of the sentence's words.
+;;      argument and returns a sentence of the first letters in
+;;      each of the sentence's words.
 
 (define (initials sent)
   (if (= (count sent) 0)
@@ -149,8 +135,8 @@
 
 
 ;; ----------------------------------------------
-;; 11.6 Write procedure `countdown' that works like this (passes the
-;;      check below):
+;; 11.6 Write procedure `countdown' that works like this (passes
+;;      the check below):
 
 (define (countdown n)
   (if (= n 0)
@@ -161,8 +147,7 @@
 
 
 ;; ----------------------------------------------
-;; 11.7 Write procedure `copies' that returns 'n' copies of
-;;      a 'word'.
+;; 11.7 Write procedure `copies' that returns 'n' copies of a word.
 
 (define (copies n w)
   (if (or (not (number? n)) (= n 0))

@@ -2,22 +2,9 @@
 ;;; Simply Scheme
 ;;; Chapter 12 The Leap of Faith
 
-
-;; The problems I worked with lightweight testing to verify results
-;; via srfi-78. This file should load into a new Scheme repl (only
-;; Chicken tested) and report no failures.
-
-;;; Set up the standard environment:
-
 ;; The #lang command loads the racket language definition for
 ;; the text. Then we just need srfi-78.
 (require srfi/78)
-
-;;; Set unit testing reporting levels and clear any dangling
-;;; totals.
-
-;; This should already be done, but just in case:
-
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -30,8 +17,8 @@
 ;; 12.12 Write `arabic' to convert Roman numerals to Arabic.
 ;;
 ;; I've gone one of these in elisp laying around somewhere that takes
-;; a different approach, but I'll do this withing the framework of the
-;; text.
+;; a different approach, but I'll do this withing the framework of
+;; the text.
 ;;
 ;; Assumes reasonable input (symbol or string) and that `butfirst" of
 ;; the last character in either returns "".
@@ -71,7 +58,6 @@
 (check (arabic 'ix) => 9)
 (check (arabic 'mcmlxxi) => 1971)
 (check (arabic 'mlxvi) => 1066)
-
 
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
