@@ -1,4 +1,13 @@
-define (match pattern sent)
+#lang simply-scheme
+;; Pattern matcher example from Simply Scheme Chapter 16
+;; I am unable to find a version of this that works. The
+;; match function consistently returns '(), which is not
+;; #f in scheme. This is returned for matches that
+;; should and shouldn't pass. I've done a good bit of
+;; hunting this morning and given up. I'll have to fix
+;; it as I work through the text.
+
+(define (match pattern sent)
   (match-using-known-values pattern sent '()))
 
 (define (match-using-known-values pattern sent known-values)
@@ -105,3 +114,5 @@ define (match pattern sent)
   (if (empty? name)
       known-values
       (se known-values name value '!)))
+
+(match '(* me *) '(love me do))
