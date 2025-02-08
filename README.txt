@@ -17,7 +17,7 @@ Science (2ND ed.). MIT. (https://people.eecs.berkeley.edu/~bh/ss-toc2.html)
 To work through the text in 2025 you need to do one of the following:
 
 - Load `From_Text/simply.scm' into your Scheme (Chicken 5 tested, R5RS
-  seems to be required, does not work with Guile or Chez).
+  seems to be required, does not work with current Guile or Chez).
 
 - Use Racket with it's `#lang simply-scheme' directive.
 
@@ -44,9 +44,9 @@ Geiser or traditional `inferior scheme' support.
 Additional Requirements:
 -----------------------
 
-I rely on srfi-78 for a minimal testing framework. I like to have many
-small tests and the support in srfi-78 is ideal. There is no required
-setup beyond loading it:
+I rely on srfi-78 for testing. It's a minimal framework and I like to
+have many small tests. Just enough testing! There is no required setup
+beyond loading it:
 
 - For Chicken: (import srfi-78)
 
@@ -91,6 +91,18 @@ from the tests providing assurance that everything works. This may
 or may not be possible/worth doing in Racket, but the problem files
 are still written to support doing so.
 
+My normal approach is to have a scratch file open and let it grow.
+As I started working problems from texts, I tried to write the
+files so that code from them could be easily used (or copied). This
+led to quasi-literate programming style comments interspered with
+code and data.
+
+For a language with a repl (Scheme, Ruby, Python) I make an effort
+to keep the file clean enough to load completely.
+
+For this text, I quickly determined that one file per chapter problem
+set was not a good idea.
+
 Several chapters had no problems worth working out in a REPL. So far
 the list is chapters 1, 2, 3, 4, 5, 10, and 13. Stub files with no
 problem number suffix exist as placeholders.
@@ -116,7 +128,7 @@ consider public domain but for those who require a more explicit
 license, you can choose between the UNLICENSE and the MIT License.
 
 I'm quite sure there's nothing I've done here that anyone would want
-to borrow and reuse.
+to borrow and reuse. If you do, it's at your own risk.
 
 Troy Brumley, blametroi@gmail.com, February 2025.
 
