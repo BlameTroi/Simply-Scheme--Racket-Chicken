@@ -30,11 +30,11 @@
 ;;           the bad definitions out.
 
 ;; bad
-(define (who sent)
-  (every describe '(peter roger john keith)))
+;;(define (who sent)
+  ;;(every describe '(peter roger john keith)))
 ;; bad
-(define (describe person)
-  (se person sent))
+;;(define (describe person)
+  ;;(se person sent))
 
 ;; fixed
 (define (fixed-who sent)

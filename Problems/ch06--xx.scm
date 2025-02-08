@@ -80,8 +80,8 @@
 
 (define (pluralize-verb verb)
    (cond ((equal? verb 'be) 'is)
-         ((equal? (last verb) 'o) (word verb 'es'))
-         ((else (word verb 's))))
+         ((equal? (last verb) 'o) (word verb 'es))
+         (else (word verb 's))))
 
 (check (pluralize-verb 'be) => 'is)
 (check (pluralize-verb 'go) => 'goes)
@@ -108,10 +108,11 @@
 
 ;; And these both came back as irrational numbers, but while 0.051271
 ;; does not equal 5127/100000, 4 does equal 4.0 in Chicken but this
-;; fails as 4.0 not equaling 4).
+;; fails as 4.0 not equaling 4 in Racket. I updated the expected
+;; result to account for this.
 
 (check (sci-coefficient 21300) => 2.13)
-(check (sci-exponent 21300)    => 4)
+(check (sci-exponent 21300)    => 4.0)
 
 
 ;; ----------------------------------------------
@@ -238,7 +239,7 @@
 (check (type-of '(nowhere man)) => 'sentence)
 (check (type-of (= 3 3))        => 'boolean)
 (check (type-of (= 3 4))        => 'boolean)
-(check (type-of '())            => 'unknown)
+(check (type-of '())            => 'sentence)
 
 
 ;; ----------------------------------------------
@@ -577,8 +578,8 @@
 ;; for this so I pulled them out.
 (define (describe-time sec)
   (cond ((> sec sec/year)        (sentence (/ sec sec/year) 'years))
-        ((> sec sec/month)       (sentence (/ sec sec/month) 'months))
-;;      ((> sec sec/week)        (sentence (/ sec sec/week) 'weeks))
+;;        ((> sec sec/month)       (sentence (/ sec sec/month) 'months))
+        ((> sec sec/week)        (sentence (/ sec sec/week) 'weeks))
         ((> sec sec/day)         (sentence (/ sec sec/day) 'days))
         ((> sec sec/hour)        (sentence (/ sec sec/hour) 'hours))
         ((> sec sec/min)         (sentence (/ sec sec/min) 'minutes))

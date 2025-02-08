@@ -53,8 +53,8 @@ setup beyond loading it:
 - For Racket: (require srfi/78)
 
 Needed around chapter 13, but useful before then, is a runtime trace
-facility. One is available in Racket with simply-scheme enabled, but in
-Chicken you must '(import trace)'.
+facility. One is available in Racket with simply-scheme enabled, but
+in Chicken you must '(import trace)'.
 
 
 The Worked Problems:

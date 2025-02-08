@@ -3,7 +3,8 @@
 ;;; Chapter 15 Advanced Recursion
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.(require srfi/78)
+;; the text. Then we just need srfi-78.
+(require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
 
@@ -33,55 +34,74 @@
 ;;
 ;; Given a digit from a phone number, return a list of the possible
 ;; letter equivalents to make phonewords. Uses the older map with
-;; no z or q. Returns (?) for illegal input.
+;; no z or q. Returns '? for illegal input other than 0 or 1, which
+;; are returned as 0 or 1.
 
 (define (digit->keypad d)
   (cond
-    ((= d 2) '(a b c))
-    ((= d 3) '(d e f))
-    ((= d 4) '(g h i))
-    ((= d 5) '(j k l))
-    ((= d 6) '(m n o))
-    ((= d 7) '(p r s))   ;; q could go here
-    ((= d 8) '(t u v))
-    ((= d 9) '(w x y))   ;; z could go here
-    (else    '(#\?))))   ;; have to do something, right?
+    ((not (number? d)) (se '?))
+    ((= d 2)          '(a b c))
+    ((= d 3)          '(d e f))
+    ((= d 4)          '(g h i))
+    ((= d 5)          '(j k l))
+    ((= d 6)          '(m n o))
+    ((= d 7)          '(p r s))   ;; q goes here in full set
+    ((= d 8)          '(t u v))
+    ((= d 9)          '(w x y))   ;; z goes here in full set
+    (else              (se d))))  ;; have to do something, right?
+
 
 ;; (phone-spell num)
 ;;
 ;; Show all the possible spellings for a phone number using a standard
-;; phone keypad (US E.161). The spec says we can assume that 0 and 1 are
-;; not input.
+;; phone keypad (US E.161). The spec says we can assume no illegal
+;; input.
 
-(define (phone-spell-r x xs)
+
+;; And here we do the compiling of the key letters. KEY is just
+;; one key, and REST is a sentence of what prior KEYs have been
+;; appended to.
+;;
+;; For 23     '(a b c) '(d e f) '(g h i)
+;;    each of g h i is combined with nothing,
+;;    then each of d e f is combined with each of g h i
+;;    then each of a b c is combined with each of dg dh di eg eh ei fg fh fi
+(define (combine-keys key rest)
   (cond
-    ((empty? xs)     (se ))
+    ((empty? rest)  (se ))
+    (else           (se (word key (first rest))
+                        (combine-keys key (bf rest))))))
+(trace combine-keys)      
 
-    ))
-(define (deeper x xs)
-  (se x (phone-spell xs)))
-
-(define (doit xs ys)     ;; xs number->letters, ys remaining number
+;; KEYS come in as a sentence of (usually) 3 letters. REST ends up
+;; being the KEYS triple for the next digit of NUM. This helper is
+;; mainly a dispatcher.
+(define (for-each-key keys rest)
   (cond
-    ((empty? xs)        (se ))
-    (else (se (deeper (first xs) ys) (doit (bf xs) ys)))))
+    ((empty? keys)  (se ))
+    (else           (se (for-each-key (bf keys) rest)
+                        (combine-keys (first keys) rest)))))
+(trace for-each-key)
 
-
-
+;; NUM should be digits only of a phone number. Each digit becomes
+;; a sentence of (usually) 3 letters. Dispatch to a helper to drive
+;; the process for each letter and the remainder of NUM.
 (define (phone-spell num)
-  (let ((letters     (digit->keypad (first num))))
-    (cond
-      ((empty? num)                                   '())
-      ((equal? (digit->keypad (first num)) #\?)       '())
-      (else (se )   )
-      )))
+  (cond
+    ((empty? num)   (se ""))
+    (else           (se (for-each-key (digit->keypad (first num)) (phone-spell (bf num)))))))
+(trace phone-spell)
 
+(check (phone-spell '234) => (reverse '(adg adh adi
+                                            aeg aeh aei
+                                            afg afh afi
+                                            bdg bdh bdi
+                                            beg beh bei
+                                            bfg bfh bfi
+                                            cdg cdh cdi
+                                            ceg ceh cei
+                                            cfg cfh cfi)))
 
-
-;; ----------------------------------------------
-;; ----------------------------------------------
-;; ----------------------------------------------
-;; ----------------------------------------------
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; And that's the end of this section. Report test results and reset
