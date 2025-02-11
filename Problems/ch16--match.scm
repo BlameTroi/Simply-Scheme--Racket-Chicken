@@ -28,7 +28,7 @@
 ;; in Chicken 5. Besides, only * is (re)defined in simply-scheme.
 
 ;; Checking this in as a base starting point so that I have
-;; diff history of the debug and fix.
+;; diff history of the debug and fix. Let the adventure begin.
 
 
 (define (match pattern sent)
