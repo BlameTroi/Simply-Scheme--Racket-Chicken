@@ -19,50 +19,34 @@
 ;; returned for matches that should and shouldn't pass. I've done
 ;; a good bit of hunting this morning and given up. I'll have to
 ;; fix it as I work through the text.
+;;
+;; After much head banging and many false starts, it does work but
+;; I've got a couple of traces in Racket that returned different
+;; results in Chicken5. My code diff showed no changes besides
+;; numbering the various 'failed points. Recopied the match.scm
+;; code in and now it works? I dunno what I broke.
+;;
+;; To match the book, I added 'match?' to return a boolean for
+;; queries for quick tests. It's just a wrapper over 'match'.
+;;
+;; I'll keep watch for a return of errors, but I'm going to assume
+;; that I fat-fingered something and gremlins got in the works.
 
-;; I did some more experiments and named matches work, while
-;; unnamed matches fail. This is regardless of the wild-card
-;; in the pattern (*?!&). I'd wonder if this was a bug in the
-;; simply-scheme language for Racket dealing with special
-;; characters that have assigned procedures, but it also fails
-;; in Chicken 5. Besides, only * is (re)defined in simply-scheme.
+;; base match.scm
 
-;; Checking this in as a base starting point so that I have
-;; diff history of the debug and fix. Let the adventure begin.
 
-;; 11-02-25 - actually this was mostly working but the interface
-;;            described in the text is different than the one in
-;;            the code. The '() return for a match? is #t while
-;;            'failed is issued where the text says we get a #f.
-;;
-;;            If matches are named (*start blarg *end) then the
-;;            a sentence is returned on success with the words
-;;            captured by the named item:
-;;
-;;            (match '(!start me !up) '(love me do))
-;;            => '(start love ! up do !)
-;;
-;;            Zero-or-more (*) matches aren't working consistently
-;;            yet.
-;;
-;;            One exit path has been fixed to return #t for '() and
-;;            '(...captured stuff...) when the match works, and #f
-;;            when it doesn't, replacing one 'failed path. There are
-;;            two other failed paths that I've marked 'failedxx and
-;;            'failedyy for future debugging.
-;;
-;;            You could argue that as the procedure is named 'match'
-;;            and not 'match?' that one shouldn't expect a boolean
-;;            back, but that's not what the book says in the prose.
+;; 'match?' added for boolean results. Use it when working through
+;; the text when booleans are expected in the walkthrough.
 
+(define (match? pattern sent)
+  (if (equal? (match pattern sent) 'failed) #f #t))
 
 (define (match pattern sent)
   (match-using-known-values pattern sent '()))
 
 (define (match-using-known-values pattern sent known-values)
   (cond ((empty? pattern)
-         ;; below was (if (empty? sent) known-values 'failed)
-	 (if (empty? sent) (if (empty? known-values) #t known-values) #f))
+	 (if (empty? sent) known-values 'failed))
 	((special? (first pattern))
 	 (let ((placeholder (first pattern)))
 	   (match-special (first placeholder)
@@ -70,14 +54,13 @@
 			  (bf pattern)
 			  sent
 			  known-values)))
-	((empty? sent) 'failedxx)
+	((empty? sent) 'failed)
 	((equal? (first pattern) (first sent))
 	 (match-using-known-values (bf pattern) (bf sent) known-values))
-	(else 'failedyy)))
+	(else 'failed)))
 
 (define (special? wd)
   (member? (first wd) '(* & ? !)))
-
 
 (define (match-special howmany name pattern-rest sent known-values)
   (let ((old-value (lookup name known-values)))
@@ -166,6 +149,7 @@
       known-values
       (se known-values name value '!)))
 
+;; end match.scm
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; And that's the end of this section. Report test results and reset
@@ -181,13 +165,37 @@
 ;; (trace longest-match)
 ;; (trace lm-helper)
 
-(check (special? (first '(* me *))) => #t)
-(check (special? (first (bf '(* me *)))) => #f)
-(check (match '(* me *) '(love me do)) => #t)
 
-
-
-
+;; Tests with results as seen in unaltered match.scm with Chicken5.
+;; Working ok (now) in Racket. 
+(check (match '(* me) '(love me)) => '())
+(check (match '(* me *) '(love me do)) => '())
+(check (match '(* me *) '(me do)) => '())
+(check (match '(* me *) '(love me)) => '())
+(check (match '(* me *) '(love me do)) => '())
+(check (match '(* me do) '(me dont)) => 'failed)
+(check (match '(love * do) '(love you she do)) => '())
+(check (match '(love * do) '(love do)) => '())
+(check (match '(? me) '(love me)) => '())
+(check (match '(? me) '(me)) => '())
+(check (match '(! me) '(me)) => 'failed)         ;; ! = 1 word
+(check (match '(! me) '(x me)) => '())
+(check (match '(love ? do) '(love you do)) => '())
+(check (match '(love * do) '(love you do)) => '())
+(check (match '(love ! do) '(love you do)) => '())
+(check (match '(love & do) '(love you do)) => '())
+(check (match '(& me &) '(love me do)) => '())
+(check (match '(&x me &y) '(love me do)) => '(x love ! y do !)) ;; captures
+(check (match '(*x me *y) '(love me do)) => '(x love ! y do !)) ;; captures
+(check (match '(*x me *y) '(me do)) => '(x ! y do !)) ;; captures
+(check (match '(*x me *y) '(love me)) => '(x love ! y !))
+(check (match '(*x me *y) '(me)) => '(x ! y !)) 
+(check (match '(love *) '(love me do)) => '())
+(check (match '(love &) '(love me do)) => '())
+(check (match '(love &) '(love me)) => '())
+(check (match '(love *) '(love me)) => '())
+(check (match '(&x me &y) '(love me do)) => '(x love ! y do !))
+(check (match '(&x me &y) '(she loves me she do)) => '(x she loves ! y she do !))
 
 
 (check-report)
