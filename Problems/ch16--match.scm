@@ -30,13 +30,39 @@
 ;; Checking this in as a base starting point so that I have
 ;; diff history of the debug and fix. Let the adventure begin.
 
+;; 11-02-25 - actually this was mostly working but the interface
+;;            described in the text is different than the one in
+;;            the code. The '() return for a match? is #t while
+;;            'failed is issued where the text says we get a #f.
+;;
+;;            If matches are named (*start blarg *end) then the
+;;            a sentence is returned on success with the words
+;;            captured by the named item:
+;;
+;;            (match '(!start me !up) '(love me do))
+;;            => '(start love ! up do !)
+;;
+;;            Zero-or-more (*) matches aren't working consistently
+;;            yet.
+;;
+;;            One exit path has been fixed to return #t for '() and
+;;            '(...captured stuff...) when the match works, and #f
+;;            when it doesn't, replacing one 'failed path. There are
+;;            two other failed paths that I've marked 'failedxx and
+;;            'failedyy for future debugging.
+;;
+;;            You could argue that as the procedure is named 'match'
+;;            and not 'match?' that one shouldn't expect a boolean
+;;            back, but that's not what the book says in the prose.
+
 
 (define (match pattern sent)
   (match-using-known-values pattern sent '()))
 
 (define (match-using-known-values pattern sent known-values)
   (cond ((empty? pattern)
-	 (if (empty? sent) known-values 'failed))
+         ;; below was (if (empty? sent) known-values 'failed)
+	 (if (empty? sent) (if (empty? known-values) #t known-values) #f))
 	((special? (first pattern))
 	 (let ((placeholder (first pattern)))
 	   (match-special (first placeholder)
@@ -44,10 +70,10 @@
 			  (bf pattern)
 			  sent
 			  known-values)))
-	((empty? sent) 'failed)
+	((empty? sent) 'failedxx)
 	((equal? (first pattern) (first sent))
 	 (match-using-known-values (bf pattern) (bf sent) known-values))
-	(else 'failed)))
+	(else 'failedyy)))
 
 (define (special? wd)
   (member? (first wd) '(* & ? !)))
@@ -153,6 +179,7 @@
 ;; (trace length-ok?)
 ;; (trace already-known-match)
 ;; (trace longest-match)
+;; (trace lm-helper)
 
 (check (special? (first '(* me *))) => #t)
 (check (special? (first (bf '(* me *)))) => #f)
