@@ -1,3 +1,4 @@
+#lang simply-scheme
 ;;; Simply Scheme
 
 ;; Troy Brumley, blametroi@gmail.com, early 2025.
@@ -8,7 +9,7 @@
 ;; environment for Simply Scheme. We load srfi 78 in the exercises to support
 ;; testing.
 
-(import srfi-78)
+(require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
 

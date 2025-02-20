@@ -61,7 +61,7 @@
 
 ;;; simply.scm -- the _Simply_Scheme_ abstraction layer:
 
-(load "../Problems/simply.scm")
+(load "../From_Text/simply.scm")
 ;;(load "simply.so")
 
 ;;; Additional environment setup:
