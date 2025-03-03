@@ -1,14 +1,13 @@
+#lang simply-scheme
 ;;; Simply Scheme
 
 ;; Troy Brumley, blametroi@gmail.com, early 2025.
 
 ;;; Chapter 18 Trees
 
-;; For Chicken 5, load "required.scm" before this to establish the text book
-;; environment for Simply Scheme. We load srfi 78 in the exercises to support
-;; testing.
-
-(import srfi-78)
+;; The #lang command loads the racket language definition for
+;; the text. Then we just need srfi-78.
+(require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
 
