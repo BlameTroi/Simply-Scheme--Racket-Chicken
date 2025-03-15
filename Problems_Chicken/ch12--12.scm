@@ -19,16 +19,14 @@
 ;; ----------------------------------------------
 ;; 12.12 Write `arabic' to convert Roman numerals to Arabic.
 ;;
-;; I've gone one of these in elisp laying around somewhere that takes
-;; a different approach, but I'll do this withing the framework of
-;; the text.
+;; I've gone one of these in elisp laying around somewhere that takes a
+;; different approach, but I'll do this within the framework of the text.
 ;;
-;; Assumes reasonable input (symbol or string) and that `butfirst" of
-;; the last character in either returns "".
+;; Assumes reasonable input (symbol or string) and that `butfirst" of the last
+;; character in either returns "".
 ;;
-;; Well, this is ugly but that's the nature of the problem, especially
-;; since we don't know much about using let yet. Leaving the helpers
-;; exposed.
+;; Well, this is ugly but that's the nature of the problem, especially since we
+;; don't know much about using let yet. Leaving the helpers exposed.
 
 (define (roman-digit->value letter)
   (cond ((equal? letter 'i) 1)

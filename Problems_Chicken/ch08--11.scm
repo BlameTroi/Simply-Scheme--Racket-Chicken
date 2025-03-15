@@ -18,8 +18,8 @@
 
 
 ;; ----------------------------------------------
-;; 8.11 Write a GPA procedure that takes a sentence of letter +/-
-;;      grades and returns the correct GPA.
+;; 8.11 Write a GPA procedure that takes a sentence of letter +/- grades and
+;; returns the correct GPA.
 ;;
 ;;      (a-d) 4-0
 ;;      + adds 0.33, - subtracts 0.33

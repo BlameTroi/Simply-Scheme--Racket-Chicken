@@ -15,6 +15,7 @@
 ;; ? -- at most one word
 ;; & -- at least one word
 ;; * -- any number of words
+
 (define (match? pattern sent)
   (cond ((empty? pattern)        (empty? sent))
         ((empty? sent)           #f)

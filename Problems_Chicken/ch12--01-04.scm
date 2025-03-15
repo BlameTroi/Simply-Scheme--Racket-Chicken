@@ -59,16 +59,16 @@
 
 
 ;; ----------------------------------------------
-;; 12.3 Can `factorial' have its base case reduced to -1 instead
-;;      of 0? If not, why? If so, show it:
+;; 12.3 Can `factorial' have its base case reduced to -1 instead of 0? If not,
+;; why? If so, show it:
 
 (define (factorial n)              ;; original
   (if (= n 0)
       1
       (* n (factorial (- n 1)))))
 
-;; It can not. While it can always return 1 for the base case, but
-;; if the base case is -1, the step before will multiply by 0.
+;; It can not. While it can always return 1 for the base case, but if the base
+;; case is -1, the step before will multiply by 0.
 
 
 ;; ----------------------------------------------
@@ -78,8 +78,8 @@
 ;; f(sent) = {
 ;;            sentence(f(butfirst(sent)),first(sent))
 ;;
-;; Implement in Scheme. What does the function do? This looks to
-;; reverse the words in a sentence.
+;; Implement in Scheme. What does the function do? This looks to reverse the
+;; words in a sentence.
 
 (define (f sent)
   (if (empty? sent)

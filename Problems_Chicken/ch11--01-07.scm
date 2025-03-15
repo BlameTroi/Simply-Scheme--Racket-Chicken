@@ -12,8 +12,8 @@
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-;; Chapter 10 was a code walkthrough. Chapter 11 is rather small and
-;; all the problems fit in one file.
+;; Chapter 10 was a code walkthrough. Chapter 11 is rather small and all the
+;; problems fit in one file.
 
 
 ;;; Scratch pad:
@@ -36,12 +36,11 @@
 (print "Chater 11 problems 1, 2, 3, 4, 5, 6, 7 start...")
 
 ;; ----------------------------------------------
-;; 11.1 Write `downup4' in terms of only `word' and `sentence'.
-;;      I must be dense, I don't see it. I need some way to break
-;;      a word into letters. A quick search shows others considered
-;;      `butlast' and 'first' acceptable in this problem. If the
-;;      authors meant "without downup3 2 1 implementations" then
-;;      that makes sense.
+;; 11.1 Write `downup4' in terms of only `word' and `sentence'. I must be
+;; dense, I don't see it. I need some way to break a word into letters. A quick
+;; search shows others considered `butlast' and 'first' acceptable in this
+;; problem. If the authors meant "without downup3 2 1 implementations" then
+;; that makes sense.
 
 (define (downup4 wd)
   (sentence
@@ -79,8 +78,10 @@
 ;; 11.3 Rewrite `phone-unspell' from 8.13 using recursion.
 
 ;; helpers and the main procedure:
-;; E.161 is the standard for letter-number mapping on phone
-;; keypads. This is the US version.
+
+;; E.161 is the standard for letter-number mapping on phone keypads. This is
+;; the US version.
+
 (define E.161-MAP '( a2 b2 c2         ;; <spelled><unspelled>
                      d3 e3 f3
                      g4 h4 i4
@@ -120,9 +121,8 @@
 
 
 ;; ----------------------------------------------
-;; 11.5 Write a procedure `initials' that takes a sentence as its
-;;      argument and returns a sentence of the first letters in
-;;      each of the sentence's words.
+;; 11.5 Write a procedure `initials' that takes a sentence as its argument and
+;; returns a sentence of the first letters in each of the sentence's words.
 
 (define (initials sent)
   (if (= (count sent) 0)

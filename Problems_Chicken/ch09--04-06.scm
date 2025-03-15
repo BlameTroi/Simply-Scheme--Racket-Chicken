@@ -20,13 +20,11 @@
 ;; ----------------------------------------------
 ;; 9.4 The following doesn't work. Fix it.
 
-;;     NOTE: This will chatter in the log about top level variables
-;;           being referenced but unbound, 'sent' in 'describe'.
-;;           That's ok for this exercise.
-
-;;           In Chicken 5 the error reports and the run can continue.
-;;           In Racket evaluation stops, so you'll need to comment
-;;           the bad definitions out.
+;;  NOTE: This will chatter in the log about top level variables being
+;;  referenced but unbound, 'sent' in 'describe'. That's ok for this exercise.
+;;
+;; In Chicken 5 the error reports and the run can continue. In Racket
+;; evaluation stops, so you'll need to comment the bad definitions out.
 
 ;; bad
 ;;(define (who sent)
@@ -57,9 +55,9 @@
 
 
 ;; ----------------------------------------------
-;; 9.6 Write `sentence-version' which takes a function F and returns a
-;;     function G. G should take a sentence as its argument and apply
-;;     F to every item in the sentence.
+;; 9.6 Write `sentence-version' which takes a function F and returns a function
+;; G. G should take a sentence as its argument and apply F to every item in the
+;; sentence.
 
 (define (sentence-version f)
   (lambda (sent) (every f sent)))

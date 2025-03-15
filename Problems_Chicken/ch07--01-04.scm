@@ -93,16 +93,15 @@
         (* +))
     (* (+ a a) (+ b b))))
 
-;; This takes advantage of the evaluation order within `let' to swap
-;; the functions + and *. In a `let' all the values (right hand side
-;; of a definition) are done before their values are bound to the
-;; corresponding names (left hand side). This prevents side effects
-;; while computing values.
+;; This takes advantage of the evaluation order within `let' to swap the
+;; functions + and *. In a `let' all the values (right hand side of a
+;; definition) are done before their values are bound to the corresponding
+;; names (left hand side). This prevents side effects while computing values.
 ;;
-;; This could not be done outside the `let' because the (+ *) would
-;; take effect before (* +) is evaluated. Using the substition model,
-;; at the end of the sequence, + would be *, and * would be ... *.
-;; Within the scope of the `let' their meanings are exchanged.
+;; This could not be done outside the `let' because the (+ *) would take effect
+;; before (* +) is evaluated. Using the substition model, at the end of the
+;; sequence, + would be *, and * would be ... *. Within the scope of the `let'
+;; their meanings are exchanged.
 
 ;; Chapter 7 is more of a preface. On to chapter 8.
 

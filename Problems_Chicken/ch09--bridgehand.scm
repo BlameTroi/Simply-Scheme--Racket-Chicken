@@ -12,17 +12,17 @@
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-;;; Implement bridge hand scoring by writing specific procedures in a
-;;; bottom up manner.
+;;; Implement bridge hand scoring by writing specific procedures in a bottom up
+;;; manner.
 
 (print "Chapter 9 -- bridge hand start...")
 
-;; Bridge hands are sentences of 13 cards. A card is suit and rank, h5
-;; for 5 of hearts, c10 for 10 of clubs, sq for quean of spades, etc.
+;; Bridge hands are sentences of 13 cards. A card is suit and rank, h5 for 5 of
+;; hearts, c10 for 10 of clubs, sq for quean of spades, etc.
 
 
-;; `card-val' returns the bridge points for the card. number cards
-;; are 0, ace 4, king 3, queen 2, jack 1.
+;; `card-val' returns the bridge points for the card. number cards are 0, ace
+;; 4, king 3, queen 2, jack 1.
 
 (define (card-val x)
   (let ((rank (butfirst x)) (suit (first x)))
@@ -37,8 +37,8 @@
 (check (card-val 'ha) => 4)
 
 
-;; `high-card-points' takes a hand (sentence) and totals the points
-;; for ranks. No distribution points are considered.
+;; `high-card-points' takes a hand (sentence) and totals the points for ranks.
+;; No distribution points are considered.
 
 (define (high-card-points xs)
   (accumulate + (every card-val xs)))
@@ -47,8 +47,8 @@
 (check (high-card-points '(sa s10 s7 s6 s2 hq hj h9 ck c4 dk d9 d3)) => 13)
 
 
-;; `count-suit' takes a suit and hand as arguments and returns the
-;; number of cards in the hand of that suit.
+;; `count-suit' takes a suit and hand as arguments and returns the number of
+;; cards in the hand of that suit.
 
 (define (count-suit s xs)
   (count (keep (lambda (c) (equal? (first c) s)) xs)))
@@ -58,8 +58,8 @@
 (check (count-suit 'd '(h3 d7 sk s3 c10 dq d8 s9 s4 d10 c7 d4 s2)) => 5)
 
 
-;; `suit-counts' given a hand, return a sentence of (#spades #hearts
-;; #clubs #diamonds).
+;; `suit-counts' given a hand, return a sentence of (#spades #hearts #clubs
+;; #diamonds).
 
 (define (suit-counts xs)
   (se (count-suit 's xs)
@@ -72,8 +72,8 @@
 (check (suit-counts '(h3 d7 sk s3 c10 dq d8 s9 s4 d10 c7 d4 s2)) => '(5 1 2 5))
 
 
-;; `suit-dist-points' takes a number of cards and returns the points
-;; for having that many cards of a particular suit.
+;; `suit-dist-points' takes a number of cards and returns the points for having
+;; that many cards of a particular suit.
 
 (define (suit-dist-points n)
   (cond ((= n 2) 1)

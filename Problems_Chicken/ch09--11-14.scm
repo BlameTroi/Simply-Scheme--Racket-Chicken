@@ -18,15 +18,15 @@
 
 
 ;; ----------------------------------------------
-;; 9.11 Write `unabbrev' which takes two arguments. The first is a
-;;      sentence to un-abbreviate, and the second is a sentence with
-;;      replacements for any numbers found in the first.
+;; 9.11 Write `unabbrev' which takes two arguments. The first is a sentence to
+;; un-abbreviate, and the second is a sentence with replacements for any
+;; numbers found in the first.
 ;;
-;;      The number 1 gets the first word from the second sentence,
-;;      and number 5 gets the fifth, and so on.
+;; The number 1 gets the first word from the second sentence, and number 5 gets
+;; the fifth, and so on.
 ;;
-;;      `item' is defined in the standard environment but I did my
-;;      own implementation.
+;; `item' is defined in the standard environment but I did my own
+;; implementation.
 
 (define (unabbrev target replacements)
   (let ((get-item (lambda (n) (first ((repeated bf (- n 1)) replacements)))))
@@ -40,8 +40,8 @@
 
 
 ;; ----------------------------------------------
-;; 9.12 Write `first-last' which takes a sentance and returns only
-;;      the words with the same first and last letter.
+;; 9.12 Write `first-last' which takes a sentance and returns only the words
+;; with the same first and last letter.
 
 (define (first-last sent)
   (keep (lambda (wrd) (equal? (first wrd) (last wrd))) sent))
@@ -51,13 +51,13 @@
 
 
 ;; ----------------------------------------------
-;; 9.13 Write a procedure `compose' which takes two functions, f and
-;;      g, and returns a function composed of f and g and computes
-;;      f(g(x)) when passed argument x.
+;; 9.13 Write a procedure `compose' which takes two functions, f and g, and
+;; returns a function composed of f and g and computes f(g(x)) when passed
+;; argument x.
 ;;
-;;      Note: `compose' is also defined in the Chicken base with this
-;;      general functionality, but it supports more than two argument
-;;      functions. To avoid collision, I'm renaming this.
+;; NOTE: `compose' is also defined in the Chicken base with this general
+;; functionality, but it supports more than two argument functions. To avoid
+;; collision, I'm renaming this.
 
 (define (compositor f g) (lambda (x) (f (g x))))
 
@@ -67,10 +67,10 @@
 
 
 ;; ----------------------------------------------
-;; 9.14 Write `substitute' taking three parameters, new-word, old-word,
-;;      and target-sent. Replace every occurance of old-word with
-;;      new-word. I'd prefer a different ordering, but meh. It's a
-;;      variation the above, with `letterwords' being a good template.
+;; 9.14 Write `substitute' taking three parameters, new-word, old-word, and
+;; target-sent. Replace every occurance of old-word with new-word. I'd prefer a
+;; different ordering, but meh. It's a variation the above, with `letterwords'
+;; being a good template.
 
 (define (substitute new-word old-word sent)
   (every

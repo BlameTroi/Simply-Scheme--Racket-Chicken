@@ -17,16 +17,16 @@
 
 
 ;; ----------------------------------------------
-;; 14.8 Write `expand' which takes and returns a sentence. If a number
-;;      is found in the sentence, return that many copies of the next
-;;      word. Otherwise just the word.
+;; 14.8 Write `expand' which takes and returns a sentence. If a number is found
+;; in the sentence, return that many copies of the next word. Otherwise just
+;; the word.
 ;;
-;; I try to handle undefined cases (two adjacent numbers, just one
-;; number as the only word in the sentence, etc.) sensibly.
+;; I try to handle undefined cases (two adjacent numbers, just one number as
+;; the only word in the sentence, etc.) sensibly.
 ;;
-;; Trying to stick with the author's standard environment caused a few
-;; problems. I opted to wrap a few of their functions to make them
-;; behave the way I want.
+;; Trying to stick with the author's standard environment caused a me few
+;; problems. I opted to wrap a few of their functions to make them behave the
+;; way I want.
 
 (define (repeater n xs)
   (cond ((not (number? n))   (se ))
@@ -85,9 +85,8 @@
 (check (expand-r 'tail '()) => '(tail))
 (check (expand-r '() '()) => '())
 
-;; `expand' is part of Chicken as:
-;; <procedure (chicken.syntax#expand exp . rest)>
-;; so I renamed it.
+;; `expand' is part of Chicken as: <procedure (chicken.syntax#expand exp .
+;; rest)> so I renamed it.
 
 (define (s-expand sent)
   (cond ((empty? sent)           sent)
@@ -115,8 +114,8 @@
 (check (s-expand '(0 zero one two))
        => '(one two))
 
-;; The following are not defined in the problem statement, but here's
-;; what I think they should do.
+;; The following are not defined in the problem statement, but here's what I
+;; think they should do.
 
 (check (s-expand '(one two 3 four 5))
        => '(one two four four four))

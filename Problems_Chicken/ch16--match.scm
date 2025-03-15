@@ -16,30 +16,28 @@
 (print "Chapter 16 Example Pattern Matcher start...")
 
 
-;; Pattern matcher example from Simply Scheme Chapter 16. I am
-;; unable to find a version of this that works. The match function
-;; consistently returns '(), which is not #f in scheme. This is
-;; returned for matches that should and shouldn't pass. I've done
-;; a good bit of hunting this morning and given up. I'll have to
-;; fix it as I work through the text.
+;; Pattern matcher example from Simply Scheme Chapter 16. I am unable to find a
+;; version of this that works. The match function consistently returns '(),
+;; which is not #f in scheme. This is returned for matches that should and
+;; shouldn't pass. I've done a good bit of hunting this morning and given up.
+;; I'll have to fix it as I work through the text.
 ;;
-;; After much head banging and many false starts, it does work but
-;; I've got a couple of traces in Racket that returned different
-;; results in Chicken5. My code diff showed no changes besides
-;; numbering the various 'failed points. Recopied the match.scm
-;; code in and now it works? I dunno what I broke.
+;; After much head banging and many false starts, it does work but I've got a
+;; couple of traces in Racket that returned different results in Chicken5. My
+;; code diff showed no changes besides numbering the various 'failed points.
+;; Recopied the match.scm code in and now it works? I dunno what I broke.
 ;;
-;; To match the book, I added 'match?' to return a boolean for
-;; queries for quick tests. It's just a wrapper over 'match'.
+;; To match the book, I added 'match?' to return a boolean for queries for
+;; quick tests. It's just a wrapper over 'match'.
 ;;
-;; I'll keep watch for a return of errors, but I'm going to assume
-;; that I fat-fingered something and gremlins got in the works.
+;; I'll keep watch for a return of errors, but I'm going to assume that I
+;; fat-fingered something and gremlins got in the works.
 
 ;; base match.scm
 
 
-;; 'match?' added for boolean results. Use it when working through
-;; the text when booleans are expected in the walkthrough.
+;; 'match?' added for boolean results. Use it when working through the text
+;; when booleans are expected in the walkthrough.
 
 (define (match? pattern sent)
   (if (equal? (match pattern sent) 'failed) #f #t))
@@ -155,10 +153,6 @@
 
 ;; end match.scm
 
-;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; And that's the end of this section. Report test results and reset
-;;; counters.
-
 ;; (trace match)
 ;; (trace special?)
 ;; (trace match-using-known-values)
@@ -172,6 +166,7 @@
 
 ;; Tests with results as seen in unaltered match.scm with Chicken5.
 ;; Working ok (now) in Racket.
+
 (check (match '(* me) '(love me)) => '())
 (check (match '(* me *) '(love me do)) => '())
 (check (match '(* me *) '(me do)) => '())

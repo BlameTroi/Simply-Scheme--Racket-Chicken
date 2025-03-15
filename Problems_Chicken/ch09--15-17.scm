@@ -18,11 +18,10 @@
 
 
 ;; ----------------------------------------------
-;; 9.15 Write a function `type-check' that takes a function and a
-;;      predicate checks an argument for correct type. Return a
-;;      function that wraps the call to `function' and only calls
-;;      it if an argument satisfies `predicate'. Return #f if the
-;;      type is invalid.
+;; 9.15 Write a function `type-check' that takes a function and a predicate
+;; checks an argument for correct type. Return a function that wraps the call
+;; to `function' and only calls it if an argument satisfies `predicate'. Return
+;; #f if the type is invalid.
 
 (define (type-check func pred)
   (lambda (arg)
@@ -36,11 +35,10 @@
 
 
 ;; ----------------------------------------------
-;; 9.16 Write a function that creates a wrapper around a traditional
-;;      single argument function (eg, sqrt) and give it the APLish
-;;      ability to work with either a single number argument or a
-;;      list (sentence) of number arguments and return a list of
-;;      the results of the application.
+;; 9.16 Write a function that creates a wrapper around a traditional single
+;; argument function (eg, sqrt) and give it the APLish ability to work with
+;; either a single number argument or a list (sentence) of number arguments and
+;; return a list of the results of the application.
 
 (define (aplize fn) ;; do it here
   (lambda (arg) (if (sentence? arg)

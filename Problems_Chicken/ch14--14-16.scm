@@ -17,15 +17,15 @@
 
 
 ;; ----------------------------------------------
-;; 14.14 Write predicate `same-shape?' that takes two sentences as
-;;       arguments. It should return #tif two conditions are met:
+;; 14.14 Write predicate `same-shape?' that takes two sentences as arguments.
+;; It should return #tif two conditions are met:
 ;;
-;;       (1) the sentences have the same number of words.
-;;       (2) the corresponding words in each sentence have the
-;;           same number of letters.
+;; (1) the sentences have the same number of words.
+;; (2) the corresponding words in each sentence have the same number of
+;;     letters.
 
-;; Accumulate. Again, they want more recursion than I would probably
-;; use, I prefer guard clauses, but I'm doing it their way.
+;; Accumulate. Again, they want more recursion than I would probably use, I
+;; prefer guard clauses, but I'm doing it their way.
 
 (define (same-shape? xs ys)
   (if (and (empty? xs) (empty? ys))
@@ -46,9 +46,9 @@
 
 
 ;; ----------------------------------------------
-;; 14.15 Write `merge' which takes two sentences of numbers as
-;;       arguments. Each sentence's numbers are in ascending order.
-;;       Return one sentence with the numbers all in ascending order.
+;; 14.15 Write `merge' which takes two sentences of numbers as arguments. Each
+;; sentence's numbers are in ascending order. Return one sentence with the
+;; numbers all in ascending order.
 
 (define (merge xs ys)
   (cond ((empty? xs)                      ys)
@@ -64,15 +64,14 @@
 
 
 ;; ----------------------------------------------
-;; 14.16 Write `syllables' which takes a word as its argument and
-;;       returns the number of syllables counted according to the
-;;       following rule:
+;; 14.16 Write `syllables' which takes a word as its argument and returns the
+;; number of syllables counted according to the following rule:
 ;;
-;;       The number of syllables is the number of vowels, except that
-;;       consecutive vowels count as one.
+;; The number of syllables is the number of vowels, except that consecutive
+;; vowels count as one.
 ;;
-;;       This rule is obviously insufficient. Create test cases showing
-;;       some of the errors.
+;; This rule is obviously insufficient. Create test cases showing some of the
+;; errors.
 ;;
 ;; Yet another accumulator.
 

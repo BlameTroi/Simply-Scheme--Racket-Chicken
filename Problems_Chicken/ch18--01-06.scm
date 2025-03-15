@@ -17,6 +17,7 @@
 (print "Chapter 18 Trees begin...")
 
 ;; for test setup
+
 (define make-node cons)
 (define datum car)
 (define children cdr)
@@ -25,12 +26,13 @@
 (define (cities name-list)
   (map leaf name-list))
 (define (leaf? tree) (null? (cdr tree)))
+
 ;; end test setup
 
 ;; --------------------------------------------------------
 ;; 18.1 What does '((SAN FRANCISCO))' mean in the printout of world-tree? Why
-;;      two sets of parentheses?
-
+;; two sets of parentheses?
+;;
 ;; That the datum in question is a 'sentence', made up of more than one symbol.
 ;; The list still holds one datum(city), but the name itself is carried as a
 ;; list.
@@ -38,12 +40,12 @@
 
 ;; --------------------------------------------------------
 ;; 18.2 Suppose we change the definition of the tree constructor so that it
-;;      uses list instead of cons:
+;; uses list instead of cons:
 ;;
 ;;       (define (make-node datum children)
 ;;         (list datum children))
 ;;
-;;      How do we have to change the selectors so that everything still works?
+;; How do we have to change the selectors so that everything still works?
 
 ;; Answer:
 ;;
@@ -59,11 +61,10 @@
 
 ;; --------------------------------------------------------
 ;; 18.3 Write depth, a procedure that takes a tree as argument and returns the
-;;      largest number of nodes connected through parent-child links. That is,
-;;      a leaf node has depth 1; a tree in which all the children of the root
-;;      node are leaves has depth 2. Our world tree has depth 4 (because the
-;;      longest path from the root to a leaf is, for example, world, country,
-;;      state, city).
+;; largest number of nodes connected through parent-child links. That is, a
+;; leaf node has depth 1; a tree in which all the children of the root node are
+;; leaves has depth 2. Our world tree has depth 4 (because the longest path
+;; from the root to a leaf is, for example, world, country, state, city).
 
 (define (depth-r branches)
   (cond ((empty? branches) 0)
@@ -99,8 +100,8 @@
 
 ;; --------------------------------------------------------
 ;; 18.4 Write count-nodes, a procedure that takes a tree as argument and
-;;      returns the total number of nodes in the tree. (Earlier we counted
-;;      the number of leaf nodes.)
+;; returns the total number of nodes in the tree. (Earlier we counted the
+;; number of leaf nodes.)
 
 (define (count-nodes-r tree)
   (cond ((empty? tree)  0)
@@ -118,10 +119,10 @@
 
 ;; --------------------------------------------------------
 ;; 18.5 Write prune, a procedure that takes a tree as argument and returns a
-;;      copy of the tree, but with all the leaf nodes of the original tree
-;;      removed. (If the argument to prune is a one-node tree, in which the
-;;      root node has no children, then prune should return #f because the
-;;      result of removing the root node wouldn't be a tree.)
+;; copy of the tree, but with all the leaf nodes of the original tree removed.
+;; (If the argument to prune is a one-node tree, in which the root node has no
+;; children, then prune should return #f because the result of removing the
+;; root node wouldn't be a tree.)
 
 (define (prune tree)
   (cond ((leaf? tree) #f)
@@ -142,18 +143,17 @@
 
 ;; --------------------------------------------------------
 ;; 18.6 Write a program parse-scheme that parses a Scheme arithmetic expression
-;;      into the same kind of tree that parse produces for infix expressions.
-;;      Assume that all procedure invocations in the Scheme expression have two
-;;      arguments.
+;; into the same kind of tree that parse produces for infix expressions. Assume
+;; that all procedure invocations in the Scheme expression have two arguments.
 ;;
-;;      The resulting tree should be a valid argument to compute:
+;; The resulting tree should be a valid argument to compute:
 ;;
 ;;       (compute (parse-scheme '(* (+ 4 3) 2)))
 ;;       14
 ;;
-;;      (You can solve this problem without the restriction to two-argument
-;;      invocations if you rewrite compute so that it doesn't assume every
-;;      branch node has two children.)
+;; (You can solve this problem without the restriction to two-argument
+;; invocations if you rewrite compute so that it doesn't assume every branch
+;; node has two children.)
 
 ;; ---------- begin supporting code from text for testing ----------
 (define (compute tree)
@@ -199,6 +199,7 @@
 
 (define (operator? x) (member? x '(* / + -)))
 (define (precedence oper) (if (member? oper '(+ -)) 1 2))
+
 ;; ---------- end supporting code from text for testing ----------
 
 ;; ------------ two argument support only ------------------------
@@ -216,6 +217,7 @@
 ;; prefix:   pre_expr := (<addop>|<mulop>) (<factor>|<pre_expr>) (<factor|pre_expr>)
 ;;
 ;; pretty simple, yeah?
+;;
 ;; (* (+ 4 3) 2) becomes (* (+ (4) (3)) (2)) for 'compute'.
 
 (define (parse-scheme expr)

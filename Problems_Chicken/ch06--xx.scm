@@ -5,21 +5,20 @@
 ;;; Simply Scheme
 ;;; Chapter 6
 
-;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
-;; exercises to support testing.
+;; For Chicken 5, load "required.scm" before this to establish the text book
+;; environment for Simply Scheme. We load srfi 78 in the exercises to support
+;; testing.
 (import srfi-78)
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-;; These were work along through the text and not from a specific
-;; problem set. Future problem sets will be better structured.
+;; These were work along through the text and not from a specific problem set.
+;; Future problem sets will be better structured.
 ;;
-;; Several of the procedures here can and will be reused in later
-;; problems. In strictly file based Chicken Scheme I would just load
-;; a file of helpers, but that doesn't work with Racket. Modules are
-;; the correct solution but they don't fit with the level we are
-;; supposed to be working from in these texts.
+;; Several of the procedures here can and will be reused in later problems. In
+;; strictly file based Chicken Scheme I would just load a file of helpers, but
+;; that doesn't work with Racket. Modules are the correct solution but they
+;; don't fit with the level we are supposed to be working from in these texts.
 ;;
 ;; There will be copy-and-paste reuse. Sorry-not sorry.
 
@@ -29,8 +28,7 @@
 
 
 ;; ----------------------------------------------
-;; Create a more readable list by inserting 'and' between the last
-;; items.
+;; Create a more readable list by inserting 'and' between the last items.
 
 (define (insert-and sl)
   (se (butlast sl) 'and (last sl)))
@@ -42,8 +40,8 @@
 
 
 ;; ----------------------------------------------
-;; Write a responder for a game of 'buzz'. Count numbers and when any
-;; number is divisible by 7, say 'buzz'.
+;; Write a responder for a game of 'buzz'. Count numbers and when any number is
+;; divisible by 7, say 'buzz'.
 
 (define (divisible? dividend divisor)
   (= 0 (remainder dividend divisor)))
@@ -63,8 +61,8 @@
 
 
 ;; ----------------------------------------------
-;; Convert a declarative sentence into a query by swapping the first
-;; two words and add a ? to the last word.
+;; Convert a declarative sentence into a query by swapping the first two words
+;; and add a ? to the last word.
 
 (define (second sent) (first (butfirst sent)))
 (define (declarative->query sent)
@@ -90,9 +88,8 @@
 
 
 ;; ----------------------------------------------
-;; Scientific notation for those numbers with a lot of zeros. This
-;; can be tricky depending upon your Scheme's handling of exact and
-;; inexact numbers.
+;; Scientific notation for those numbers with a lot of zeros. This can be
+;; tricky depending upon your Scheme's handling of exact and inexact numbers.
 
 (define (scientific b p)
   (* b (expt 10 p)))
@@ -101,28 +98,25 @@
 (define (sci-coefficient n)
   (/ n (expt 10 (sci-exponent n))))
 
-;; Chicken is returning a rational number here and the comparison
-;; doesn't work with the equivalent (ok, approximately equivalent)
-;; irrational number.
+;; Chicken is returning a rational number here and the comparison doesn't work
+;; with the equivalent (ok, approximately equivalent) irrational number.
 
 (check (scientific 5127 -5) => 5127/100000)
 
-;; And these both came back as irrational numbers, but while 0.051271
-;; does not equal 5127/100000, 4 does equal 4.0 in Chicken but this
-;; fails as 4.0 not equaling 4 in Racket. I updated the expected
-;; result to account for this.
+;; And these both came back as irrational numbers, but while 0.051271 does not
+;; equal 5127/100000, 4 does equal 4.0 in Chicken but this fails as 4.0 not
+;; equaling 4 in Racket. I updated the expected result to account for this.
 
 (check (sci-coefficient 21300) => 2.13)
 (check (sci-exponent 21300)    => 4.0)
 
 
 ;; ----------------------------------------------
-;; Time conversion routines for America <-> European time formats,
-;; hours only. Watch for edge cases.
+;; Time conversion routines for America <-> European time formats, hours only.
+;; Watch for edge cases.
 ;;
-;; Style note. I almost always use guards to keep bad input out of
-;; processing logic, it may require more procedures but the clarity
-;; is worth it.
+;; Style note. I almost always use guards to keep bad input out of processing
+;; logic, it may require more procedures but the clarity is worth it.
 
 ;; helpers for ranges [) and (] and such.
 (define (in-open?   a b x)       (and (<= a x) (>= b x)))
@@ -170,8 +164,9 @@
 (check (european-time? 'noon) => #t)
 (check (european-time? 'midnight) => #t)
 
-;; Now that we can verify input validity, convert an American
-;; formatted time to European format.
+;; Now that we can verify input validity, convert an American formatted time to
+;; European format.
+
 (define (european-time ts)
   (if (not (american-time? ts))
       #f
@@ -198,6 +193,7 @@
 (check (european-time '(13 pm)) => #f)
 
 ;; And now a European formatted time to American format.
+
 (define (american-time ts)
   (if (not (european-time? ts))
       #f
@@ -219,11 +215,10 @@
 
 
 ;; ----------------------------------------------
-;; Return the type of an object, as defined in "simply.scm". Note that
-;; the "simply.scm" environment thinks '() is a sentence, I disagree
-;; in principle but will go along with their definition. I also
-;; debate if a single word sentence is a sentence or a word, but I'll
-;; accept their definition.
+;; Return the type of an object, as defined in "simply.scm". Note that the
+;; "simply.scm" environment thinks '() is a sentence, I disagree in principle
+;; but will go along with their definition. I also debate if a single word
+;; sentence is a sentence or a word, but I'll accept their definition.
 
 (define (type-of x)
   (cond ((and (word? x) (not (number? x))) 'word)
@@ -246,9 +241,8 @@
 ;; ----------------------------------------------
 ;; What is the indefinite article of a noun (phrase)?
 ;;
-;; We don't have to worry about silent consonant rules for 'a' vs
-;; 'an'. For a noun (phrase) of indenfite identity (people or person
-;; vs a name):
+;; We don't have to worry about silent consonant rules for 'a' vs 'an'. For a
+;; noun (phrase) of indenfite identity (people or person vs a name):
 ;;
 ;; For count nouns, a or an.
 ;;
@@ -258,8 +252,8 @@
 ;;
 ;; Specific thing, the.
 ;;
-;; The rules are more complex than we are expected to catch, but
-;; giving it a try.
+;; The rules are more complex than we are expected to catch, but giving it a
+;; try.
 
 (define (valid-noun-phrase? np)
   (cond ((number? np)                                    #f)
@@ -292,20 +286,19 @@
 
 
 ;; ----------------------------------------------
-;; Convert a noun to singular or plural depending upon `thismany' of
-;; them there are.
+;; Convert a noun to singular or plural depending upon `thismany' of them there
+;; are.
 ;;
-;; We are asked to improve the `plural' function from earlier in the
-;; text elsewhere in these problems, I'll do that here and reuse it
-;; for the `thismany' problem.
+;; We are asked to improve the `plural' function from earlier in the text
+;; elsewhere in these problems, I'll do that here and reuse it for the
+;; `thismany' problem.
 ;;
-;; I'm cheating by using a recursive call for a sentence, which isn't
-;; in the spec but it's for a case that wouldn't be used at this
-;; point in the text.
+;; I'm cheating by using a recursive call for a sentence, which isn't in the
+;; spec but it's for a case that wouldn't be used at this point in the text.
 ;;
-;; To make a plural noun, add 's' most of the time, but if a noun ends
-;; in 's', 'x', 'z', 'sh', 'ch' add 'es', nouns ending in '<consonant>
-;; y' change the 'y' to 'i' and add 'es'.
+;; To make a plural noun, add 's' most of the time, but if a noun ends in 's',
+;; 'x', 'z', 'sh', 'ch' add 'es', nouns ending in '<consonant> y' change the
+;; 'y' to 'i' and add 'es'.
 ;;
 ;; Which leads to some helpers:
 
@@ -367,17 +360,17 @@
 
 
 ;; ----------------------------------------------
-;; Write a date validation predicate for numerical dates '(mm dd
-;; yyyy).
+;; Write a date validation predicate for numerical dates '(mm dd yyyy).
 ;;
-;; There is a lot of (probably too much) functional decomposition
-;; here. It isn't as bad as it initially appears, there are a lot
-;; of unit tests with the functions.
+;; There is a lot of (probably too much) functional decomposition here. It
+;; isn't as bad as it initially appears, there are a lot of unit tests with the
+;; functions.
 ;;
-;; In a real application this would be refactored and I might flip
-;; some of the tests from negative to positive.
+;; In a real application this would be refactored and I might flip some of the
+;; tests from negative to positive.
 
 ;; Accessors for parts of a date.
+
 (define (month mdy)
   (first mdy))
 (define (day mdy)
@@ -389,10 +382,10 @@
 (check (day '(1 2 1930)) => 2)
 (check (year '(1 2 1930)) => 1930)
 
-;; There are some quick checks I can perform for each unit of the
-;; date. Doing so allows me to ignore error checking within the
-;; actual validation. Think of this as checking syntax before
-;; semantics.
+;; There are some quick checks I can perform for each unit of the date. Doing
+;; so allows me to ignore error checking within the actual validation. Think of
+;; this as checking syntax before semantics.
+
 (define (obviously-bad-month? mdy)
   (or (not (number? (month mdy)))
       (< (month mdy) 1)
@@ -420,8 +413,9 @@
 (check (obviously-bad-year? '(7 15 1943)) => #f)
 (check (obviously-bad-year? '(7 15 0)) => #t)
 
-;; Here the accessors and unit checks are combined with some basic
-;; formatting checks. Throw out the malformed dates.
+;; Here the accessors and unit checks are combined with some basic formatting
+;; checks. Throw out the malformed dates.
+
 (define (obviously-bad-date? mdy)
   (or (not (sentence? mdy))
       (not (equal? (count mdy) 3))
@@ -432,15 +426,14 @@
       (obviously-bad-day? mdy)
       (obviously-bad-year? mdy)))
 
-;; We have lexical scope in Scheme. The authors frequently abbreviate
-;; their function names and I've started doing the same for these
-;; problem sets. Here I reuse `obd?' as an abbreviation of
-;; `obviously-bad-date?'. The `check's following in the source code
-;; invoke `obviously-bad-date' while any `check's prior to this define
-;; still invoke `obviously-bad-day?'.
+;; We have lexical scope in Scheme. The authors frequently abbreviate their
+;; function names and I've started doing the same for these problem sets. Here
+;; I reuse `obd?' as an abbreviation of `obviously-bad-date?'. The `check's
+;; following in the source code invoke `obviously-bad-date' while any `check's
+;; prior to this define still invoke `obviously-bad-day?'.
 ;;
-;; This isn't quite shadowing as both definitions are at the same
-;; nesting level.
+;; This isn't quite shadowing as both definitions are at the same nesting
+;; level.
 
 (check (obviously-bad-date? '(1 23 1945)) => #f)
 (check (obviously-bad-date? '(1 14)) => #t)
@@ -452,8 +445,8 @@
 (check (obviously-bad-date? '(30 2 1960)) => #t)
 (check (obviously-bad-date? '(1942 6 4)) => #t)
 
-;; And the ever problematic 'what is a leap year':
-;; /4 and /400 but not !/100
+;; And the ever problematic 'what is a leap year': /4 and /400 but not !/100
+
 (define (leap-year? yyyy)
   (cond ((divisible? yyyy 100) (divisible? yyyy 400))
         (else (divisible? yyyy 4))))
@@ -467,8 +460,9 @@
 (define (days-in-february mdy)
   (if (leap-year? (year mdy)) 29 28))
 
-;; "Thirty days hath September..." table lookups are more readable
-;;  than `if' or `cond' chains.
+;; "Thirty days hath September..." table lookups are more readable than `if' or
+;; `cond' chains.
+
 (define (thirty-day-month? mdy) (member? (month mdy) '(9 4 6 11)))
 (define (thirty-one-day-month? mdy) (member? (month mdy) '(1 3 5 7 8 9 10 12)))
 
@@ -477,9 +471,10 @@
         ((and (thirty-one-day-month? mdy) (<= (day mdy) 31))    #f)
         (else (if (<= (day mdy) (days-in-february mdy))      #f #t))))
 
-;; And after that we have a four 'line' function to see if a date is
-;; valid. I mostly wrote this bottom-up but my thought process was
-;; somewhere closer to top-down. I don't think of it as middle-out.
+;; And after that we have a four 'line' function to see if a date is valid. I
+;; mostly wrote this bottom-up but my thought process was somewhere closer to
+;; top-down. I don't think of it as middle-out.
+
 (define (valid-date? mdy)
   (cond ((obviously-bad-date? mdy)   #f)
         ((too-many-days? mdy)        #f)
@@ -496,12 +491,12 @@
 
 
 ;; ----------------------------------------------
-;; Improve `greet' so that it handles honorifics, suffixes, and some
-;; commonly known names associated with titles.
+;; Improve `greet' so that it handles honorifics, suffixes, and some commonly
+;; known names associated with titles.
 
-;; Is this an honorific? Several are missing, of course. In a real
-;; application I'd have to account for military ranks and who knows
-;; what else.
+;; Is this an honorific? Several are missing, of course. In a real application
+;; I'd have to account for military ranks and who knows what else.
+
 (define (honorific? wd)
   (member?
    wd
@@ -512,6 +507,7 @@
 (check (honorific? 'queen) => #f)
 
 ;; Is this a suffix? As with honorifics, several are missing.
+
 (define (suffix? wd)
   (member?
    wd
@@ -522,6 +518,7 @@
 (check (suffix? 'first) => #f)
 
 ;; Have we reduced the name to a single word?
+
 (define (one-word? nm)
   (cond ((word? nm)                                 #t)
         ((and (sentence? nm) (equal? (count nm) 1)) #t)
@@ -532,6 +529,7 @@
 (check (one-word? '(wilma flintstone)) => #f)
 
 ;; Allow for some famous special cases.
+
 (define (famous? nm)
   (cond ((member? (first nm) '(queen pope king president))       #t)
         ((equal? nm '(david livingstone))                        #t)
@@ -547,6 +545,7 @@
    (else                                    '(oh gosh, its you? i dont know what to say!))))
 
 ;; Weave it all together.
+
 (define (greet nm)
   (cond ((one-word? nm)                (sentence 'hi (if (word? nm) nm (first nm))))
         ((famous? nm)                  (greet-famous nm))
@@ -564,9 +563,8 @@
 
 
 ;; ----------------------------------------------
-;; Convert an absolutely silly duration in seconds to a more
-;; meaningful duration for human consumption. IE, bigger units,
-;; smaller numbers.
+;; Convert an absolutely silly duration in seconds to a more meaningful
+;; duration for human consumption. IE, bigger units, smaller numbers.
 
 (define sec/min 60)
 (define sec/hour (* sec/min 60))
@@ -575,8 +573,9 @@
 ;;(define sec/month (* sec/day 30))  ;; approx
 (define sec/year (* sec/day 365))
 
-;; A very simplistic first pass. Months are too approximate
-;; for this so I pulled them out.
+;; A very simplistic first pass. Months are too approximate for this so I
+;; pulled them out.
+
 (define (describe-time sec)
   (cond ((> sec sec/year)        (sentence (/ sec sec/year) 'years))
 ;;        ((> sec sec/month)       (sentence (/ sec sec/month) 'months))

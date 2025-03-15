@@ -18,9 +18,8 @@
 
 
 ;; ----------------------------------------------
-;; 8.9 What procedures can you use as the function argument to
-;;     `every', `keep', and `accumulate' so that the output equals
-;;     the input.
+;; 8.9 What procedures can you use as the function argument to `every', `keep',
+;; and `accumulate' so that the output equals the input.
 
 ;;     every se ...
 ;;     keep se ...
@@ -32,9 +31,8 @@
 
 
 ;; ----------------------------------------------
-;; 8.10 Write procedure `true-for-all?' that takes a predicate and
-;;      a sentence and tests each word of the sentence against the
-;;      predicate.
+;; 8.10 Write procedure `true-for-all?' that takes a predicate and a sentence
+;; and tests each word of the sentence against the predicate.
 
 (define (true-for-all? pred sent)
   (cond ((empty? sent)              #f)

@@ -18,9 +18,8 @@
 
 
 ;; ----------------------------------------------
-;; 8.4 Write procedure choose-beatles that takes a predicate function
-;;     as its sole argument and returns a sentence of just those
-;;     Beatles.
+;; 8.4 Write procedure choose-beatles that takes a predicate function as its
+;; sole argument and returns a sentence of just those Beatles.
 
 (define (choose-beatles fn)
   (keep fn '(john paul george ringo)))
@@ -31,9 +30,8 @@
 
 
 ;; ----------------------------------------------
-;; 8.5 Write a procedure transform-beatles that takes a function,
-;;     applies it to each of the beatles, and returns a sentence of
-;;     the results.
+;; 8.5 Write a procedure transform-beatles that takes a function, applies it to
+;; each of the beatles, and returns a sentence of the results.
 
 (define (transform-beatles fn)
   (every fn '(john paul george ringo)))
@@ -44,8 +42,8 @@
 
 
 ;; ----------------------------------------------
-;; 8.6 Write a procedure that takes a word and spells it out using
-;;     the NATO phonetic alphabet.
+;; 8.6 Write a procedure that takes a word and spells it out using the NATO
+;; phonetic alphabet.
 
 (define phonetic-alphabet
   '(alfa bravo charlie delta echo foxtrot golf hotel india

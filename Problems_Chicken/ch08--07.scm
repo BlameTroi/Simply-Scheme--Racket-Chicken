@@ -18,8 +18,8 @@
 
 
 ;; ----------------------------------------------
-;; 8.7 Write a procedure letter-count that takes a sentence and
-;;     returns the number of letters in the sentece.
+;; 8.7 Write a procedure letter-count that takes a sentence and returns the
+;; number of letters in the sentece.
 
 ;; One is the loneliest number:
 (define (count-1 ignored) 1)
@@ -33,14 +33,12 @@
               (every count-1
                      (every word->characters sent))))
 
-;; And now a cleaner version with some better selection options. The
-;; special characters seem to parse differently between Emacs and
-;; Chicken w/breadline, quite a mess, but this should demonstrate the
-;; idea.
+;; And now a cleaner version with some better selection options. The special
+;; characters seem to parse differently between Emacs and Chicken w/breadline,
+;; quite a mess, but this should demonstrate the idea.
 ;;
-;; The period is expanded out of word->characters as "." and not .,
-;; which makes sense as with a naked . it would be a botched pair
-;; syntax.
+;; The period is expanded out of word->characters as "." and not ., which makes
+;; sense as with a naked . it would be a botched pair syntax.
 
 ;; Character selection predicates:
 
@@ -59,10 +57,9 @@
 (define (pred-everything c)
   #t)
 
-;; Count the characters requested, this does not capture separators
-;; between words in the sentence. NOTE: `lambda' is the subject of
-;; the next chapters but it showed up in some of the text of 7 and
-;; 8 so I felt free to use it.
+;; Count the characters requested, this does not capture separators between
+;; words in the sentence. NOTE: `lambda' is the subject of the next chapters
+;; but it showed up in some of the text of 7 and 8 so I felt free to use it.
 
 (define (character-count pred sent)
   (let ((count-1 (lambda (c) (if (pred c) 1 0)))
