@@ -1,5 +1,8 @@
 #lang simply-scheme
 ;;; Simply Scheme
+
+;; Troy Brumley, blametroi@gmail.com, early 2025.
+
 ;;; Chapter 12 The Leap of Faith
 
 ;; The #lang command loads the racket language definition for
@@ -14,8 +17,8 @@
 
 
 ;; ----------------------------------------------
-;; 12.8 Write `numbers' that takes a sentence and returns a sentence
-;;      made up of only the numbers in the sentence.
+;; 12.8 Write `numbers' that takes a sentence and returns a sentence made up of
+;; only the numbers in the sentence.
 
 (define (numbers sent)
   (let ((number-or-nil (lambda (x) (if (number? x) x '()))))
@@ -28,8 +31,8 @@
 
 
 ;; ----------------------------------------------
-;; 12.9 Write `real-words' to filter noise words out of a sentence.
-;;      use the definition of real words from chapter 1.
+;; 12.9 Write `real-words' to filter noise words out of a sentence. use the
+;; definition of real words from chapter 1.
 
 (define (real-word? wd) (not (member? wd '(a the an in of and for to with))))
 (define (real-words sent)
@@ -44,8 +47,8 @@
 
 
 ;; ----------------------------------------------
-;; 12.10 Write `remove' that takes a word and sentence and returns the
-;;       sentence with all occurances of word removed.
+;; 12.10 Write `remove' that takes a word and sentence and returns the sentence
+;; with all occurances of word removed.
 
 (define (remove wd sent)
   (let ((wd->nil (lambda (x) (if (equal? x wd) '() x))))
@@ -59,12 +62,11 @@
 
 
 ;; ----------------------------------------------
-;; 12.11 Write `count' to return the number of words in a sentence
-;;       or letters in a word.
+;; 12.11 Write `count' to return the number of words in a sentence or letters
+;; in a word.
 ;;
-;; This relies on first and bf working on either words or sentences
-;; correctly. `my-count' as `count' is part of the standard
-;; environment.
+;; This relies on first and bf working on either words or sentences correctly.
+;; `my-count' as `count' is part of the standard environment.
 
 (define (my-count xs)
   (cond ((empty? xs)            0)

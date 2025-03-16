@@ -1,5 +1,8 @@
 #lang simply-scheme
 ;;; Simply Scheme
+
+;; Troy Brumley, blametroi@gmail.com, early 2025.
+
 ;;; Chapter 14 Common Patters in Recursive Procedures
 
 ;; The #lang command loads the racket language definition for
@@ -13,12 +16,12 @@
 (print "Chapter 14 problems 1, 2, 3, 4, 5, 6, and 7 start...")
 
 
-;; Identify a "pattern" (every/keep/accumulate) that leads to a
-;; solution. Write a procedure implementing the solution.
+;; Identify a "pattern" (every/keep/accumulate) that leads to a solution. Write
+;; a procedure implementing the solution.
 
 ;; ----------------------------------------------
-;; 14.1 Only remove one item. To me using their terminology this
-;;      is a variation on keep.
+;; 14.1 Only remove one item. To me using their terminology this is a variation
+;; on keep.
 
 (define (remove-once wd sent)
   (cond ((empty? sent)                   '())         ;; base case
@@ -31,6 +34,7 @@
 ;;                              ;; if approached backwards.
 
 ;; This is waaay to much testing:
+
 (check (remove-once 'morning '(good good good)) => '(good good good))
 (check (remove-once 'morning '(morning is good every morning)) => '(is good every morning))
 (check (remove-once 'morning '(morning)) => '())
@@ -42,9 +46,9 @@
 
 
 ;; ----------------------------------------------
-;; 14.2 Build a word or sentence up letter by letter. Iterate over
-;;      each letter, or keep, but we're accumulating a sentence.
-;;      So accumulate is probably the best answer.
+;; 14.2 Build a word or sentence up letter by letter. Iterate over each letter,
+;; or keep, but we're accumulating a sentence. So accumulate is probably the
+;; best answer.
 
 (define (up-r sofar togo)
   (if (or (equal? togo '()) (equal? togo ""))
@@ -57,8 +61,9 @@
       (se )
       (se (first wrd) (up-r (first wrd) (butfirst wrd)))))
 
-;; edge cases are empty or single letter. this happens to
-;; do something somewhat reasonable for a sentence.
+;; edge cases are empty or single letter. this happens to do something somewhat
+;; reasonable for a sentence.
+
 (check (up 'town) => '(t to tow town))
 (check (up 'x) => '(x))
 (check (up '()) => '())
@@ -67,10 +72,9 @@
 
 
 ;; ----------------------------------------------
-;; 14.3 Remove duplicates from a sentence. This is a variation on
-;;      keep. Or maybe accumulate. I'm accumulating a sentence and
-;;      replacing some items, so now that I think on it, this is an
-;;      every where duplicates a made nil.
+;; 14.3 Remove duplicates from a sentence. This is a variation on keep. Or
+;; maybe accumulate. I'm accumulating a sentence and replacing some items, so
+;; now that I think on it, this is an every where duplicates a made nil.
 
 (define (add-if-not-member x xs)
   ;; If x is already in xs, don't add it again.
@@ -108,9 +112,8 @@
 
 
 ;; ----------------------------------------------
-;; 14.5 Write `letter-count' that takes a sentence and returns
-;;      the total number of letters in the sentence. This is an
-;;      accumulate.
+;; 14.5 Write `letter-count' that takes a sentence and returns the total number
+;; of letters in the sentence. This is an accumulate.
 
 (define (lower-case? x)
   (member? x '(a b c d e f g h i j k l m n o p q r s t u v w x y z)))
@@ -159,13 +162,12 @@
 
 
 ;; ----------------------------------------------
-;; 14.7 Write `differences' which takes a sentence of numbers and
-;;      returns a sentence of the differences between adjacent
-;;      numbers (first subtracted from second, second from third,
-;;      ...). There will be one fewer items in the new sentence
-;;      than the original.
+;; 14.7 Write `differences' which takes a sentence of numbers and returns a
+;; sentence of the differences between adjacent numbers (first subtracted from
+;; second, second from third, ...). There will be one fewer items in the new
+;; sentence than the original.
 ;;
-;;      Accumulator over every.
+;; An accumulator over every.
 
 (define (differences-r prev this rest)
   (cond ((empty? rest) (se (- this prev)))

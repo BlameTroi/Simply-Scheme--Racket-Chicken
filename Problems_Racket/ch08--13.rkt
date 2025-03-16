@@ -19,9 +19,8 @@
 
 
 ;; ----------------------------------------------
-;; 8.13 Write procedure 'phone-unspell' that takes a spelled out
-;;      version of a phone number and returns the correct phone
-;;      number. POPCORN => 7672676.
+;; 8.13 Write procedure 'phone-unspell' that takes a spelled out version of a
+;; phone number and returns the correct phone number. POPCORN => 7672676.
 
 ;; Using the E.161 standard as it is in 2025.
 ;;
@@ -36,8 +35,8 @@
 ;; 9 wxyz
 ;; 0
 
-;; E.161 is the standard for letter-number mapping on phone
-;; keypads. This is the US version.
+;; E.161 is the standard for letter-number mapping on phone keypads. This is
+;; the US version.
 
 (define E.161-MAP '( a2 b2 c2         ;; <spelled><unspelled>
                      d3 e3 f3

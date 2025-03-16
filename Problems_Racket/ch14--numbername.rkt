@@ -1,5 +1,8 @@
 #lang simply-scheme
 ;;; Simply Scheme
+
+;; Troy Brumley, blametroi@gmail.com, early 2025.
+
 ;;; Chapter 14-15 interlude --- spelling names of huge numbers
 
 ;; The #lang command loads the racket language definition for
@@ -13,17 +16,15 @@
 (print "Chapter 14 project -- number name...")
 
 ;; ----------------------------------------------
-;; A mini project to speak an arbitrarily long string of digits into
-;; mostly proper English. The sentence/word wrappers ended up working
-;; well here.
+;; A mini project to speak an arbitrarily long string of digits into mostly
+;; proper English. The sentence/word wrappers ended up working well here.
 ;;
-;; Groupings of three digits for long numbers are called periods. A
-;; natural approach is to speak each period with its magnitude (10^3
-;; = thousand, 10^6 = million, and so on).
+;; Groupings of three digits for long numbers are called periods. A natural
+;; approach is to speak each period with its magnitude (10^3 = thousand, 10^6 =
+;; million, and so on).
 ;;
-;; There are two irregularities, but only the handling for values in
-;; the teens is at all tedius. The magnitude for units (10^0) is not
-;; spoken.
+;; There are two irregularities, but only the handling for values in the teens
+;; is at all tedius. The magnitude for units (10^0) is not spoken.
 
 
 ;;-----------------------------------------------
@@ -33,9 +34,9 @@
   (if (<= n 1) 1 (* n (factorial (- n 1)))))
 
 ;; ----------------------------------------------
-;; Given a digit in a position of a period (one/digit, ten, hundred)
-;; return the proper string. Depending upon position and context a '4
-;; will return '(four hundred) or '(forty) or '(four) or '(fourteen).
+;; Given a digit in a position of a period (one/digit, ten, hundred) return the
+;; proper string. Depending upon position and context a '4 will return '(four
+;; hundred) or '(forty) or '(four) or '(fourteen).
 ;;
 ;; Zeros are never spoken but are returned here as placeholders.
 
@@ -49,16 +50,16 @@
 (check (one 3) => 'three)
 (check (one 11) => 'ERROR)
 
-;; Hundred's are suffixed 'hundred' later in the process. Here they
-;; are the same as digits.
+;; Hundred's are suffixed 'hundred' later in the process. Here they are the
+;; same as digits.
 
 (define (hundred n)
   (one n))
 
 (check (hundred 4) => 'four)
 
-;; Ten is actually teen and is used to trigger replacement for '(ten
-;; five) to 'fifteen, and so on.
+;; Ten is actually teen and is used to trigger replacement for '(ten five) to
+;; 'fifteen, and so on.
 
 (define (ten n)
   (cond ((< n 0) 'ERROR)
@@ -71,8 +72,8 @@
 (check (ten 1) => 'ten)
 (check (ten 3) => 'thirty)
 
-;; Since we don't have associative arrays yet, a long cond sequence
-;; will map a digit to its teen.
+;; Since we don't have associative arrays yet, a long cond sequence will map a
+;; digit to its teen.
 
 (define (ones->teens x) ;; at this point ...
   (cond ((equal? x 'zero)  'ten)
@@ -92,8 +93,8 @@
 
 
 ;; ----------------------------------------------
-;; Return a sentence of the periods that make up the number n, ordered
-;; least to most significant: 21057321 becomes '(321 57 21).
+;; Return a sentence of the periods that make up the number n, ordered least to
+;; most significant: 21057321 becomes '(321 57 21).
 
 (define (periodically-r n)
   (cond ((= n 0) (se '()))
@@ -104,8 +105,9 @@
   (cond ((= n 0) (se 0))
         (else (se (periodically-r n)))))
 
-;; These test cases check behavior at the edges and confirm that
-;; periods are ordered least -> most.
+;; These test cases check behavior at the edges and confirm that periods are
+;; ordered least -> most.
+
 (check (periodically 0) => '(0))
 (check (periodically 1) => '(1))
 (check (periodically 10) => '(10))
@@ -124,12 +126,11 @@
 
 
 ;; ----------------------------------------------
-;; Regardless of the magnitude of the period, each period is spoken
-;; the same way. The magnitude is appended as a suffix later. Here the
-;; periods are normalized. Each digit (digit, ten, hundred) is given a
-;; text value, even leading zeros. '111 is '(one ten one), and will
-;; eventually become '(one hundred eleven). '456 is '(four fifty six).
-;; '7 is '(zero zero seven).
+;; Regardless of the magnitude of the period, each period is spoken the same
+;; way. The magnitude is appended as a suffix later. Here the periods are
+;; normalized. Each digit (digit, ten, hundred) is given a text value, even
+;; leading zeros. '111 is '(one ten one), and will eventually become '(one
+;; hundred eleven). '456 is '(four fifty six). '7 is '(zero zero seven).
 
 (define (normalize-period n)
   (cond ((< n 0)   (se n 'ERROR 'ERROR 'ERROR))
@@ -177,14 +178,14 @@
 (check (tail-after 0 '(1 2 3 4 0 5 6 7 8 0)) => '(5 6 7 8 0))
 
 ;; ----------------------------------------------
-;; Take the normalized form and return a clean human readable form.
-;; '(21 zero twenty one) becomes '(twenty one FM), '(100 one zero
-;; zero) becomes '(one hundred FM), '(310 three ten zero) becomes
-;; '(three hundred ten FM), and so on. The 'FM is the end of period
-;; marker to help find where to insert magnitudes.
+;; Take the normalized form and return a clean human readable form. '(21 zero
+;; twenty one) becomes '(twenty one FM), '(100 one zero zero) becomes '(one
+;; hundred FM), '(310 three ten zero) becomes '(three hundred ten FM), and so
+;; on. The 'FM is the end of period marker to help find where to insert
+;; magnitudes.
 ;;
-;; Handling teens makes this uglier than I would like. Both the
-;; handlers for tens and ones have to be aware of the other.
+;; Handling teens makes this uglier than I would like. Both the handlers for
+;; tens and ones have to be aware of the other.
 
 (define (humanize-hundreds xs)
   (let ((this (first xs)))
@@ -217,12 +218,12 @@
 
 
 ;; ----------------------------------------------
-;; Periods are in a sentence, least to most significant. Each period
-;; is delimited by a marker. Match each period with its appropriate
-;; magnitude and return the English sentence as one would speak it.
+;; Periods are in a sentence, least to most significant. Each period is
+;; delimited by a marker. Match each period with its appropriate magnitude and
+;; return the English sentence as one would speak it.
 ;;
-;; The least significant period (units) has no suffix, so a dummy
-;; value is added to the magnitude list as a place holder.
+;; The least significant period (units) has no suffix, so a dummy value is
+;; added to the magnitude list as a place holder.
 
 (define (insert-magnitudes periods magnitudes)
   (cond ((empty? periods)
@@ -236,15 +237,15 @@
 
 
 ;; ----------------------------------------------
-;; The process breaks naturaly into four pieces. Break the number into
-;; periods (the groups of three digits between commas), spell out the
-;; digits (normalize) and make them properly worded (humanize by
-;; adding 'hundred' and dealing with teens) and then inserting the
-;; magnitudes (thousand, million, billion, ...) after each period.
+;; The process breaks naturaly into four pieces. Break the number into periods
+;; (the groups of three digits between commas), spell out the digits
+;; (normalize) and make them properly worded (humanize by adding 'hundred' and
+;; dealing with teens) and then inserting the magnitudes (thousand, million,
+;; billion, ...) after each period.
 
 
-;; Magnification places a magnitude indicator between each period. Is
-;; this period thousands, millions, ...
+;; Magnification places a magnitude indicator between each period. Is this
+;; period thousands, millions, ...
 
 (define (magnify-periods xs)
   (insert-magnitudes
@@ -255,9 +256,8 @@
             nonillion decillion)))
 
 
-;; Humanization takes the normalized periods and makes them
-;; properly speakable (add 'hundred', remove leading zeros,
-;; handle the teens).
+;; Humanization takes the normalized periods and makes them properly speakable
+;; (add 'hundred', remove leading zeros, handle the teens).
 
 (define (humanize-periods xs)
   (cond ((empty? xs) (se ))
@@ -265,9 +265,9 @@
                   (humanize-periods (tail-after-n 4 xs))))))
 
 
-;; Normalization takes the period and speaks it (poorly) into English.
-;; Each period will be comprised of three words in a sentence followed
-;; by a delimiter, for a total of four.
+;; Normalization takes the period and speaks it (poorly) into English. Each
+;; period will be comprised of three words in a sentence followed by a
+;; delimiter, for a total of four.
 
 (define (normalize-periods xs)
   (cond ((empty? xs) (se ))
@@ -275,17 +275,16 @@
                   (normalize-periods (butfirst xs))))))
 
 
-;; Split into digits of the number into groups of three, right
-;; to left.
+;; Split into digits of the number into groups of three, right to left.
 
 (define (create-periods n)
   (periodically n))
 
 
 ;; ----------------------------------------------
-;; The assignment is to write `number-name' which takes a positive
-;; whole number and returns a sentence of the spelled out number with
-;; magnitudes for every period.
+;; The assignment is to write `number-name' which takes a positive whole number
+;; and returns a sentence of the spelled out number with magnitudes for every
+;; period.
 
 (define (number-name n)
   (magnify-periods

@@ -19,12 +19,12 @@
 
 
 ;; ----------------------------------------------
-;; 8.14 Write procedure `subword' that takes a word, a start, and and
-;;      end position in the word, and returns the word made up from
-;;      those characters. (subword 'polythene' 5 8) => 'then.
+;; 8.14 Write procedure `subword' that takes a word, a start, and and end
+;; position in the word, and returns the word made up from those characters.
+;; (subword 'polythene' 5 8) => 'then.
 ;;
-;; This is a job for `repeated'. Proof of concept:
-;; `((repeated bl 3) ((repeated bf 3) '1234567890))' => '4567
+;; This is a job for `repeated'. Proof of concept: `((repeated bl 3) ((repeated
+;; bf 3) '1234567890))' => '4567
 ;;
 ;; (define wrd 'polythene)
 ;; (count wrd) => 9

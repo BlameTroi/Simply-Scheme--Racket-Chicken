@@ -7,10 +7,10 @@
 
 ;;; Chapter 10
 
-;; Actually there's nothing to do here. The chapter is a code walk through
-;; of `ttt': tic-tac-toe implemented in Scheme with strategy for the
-;; computer player. There are a few trivial questions and then a joke (?)
-;; problem to "now implement a game of chess". :)
+;; Actually there's nothing to do here. The chapter is a code walk through of
+;; `ttt': tic-tac-toe implemented in Scheme with strategy for the computer
+;; player. There are a few trivial questions and then a joke (?) problem to
+;; "now implement a game of chess". :)
 
 ;;; Problem set:
 

@@ -1,5 +1,8 @@
 #lang simply-scheme
 ;;; Simply Scheme
+
+;; Troy Brumley, blametroi@gmail.com, early 2025.
+
 ;;; Chapter 12 The Leap of Faith
 
 ;; The #lang command loads the racket language definition for
@@ -14,12 +17,11 @@
 
 
 ;; ----------------------------------------------
-;; 12.13 Rewrite chapter 6 `describe-time' to produce more human
-;;       readable output.
+;; 12.13 Rewrite chapter 6 `describe-time' to produce more human readable
+;; output.
 ;;
-;; Convert an absolutely silly duration in seconds to a more
-;; meaningful duration for human consumption. IE, bigger units,
-;; smaller numbers.
+;; Convert an absolutely silly duration in seconds to a more meaningful
+;; duration for human consumption. IE, bigger units, smaller numbers.
 
 (define sec/sec       1)
 (define sec/min       60)
@@ -58,7 +60,7 @@
 (check (describe-time 4967189641)
        => '(1 centuries 57 years 20 weeks 6 days 8 hours 54 minutes 1 seconds))
 
-;; I had to drop months and add 1/4 dayto year to match their result,
+;; I had to drop months and add 1/4 day to year to match the authors' results,
 ;; but the code works.
 
 

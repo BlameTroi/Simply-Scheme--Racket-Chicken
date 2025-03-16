@@ -1,5 +1,8 @@
 #lang simply-scheme
 ;;; Simply Scheme
+
+;; Troy Brumley, blametroi@gmail.com, early 2025.
+
 ;;; Chapter 14 Common Patters in Recursive Procedures
 
 ;; The #lang command loads the racket language definition for
@@ -14,9 +17,8 @@
 
 
 ;; ----------------------------------------------
-;; 14.11 Write `remove-adjacent-duplicates' to remove any word from
-;;       a sentence that is immediately followed by the same word.
-;;       Note the ordering.
+;; 14.11 Write `remove-adjacent-duplicates' to remove any word from a sentence
+;; that is immediately followed by the same word. Note the ordering.
 ;;
 ;; This is a keep operation.
 
@@ -33,9 +35,9 @@
 
 
 ;; ----------------------------------------------
-;; 14.12 Write `progressive-squares?' that takes a sentence of numbers
-;;       and determines if the numbers after the first one are squares
-;;       of the prior number.
+;; 14.12 Write `progressive-squares?' that takes a sentence of numbers and
+;; determines if the numbers after the first one are squares of the prior
+;; number.
 ;;
 ;; This is an accumulate.
 
@@ -57,14 +59,13 @@
 
 
 ;; ----------------------------------------------
-;; 14.13 What does `pigl' from chapter 11 do when given a word with
-;;       no vowels, such as 'frzzmlpt? Fix it so that it returns
-;;       'frzzmlptay.
+;; 14.13 What does `pigl' from chapter 11 do when given a word with no vowels,
+;; such as 'frzzmlpt? Fix it so that it returns 'frzzmlptay.
 ;;
-;; It goes into an infinite loop. The way I would fix this is to check
-;; for all consonants, but that's probably now what they want here.
-;; Another approach is to count the iterations and once the end is
-;; reached, just pass the word with 'ay appended.
+;; It goes into an infinite loop. The way I would fix this is to check for all
+;; consonants, but that's probably now what they want here. Another approach is
+;; to count the iterations and once the end is reached, just pass the word with
+;; 'ay appended.
 
 (define (ch11-pigl wd)
   (if (member? (first wd) 'aeiou)

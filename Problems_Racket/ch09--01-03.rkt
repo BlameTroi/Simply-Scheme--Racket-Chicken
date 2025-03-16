@@ -38,7 +38,7 @@
 ;; ----------------------------------------------
 ;; 9.2 Rewrite the following to make the implicit lambda explicit.
 ;;
-;;     I'm taking this to mean the lambda implied by define.
+;; I'm taking this to mean the lambda implied by define.
 
 (define (second stuff)
   (first (bf stuff)))
@@ -68,8 +68,8 @@
 
 (define (let-it-be sent)                ;; returns sent
   (accumulate (lambda (x y) y) sent))
-;; wrong, returns `last' of sent. That seems like a lot of work for a
-;; `last' implementation.
+;; wrong, returns `last' of sent. That seems like a lot of work for a `last'
+;; implementation.
 
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

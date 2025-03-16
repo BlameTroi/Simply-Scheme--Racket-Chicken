@@ -19,8 +19,8 @@
 
 
 ;; ----------------------------------------------
-;; 8.12 Write procedure `count-ums' that counts the number of
-;;      times 'um' appears in a sentence.
+;; 8.12 Write procedure `count-ums' that counts the number of times 'um'
+;; appears in a sentence.
 
 (define (count-ums sent)
   (count (keep (lambda (wrd) (equal? wrd 'um)) sent)))

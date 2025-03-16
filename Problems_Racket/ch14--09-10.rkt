@@ -1,5 +1,8 @@
 #lang simply-scheme
 ;;; Simply Scheme
+
+;; Troy Brumley, blametroi@gmail.com, early 2025.
+
 ;;; Chapter 14 Common Patters in Recursive Procedures
 
 ;; The #lang command loads the racket language definition for
@@ -14,10 +17,9 @@
 
 
 ;; ----------------------------------------------
-;; 14.9 Write `location' taking a word and a sentence. Return the
-;;      position of the word within the sentence or #f. Report only
-;;      the first occurrence. I could be convinced this is an
-;;      accumulate or a keep.
+;; 14.9 Write `location' taking a word and a sentence. Return the position of
+;; the word within the sentence or #f. Report only the first occurrence. I
+;; could be convinced this is an accumulate or a keep.
 
 (define (location-r n x xs)
   (cond ((empty? xs)              #f)
@@ -39,16 +41,15 @@
 
 
 ;; ----------------------------------------------
-;; 14.10 Write `count-adjacent-duplicates' which reports the words
-;;       in the sentence that are immediately followed by the same
-;;       word.
+;; 14.10 Write `count-adjacent-duplicates' which reports the words in the
+;; sentence that are immediately followed by the same word.
 ;;
-;;       The behavior of 'a b b b b a' could be isn't clearly stated
-;;       but that should be a 3.
+;; The behavior of 'a b b b b a' could be isn't clearly stated but that should
+;; be a 3.
 ;;
-;;       This is an accumulate.
-(define (second xs)
-  (first (butfirst xs)))
+;; This is an accumulate.
+
+(define (second xs) (first (butfirst xs)))
 
 (define (c-a-d-r n xs)
   (cond ((empty? xs)              n)

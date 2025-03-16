@@ -1,5 +1,8 @@
 #lang simply-scheme
 ;;; Simply Scheme
+
+;; Troy Brumley, blametroi@gmail.com, early 2025.
+
 ;;; Chapter 15 Advanced Recursion
 
 ;; The #lang command loads the racket language definition for
@@ -12,12 +15,13 @@
 
 (print "Chapter 15 problem 05 start...")
 
-;; 15.5 Given a phone number, come up with a clever way to spell out
-;;      the number. Return all the possible spellings. That'll be
-;;      huge. I'm using the E.161 table from chapters 8 and 11.
+;; -----------------------------------------------
+;; 15.5 Given a phone number, come up with a clever way to spell out the
+;; number. Return all the possible spellings. That'll be huge. I'm using the
+;; E.161 table from chapters 8 and 11.
 ;;
-;;      There are 2187 possible combinations (3^7, no q or z) so an
-;;      exhaustive test is not advisable.
+;; There are 2187 possible combinations (3^7, no q or z) so an exhaustive test
+;; is not advisable.
 ;;
 ;; (check (phone-spell 22235766) => '(aadjpmm aadjpmn ... ccflsoo))
 ;;
@@ -29,13 +33,12 @@
 ;;                            b   d
 ;;                            b    e
 ;;                            b     f ...
-
+;;
 ;; (digit->keypad d)
 ;;
-;; Given a digit from a phone number, return a list of the possible
-;; letter equivalents to make phonewords. Uses the older map with
-;; no z or q. Returns '? for illegal input other than 0 or 1, which
-;; are returned as 0 or 1.
+;; Given a digit from a phone number, return a list of the possible letter
+;; equivalents to make phonewords. Uses the older map with no z or q. Returns
+;; '? for illegal input other than 0 or 1, which are returned as 0 or 1.
 
 (define (digit->keypad d)
   (cond
@@ -53,14 +56,12 @@
 
 ;; (phone-spell num)
 ;;
-;; Show all the possible spellings for a phone number using a standard
-;; phone keypad (US E.161). The spec says we can assume no illegal
-;; input.
+;; Show all the possible spellings for a phone number using a standard phone
+;; keypad (US E.161). The spec says we can assume no illegal input.
 
 
-;; And here we do the compiling of the key letters. KEY is just
-;; one key, and REST is a sentence of what prior KEYs have been
-;; appended to.
+;; And here we do the compiling of the key letters. KEY is just one key, and
+;; REST is a sentence of what prior KEYs have been appended to.
 ;;
 ;; For 23     '(a b c) '(d e f) '(g h i)
 ;;    each of g h i is combined with nothing,
@@ -71,11 +72,11 @@
     ((empty? rest)  (se ))
     (else           (se (word key (first rest))
                         (combine-keys key (bf rest))))))
-(trace combine-keys)      
+(trace combine-keys)
 
-;; KEYS come in as a sentence of (usually) 3 letters. REST ends up
-;; being the KEYS triple for the next digit of NUM. This helper is
-;; mainly a dispatcher.
+;; KEYS come in as a sentence of (usually) 3 letters. REST ends up being the
+;; KEYS triple for the next digit of NUM. This helper is mainly a dispatcher.
+
 (define (for-each-key keys rest)
   (cond
     ((empty? keys)  (se ))
@@ -83,9 +84,10 @@
                         (combine-keys (first keys) rest)))))
 (trace for-each-key)
 
-;; NUM should be digits only of a phone number. Each digit becomes
-;; a sentence of (usually) 3 letters. Dispatch to a helper to drive
-;; the process for each letter and the remainder of NUM.
+;; NUM should be digits only of a phone number. Each digit becomes a sentence
+;; of (usually) 3 letters. Dispatch to a helper to drive the process for each
+;; letter and the remainder of NUM.
+
 (define (phone-spell num)
   (cond
     ((empty? num)   (se ""))

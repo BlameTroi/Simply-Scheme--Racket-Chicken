@@ -1,5 +1,8 @@
 #lang simply-scheme
 ;;; Simply Scheme
+
+;; Troy Brumley, blametroi@gmail.com, early 2025.
+
 ;;; Chapter 15 Advanced Recursion
 
 ;; The #lang command loads the racket language definition for
@@ -15,8 +18,8 @@
 ;; ----------------------------------------------
 ;; Work along text examples....
 
-;; A good quick introductory example that will lead to a merge sort
-;; later. `remove-once' is from an earlier chapter.
+;; A good quick introductory example that will lead to a merge sort later.
+;; `remove-once' is from an earlier chapter.
 
 (define (sort sent)
   (if (empty? sent)
@@ -41,9 +44,9 @@
 (check (sort '(gamma delta bravo alpha charlie beta echo)) => '(alpha beta bravo charlie delta echo gamma))
 
 
-;; I really didn't like how they explained the binary to decimal
-;; conversion. Their walk through takes something easy and mangles
-;; it into something difficult to follow.
+;; I really didn't like how they explained the binary to decimal conversion.
+;; Their walk through takes something easy and mangles it into something
+;; difficult to follow.
 
 (define (binary-r accum xs)
   (cond ((empty? xs)     accum)
@@ -52,9 +55,9 @@
 (define (from-binary bits)
   (binary-r 0 bits))
 
-;; You would think the binary input would have to be a symbol or
-;; string but their abstraction layer does what is reasonable and
-;; (first 10) is 1, and so on.
+;; You would think the binary input would have to be a symbol or string but
+;; their abstraction layer does what is reasonable and (first 10) is 1, and so
+;; on.
 
 (check (from-binary 0) => 0)
 (check (from-binary 10) => 2)
@@ -62,17 +65,17 @@
 (check (from-binary 10000) => 16)
 
 
-;; One thing they do consistently stress is that when thinking about
-;; recursive algorithms, take a leap of faith and trust that some
-;; small bit of recursion will just work. That's along the lines
-;; of functional decomposition/recomposition.
+;; One thing they do consistently stress is that when thinking about recursive
+;; algorithms, take a leap of faith and trust that some small bit of recursion
+;; will just work. That's along the lines of functional
+;; decomposition/recomposition.
 ;;
 ;; Once you have a procedure that works, trust it to work.
 
 
-;; They now provide one of the best descriptions and walkthroughs
-;; of a merge sort that I have ever seen. This is precisely
-;; because of that leap of faith concept.
+;; They now provide one of the best descriptions and walkthroughs of a merge
+;; sort that I have ever seen. This is precisely because of that leap of faith
+;; concept.
 
 (define (mergesort sent)
   (if (<= (count sent) 1)
@@ -80,9 +83,9 @@
       (merge (mergesort (one-half sent))
              (mergesort (other-half sent)))))
 
-;; We wrote a merge for 14.15...lifting my version as I know it works
-;; but changing the predicate from <= to before? My tests were all
-;; numeric in chapter 14.
+;; We wrote a merge for 14.15...lifting my version as I know it works but
+;; changing the predicate from <= to before? My tests were all numeric in
+;; chapter 14.
 
 (define (merge xs ys)
   (cond ((empty? xs)                      ys)
@@ -90,16 +93,15 @@
         ((before? (first xs) (first ys)) (se (first xs) (merge (bf xs) ys)))
         (else                            (se (first ys) (merge xs (bf ys))))))
 
-;; Now all we need is a way to get the first and then the second half
-;; of the current sentence. Their approach to this works but is
-;; redundant. Either way we have to pass over the sentence twice, once
-;; from the front and once from the back, but they do the whole
-;; sentence each time while only half the sentence is needed. I'd redo
-;; this if efficiency was an issue.
+;; Now all we need is a way to get the first and then the second half of the
+;; current sentence. Their approach to this works but is redundant. Either way
+;; we have to pass over the sentence twice, once from the front and once from
+;; the back, but they do the whole sentence each time while only half the
+;; sentence is needed. I'd redo this if efficiency was an issue.
 ;;
-;; There's also the temptation to introduce global variables and
-;; persistent state, but I'm not going there. I can see a way to
-;; do this in one pass with nested lets though.
+;; There's also the temptation to introduce global variables and persistent
+;; state, but I'm not going there. I can see a way to do this in one pass with
+;; nested lets though.
 
 (define (one-half sent)
   (if (<= (count sent) 1)
@@ -115,19 +117,17 @@
 (check (other-half '(a b c d e)) => '(b d))
 
 
-;; A decent walkthrough of figuring out how to get every combination
-;; of the letters in a word is followed by a rare mention of
-;; efficiency. The obvious solution has a redundancy that matters and
-;; so show how to cache the result without ever saying 'cache' or
-;; 'memoize'.
+;; A decent walkthrough of figuring out how to get every combination of the
+;; letters in a word is followed by a rare mention of efficiency. The obvious
+;; solution has a redundancy that matters and so show how to cache the result
+;; without ever saying 'cache' or 'memoize'.
 
 (define (prepend-every ltr sent)
   (if (empty? sent)
       (se )
       (se (word ltr (first sent)) (prepend-every ltr (bf sent)))))
 
-;; works but inefficient -- calls itself twice with the same
-;; arguments (bf wd).
+;; works but inefficient -- calls itself twice with the same arguments (bf wd).
 
 (define (subsets-old wd)
   (if (empty? wd)
@@ -136,8 +136,8 @@
           (prepend-every (first wd)
                          (subsets (bf wd)))))) ; <-- second call same args
 
-;; better -- factor out the call to subsets so it only happens
-;; once and caches the result.
+;; better -- factor out the call to subsets so it only happens once and caches
+;; the result.
 
 (define (subsets wd)
   (if (empty? wd)
@@ -150,12 +150,12 @@
 
 ;; ----------------------------------------------
 ;; 15.1 Write `to-binary'.
-
+;;
 ;; (find-power-of-2 num pow)
 ;;
-;; Finds the power of 2 where 2^pow >= num. This is meant to be called
-;; from wrapper routines and has no real error checking. On the first
-;; call pow should be 0.
+;; Finds the power of 2 where 2^pow >= num. This is meant to be called from
+;; wrapper routines and has no real error checking. On the first call pow
+;; should be 0.
 
 (define (find-power-of-2 num pow)
   (cond ((> num (expt 2 pow))     (find-power-of-2 num (+ pow 1)))
@@ -168,21 +168,18 @@
 
 ;; (to-binary-r num pow)
 ;;
-;; Recursively returns a word representing the bits of num in binary.
-;; On the initial call 2^pow >= num. If a 'word' pow is "too large"
-;; leading zeros are issued but the result is otherwise correct.
+;; Recursively returns a word representing the bits of num in binary. On the
+;; initial call 2^pow >= num. If a 'word' pow is "too large" leading zeros are
+;; issued but the result is otherwise correct.
 ;;
-;; As with `find-power-of-2', this is not meant to be called directly
-;; and so it has no guards for bad input.
+;; As with `find-power-of-2', this is not meant to be called directly and so it
+;; has no guards for bad input.
 
-;; NOTE:
-;;
-;; Due to the "strings are numbers" behavior of the book framework,
-;; a result with leading zeros is returned as a string. If the result
-;; is properly fitted and the first digit is a one, the result
-;; appears to be a binary number but is really in whatever radix
-;; is active in your repl. This is not an issue within the book
-;; framework.
+;; NOTE: Due to the "strings are numbers" behavior of the book framework, a
+;; result with leading zeros is returned as a string. If the result is properly
+;; fitted and the first digit is a one, the result appears to be a binary
+;; number but is really in whatever radix is active in your repl. This is not
+;; an issue within the book framework.
 
 (define (to-binary-r num pow)
   (if (< pow 0)
@@ -210,13 +207,12 @@
 
 
 ;; ----------------------------------------------
-;; 15.2 Write predicate (palindrome? sent) that determines if a
-;; sentence reads the same forwards and backwards by letters.
-
+;; 15.2 Write predicate (palindrome? sent) that determines if a sentence reads
+;; the same forwards and backwards by letters.
+;;
 ;; (sentence->word sent)
 ;;
-;; Concatenate all the words that make up the sentence into one
-;; long word.
+;; Concatenate all the words that make up the sentence into one long word.
 
 (define (sentence->word sent)
   (cond ((empty? sent) (word ))
@@ -239,8 +235,8 @@
 
 ;; (palindrome? sent-or-wd)
 ;;
-;; Is the argument a palindrome? If the argument is a sentence, all
-;; spaces are removed to create one long word, which is then checked.
+;; Is the argument a palindrome? If the argument is a sentence, all spaces are
+;; removed to create one long word, which is then checked.
 
 (define (palindrome? sent-or-wd)
   (cond ((sentence? sent-or-wd)       (palindromic-word? (sentence->word sent-or-wd)))
@@ -255,15 +251,14 @@
 
 
 ;; ----------------------------------------------
-;; 15.3 Write (substrings wd) which returns a sentence of all the
-;;      possible substrings in the word. Not subsets, but substrings.
-;;      rat and at are substrings of brat, ar is a subset, as is
-;;      btra.
-
+;; 15.3 Write (substrings wd) which returns a sentence of all the possible
+;; substrings in the word. Not subsets, but substrings. rat and at are
+;; substrings of brat, ar is a subset, as is btra.
+;;
 ;; (substrings-r wd)
 ;;
-;; Recursive helper for substrings that returns the substrings in
-;; wd by repeatedly triming the tail.
+;; Recursive helper for substrings that returns the substrings in wd by
+;; repeatedly triming the tail.
 
 (define (substrings-r wd)
   (cond ((< (count wd) 1)               (se ))
@@ -282,9 +277,9 @@
 
 
 ;; ----------------------------------------------
-;; 15.4 Write predicate (substring? wd). See 15.3 for the definition
-;;      of substring.
-
+;; 15.4 Write predicate (substring? wd). See 15.3 for the definition of
+;; substring.
+;;
 ;; (prefix? pre str)
 ;;
 ;; Does str start with pre?

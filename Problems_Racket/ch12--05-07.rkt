@@ -1,5 +1,8 @@
 #lang simply-scheme
 ;;; Simply Scheme
+
+;; Troy Brumley, blametroi@gmail.com, early 2025.
+
 ;;; Chapter 12 The Leap of Faith
 
 ;; The #lang command loads the racket language definition for
@@ -14,8 +17,8 @@
 
 
 ;; ----------------------------------------------
-;; 12.5 (8.8 but recursive) Write the `exaggerate' procedure that
-;;      exaggerates sentences.
+;; 12.5 (8.8 but recursive) Write the `exaggerate' procedure that exaggerates
+;; sentences.
 
 (define (exaggerate sent)
   (if (empty? sent)
@@ -28,9 +31,8 @@
 
 
 ;; ----------------------------------------------
-;; 12.6 (8.11) Write GPA as defined in 8.11: Write a GPA procedure
-;; that takes a sentence of letter +/- grades and returns the correct
-;; GPA.
+;; 12.6 (8.11) Write GPA as defined in 8.11: Write a GPA procedure that takes a
+;; sentence of letter +/- grades and returns the correct GPA.
 ;;
 ;;      (a-d) 4-0
 ;;      + adds 0.33, - subtracts 0.33
@@ -54,8 +56,9 @@
 (define (ch8-grades->gpa sent)
   (/ (accumulate + (every grade->points sent)) (count sent)))
 
-;; I wanted to put this embedded in `grades->gpa' but we haven't
-;; been introduced to let* or letrec yet.
+;; I wanted to put this embedded in `grades->gpa' but we haven't been
+;; introduced to let* or letrec yet.
+
 (define (sum-grades xs)
   (if (empty? xs)
       0
@@ -76,9 +79,8 @@
 
 
 ;; ----------------------------------------------
-;; 12.7 Write `spell-number' that takes a number and returns a
-;;      sentence of the digits spelled out. The authors provide
-;;      a helper function (meh).
+;; 12.7 Write `spell-number' that takes a number and returns a sentence of the
+;; digits spelled out. The authors provide a helper function (meh).
 
 (define (spell-digit digit)
   (item (+ 1 digit)

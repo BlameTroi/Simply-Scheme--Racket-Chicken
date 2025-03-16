@@ -23,8 +23,8 @@
 
 ;; --------------------------------------------------------
 ;; 17.4 Presents a procedure and asks that we predict its output before testing
-;;      it. On reading this appears to create a new copy of its input. Wrong,
-;;      it is a reversed copy of its input.
+;; it. On reading this appears to create a new copy of its input. Wrong, it is
+;; a reversed copy of its input.
 
 (define (mystery-helper lst other)
   (if (null? lst)
@@ -39,8 +39,8 @@
 
 ;; --------------------------------------------------------
 ;; 17.5 Implement (max ...) returning the maximum of an arbitrarily long list
-;;      of numbers. Do this in terms of (max2 a b) which returns the maximum of
-;;      the two numbers.
+;; of numbers. Do this in terms of (max2 a b) which returns the maximum of the
+;; two numbers.
 
 (define (max2 a b) (if (> a b) a b))
 
@@ -56,8 +56,7 @@
 
 ;; --------------------------------------------------------
 ;; 17.6 Use 'car', 'cdr', and 'cons' to write 'append'. First as a procedure
-;;      taking two arguments, and then generalize it for any number of
-;;      arguments.
+;; taking two arguments, and then generalize it for any number of arguments.
 ;;
 ;; While 'append' appends lists, I decided to add the ability to append atoms,
 ;; resulting in a list. This is done by converting an atom into a list with one
@@ -107,8 +106,8 @@
 
 ;; --------------------------------------------------------
 ;; 17.7 This assignment is to use out 'append' to write 'sentence'. I've
-;;      already acomplished that by dealing with atoms in addition to lists
-;;      in my 'append'. So, for me, this becomes:
+;; already acomplished that by dealing with atoms in addition to lists in my
+;; 'append'. So, for me, this becomes:
 
 (define (sentenced . args) (apply appendage args))
 
@@ -152,8 +151,8 @@
 
 ;; --------------------------------------------------------
 ;; 17.11 Write 'before-in-list?' taking a list and two elements, and return #t
-;;       if the first element appears before the second element, and #f if
-;;       neither element appears in the list.
+;; if the first element appears before the second element, and #f if neither
+;; element appears in the list.
 ;;
 ;; Not a requirement, but I'll use my versions of helpers.
 
@@ -194,10 +193,9 @@
 
 ;; --------------------------------------------------------
 ;; 17.12 Write a procedure called flatten that takes as its argument a list,
-;;       possibly including sublists, but whose ultimate building blocks are
-;;       words (not Booleans or procedures). It should return a sentence
-;;       containing all the words of the list, in the order in which they
-;;       appear in the original:
+;; possibly including sublists, but whose ultimate building blocks are words
+;; (not Booleans or procedures). It should return a sentence containing all the
+;; words of the list, in the order in which they appear in the original:
 
 (define (flatten-r xs)
   (cond ((not (list? xs)) (appendage xs))
@@ -216,7 +214,7 @@
 
 ;; --------------------------------------------------------
 ;; 17.13 Here is a procedure that counts the number of words anywhere within a
-;;       structured list:
+;; structured list:
 
 (define (deep-count lst)
   (cond ((null? lst) 0)
@@ -224,9 +222,10 @@
         (else (+ (deep-count (car lst))
                  (deep-count (cdr lst))))))
 
-;;      Although this procedure works, it's too complicated. Simplify it.
+;; Although this procedure works, it's too complicated. Simplify it.
 
 ;; First try is pretty feeble. DIfferent, but not appreciably better.
+
 (define (deeper-count lst)
   (if (null? lst)
     0
@@ -237,6 +236,7 @@
 
 ;; Coming at the problem cold I'd have done a flatten and count. But after some
 ;; reflection, I think this is the solution they wanted us to find:
+
 (define (deepest-count lst)
   (reduce +
     (map (lambda (x) (if (word? x) 1 (deepest-count x))) lst)))
@@ -244,20 +244,27 @@
 
 ;; --------------------------------------------------------
 ;; 17.14 Write a procedure branch that takes as arguments a list of numbers and
-;;       a nested list structure. It should be the list-of-lists equivalent of
-;;       item, like this:
+;; a nested list structure. It should be the list-of-lists equivalent of item,
+;; like this:
 ;;
 ;;       (branch '(3) '((a b) (c d) (e f) (g h))) => '(e f))
 ;;       (branch '(3 2) '((a b) (c d) (e f) (g h))) => 'f)
 ;;       (branch '(2 3 1 2) '((a b) ((c d) (e f) ((g h) (i j)) k) (l m))) => 'h)
 ;;
-;;       In the last example above, the second element of the list is:
+;; In the last example above, the second element of the list is:
+;;
 ;;         '((c d) (e f) ((g h) (i j)) k)
-;;       The third element of that smaller list is:
+;;
+;; The third element of that smaller list is:
+;;
 ;;         '((g h) (i j))
-;;       The first element of that is:
+;;
+;; The first element of that is:
+;;
 ;;         '(g h)
-;;       And the second element of that is just:
+;;
+;; And the second element of that is just:
+;;
 ;;         'h
 
 ;; As is typical, I made this too hard by visualizing the problem incorrectly.
@@ -277,12 +284,11 @@
 
 
 ;; --------------------------------------------------------
-;; 17.15 Modify the pattern matcher to represent the known-values database as
-;;       a list of two-element lists, as we suggested at the beginning of this
-;;       chapter.
+;; 17.15 Modify the pattern matcher to represent the known-values database as a
+;; list of two-element lists, as we suggested at the beginning of this chapter.
 ;;
-;; The original structure is (name data ! name data !). An association list
-;; is the natural solution for this.
+;; The original structure is (name data ! name data !). An association list is
+;; the natural solution for this.
 
 (define (lookup name known-values)
   (let ((there (assoc name known-values)))
@@ -298,16 +304,16 @@
 
 ;; --------------------------------------------------------
 ;; 17.16 Write a predicate valid-infix? that takes a list as argument and
-;;       returns #t if and only if the list is a legitimate infix arithmetic
-;;       expression (alternating operands and operators, with parentheses—that
-;;       is, sublists—allowed for grouping).
+;; returns #t if and only if the list is a legitimate infix arithmetic
+;; expression (alternating operands and operators, with parentheses—that is,
+;; sublists—allowed for grouping).
 ;;
 ;;       (valid-infix? '(4 + 3 * (5 - 2))) => #t
 ;;       (valid-infix? '(4 + 3 * (5 2))) => #f
 ;;
-;; I'm not seeing this as needing much beyond 'flatten(er)'. We aren't asked
-;; to actually evaluate the expression, so this isn't a parsing problem.
-;; Nor do they mention leaing negation, so.
+;; I'm not seeing this as needing much beyond 'flatten(er)'. We aren't asked to
+;; actually evaluate the expression, so this isn't a parsing problem. Nor do
+;; they mention leaing negation, so...
 
 (define (operator? x) (member? x '(* + / -)))
 
@@ -322,8 +328,6 @@
 (check (valid-infix? '(4 + 3 * (5 - 2))) => #t)
 (check (valid-infix? '(4 + 3 * (5 2))) => #f)
 
-;; --------------------------------------------------------
-;; --------------------------------------------------------
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; And that's the end of this section. Report test results and reset
 ;;; counters.
