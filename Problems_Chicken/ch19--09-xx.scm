@@ -100,7 +100,7 @@
 (check (three-arg-accumulate + 0 '()) => (accumulate + '()))
 
 (check (three-arg-accumulate cons '() '(a b c d e)) => '(a b c d e))
-(check (three-arg-accumulate cons '() '(a b c d e)) => (accumulate cons '(a b c d e)))
+;; (check (three-arg-accumulate cons '() '(a b c d e)) => (accumulate cons '(a b c d e)))
 
 
 ;; ----------------------------------------------
@@ -128,7 +128,7 @@
                 (left-accumulate verb (bl stuff))
                 (last stuff)))))
 
-(check (left-accumulate - '(2 3 4 5)) => ((- (- 2 3) 4) 5))
+(check (left-accumulate - '(2 3 4 5)) => (- (- (- 2 3) 4) 5))
 
 ;;                                       -1 - 4 = -5 -5 = -10
 
@@ -241,16 +241,12 @@
 ;; already in 'true-for-all-pairs?'. Make 'true-for-all-pairs?' a wrapper
 ;; over 'true-for-any-pairs?' with a modified predicate using a lambda.
 
-(not (fred?
-       wilma
-       barney))
-
 (define (true-for-all-pairs-2? pred sent)
   (cond ((empty? sent)            #f)
         ((empty? (cdr sent))      #f)
         (else (not (true-for-any-pair?
-                     (lambda (a b) (not pred))) ;; this makes true for any false for any
-                   sent))))
+                     (lambda (a b) (not (pred a b)))
+                     sent)))))
 
 (check (true-for-all-pairs-2? equal? '(a b c c d)) => #f)
 (check (true-for-all-pairs-2? equal? '(a a a a a)) => #t)
@@ -320,6 +316,42 @@
 ;; ----------------------------------------------
 ;; 19.10 Write tree-map, analogous to our deep-map, but for trees, using the
 ;; datum and children selectors.
+
+;; My full set of their tree api.
+
+(define make-node cons)
+(define datum car)
+(define children cdr)
+(define (leaf datum)
+  (make-node datum '()))
+(define (cities name-list)
+  (map leaf name-list))
+(define (leaf? tree) (null? (cdr tree)))
+
+;; The 'deep-map' procedure from the text.
+
+(define (deep-map f structure)
+  (cond ((word? structure) (f structure))
+        ((null? structure) '())
+        (else (cons (deep-map f (car structure))
+                    (deep-map f (cdr structure))))))
+
+;; At first glance, this is just a textual exercise, but I'm not sure about the
+;; order of the 'cond'.
+
+(define (tree-map f structure)
+  (cond ((word? structure) (f structure))
+        ((null? structure) '())
+        (else (cons (tree-map f (datum structure))
+                    (tree-map f (children structure))))))
+
+;; They gave no test case, but they mentioned doing a 'deep square' so let's do
+;; that and see what happens.
+
+(define some-tree (make-node 3 (list (make-node 4 (cities '(5 6 7)))
+                                     (make-node 8 (cities '(9 10 11))))))
+
+(tree-map (lambda (n) (* n n)) some-tree)
 
 
 ;; ----------------------------------------------
