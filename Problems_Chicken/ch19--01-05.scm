@@ -14,11 +14,10 @@
 
 ;;; Problem set:
 
-(print "Chapter 19 Implementing High Order Functions begin...")
+(print "Chapter 19 Implementing High Order Functions begin 01-05...")
 
 
 ;; ----------------------------------------------
-
 ;; 19.2 Write keep. Don't forget that keep has to return a sentence if its
 ;; second argument is a sentence, and a word if its second argument is a word.
 ;;
@@ -91,7 +90,7 @@
 ;; Testing the three argument against their expected results and then
 ;; against their standard 'accumulate'. Interesting, their 'accumulate'
 ;; of cons '(list) returns '(<butlast list> . <last list>). So, we
-;; get one failure reported but I matched the problem spec.
+;; get one failure reported but my solution matched the problem spec.
 
 (check (three-arg-accumulate + 0 '(4 5 6)) => 15)
 (check (three-arg-accumulate + 0 '(4 5 6)) => (accumulate + '(4 5 6)))
@@ -170,4 +169,4 @@
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-(print "Chapter 19 Implementing High Order Functions end...")
+(print "Chapter 19 Implementing High Order Functions end 01-05...")

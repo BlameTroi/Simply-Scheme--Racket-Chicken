@@ -14,7 +14,7 @@
 
 ;;; Problem set:
 
-(print "Chapter 19 Implementing High Order Functions begin...")
+(print "Chapter 19 Implementing High Order Functions begin 06-08...")
 
 
 ;; ----------------------------------------------
@@ -89,12 +89,12 @@
 ;; arm of the 'cond' with 'true-for-any-pairs?' but why? Is the idea to
 ;; call any-pairs with (not pred)?
 ;;
-;; Of the two or three (out of approximately forty) repos on Github for
-;; these, only a couple of other people have gone past the first ten or
-;; so chapters. The solutions is that -I need to read better-. The
-;; recursion is from 'true-for-any-pair?' and not to use the recursion
-;; already in 'true-for-all-pairs?'. Make 'true-for-all-pairs?' a wrapper
-;; over 'true-for-any-pairs?' with a modified predicate using a lambda.
+;; Of the two or three (out of approximately forty) repos on Github for these,
+;; only a couple of other people have gone past the first ten or so chapters.
+;; The solution for this problem is that -I need to read better-. The recursion
+;; is from 'true-for-any-pair?' and not to use the recursion already in
+;; 'true-for-all-pairs?'. Make 'true-for-all-pairs?' a wrapper over
+;; 'true-for-any-pairs?' with a modified predicate using a lambda.
 
 (define (true-for-all-pairs-2? pred sent)
   (cond ((empty? sent)            #f)
@@ -109,7 +109,6 @@
 (check (true-for-all-pairs-2? < '(3 7 19 22 43)) => #t)
 
 
-
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; And that's the end of this section. Report test results and reset
 ;;; counters.
@@ -118,4 +117,4 @@
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-(print "Chapter 19 Implementing High Order Functions end...")
+(print "Chapter 19 Implementing High Order Functions end 06-08...")
