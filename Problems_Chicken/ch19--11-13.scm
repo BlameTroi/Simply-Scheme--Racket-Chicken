@@ -14,7 +14,7 @@
 
 ;;; Problem set:
 
-(print "Chapter 19 Implementing High Order Functions begin 09-xx...")
+(print "Chapter 19 Implementing High Order Functions begin 11-13...")
 
 
 ;; ----------------------------------------------
@@ -69,6 +69,7 @@
        '(through the bathroom window))
 (check ((repeater plural 4) 'computer) =>
        'computerssss)
+(define (square n) (* n n))
 (check ((repeater square 2) 3) =>
        81)
 (check ((repeater square 4) 2) =>
@@ -107,17 +108,17 @@
 ;; on Github did it in two functions by pulling tree-reduce-r into tree-reduce.
 ;; I get it, but I'll stick with my three function solution.
 
-(define (tree-reduce fn node)
-  (tree-reduce-r fn (fn) node))
+(define (tree-reduce fn tree)
+  (tree-reduce-r fn (fn) tree))
 
 (define (tree-reduce-r fn accum node)
   (cond ((empty? node)
-         accum
+         accum)
          (else (fn
                  accum
                  (fn
                    (datum node)
-                   (children-r fn (fn) (children node))))))))
+                   (children-r fn (fn) (children node)))))))
 
 (define (children-r fn accum nodes)
   (cond ((empty? nodes)
@@ -142,6 +143,30 @@
 ;;
 ;; (deep-reduce word '(r ((a (m b) (l)) (e (r))))) => 'rambler
 
+;; Allowing for combiner to accept zero or more arguments as in 19.12, I have
+;; the following suspenders-and-belt implementation. Not all of the terminal
+;; conditions I've coded for may be possible. I'll come back to this later,
+;; maybe.
+
+(define (deep-reduce fn thing)
+  (deep-reduce-r fn (fn) thing))
+
+(define (deep-reduce-r fn accum thing)
+  (cond ((not thing)               ;; terminal one, nil
+         accum)
+        ((not (list? thing))       ;; terminal two, atom
+         (fn accum thing))
+        ((empty? thing)            ;; terminal three, empty thing
+         accum)
+        ((list? (car thing))
+         (fn accum (deep-reduce fn (car thing)) (deep-reduce-r fn (fn) (cdr thing))))
+        (else
+          (fn accum (fn (car thing)) (deep-reduce-r fn (fn) (cdr thing))))))
+
+(define rambler '(r ((a (m b) (l)) (e (r)))))
+
+(check (deep-reduce word rambler) => 'rambler)
+
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; And that's the end of this section. Report test results and reset
@@ -151,4 +176,4 @@
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-(print "Chapter 19 Implementing High Order Functions end 09-xx...")
+(print "Chapter 19 Implementing High Order Functions end 11-13...")
