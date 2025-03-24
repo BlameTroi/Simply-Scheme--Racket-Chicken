@@ -14,6 +14,11 @@
 
 ;;; Problem set:
 
+;; NOTE: While I've left the srfi-78 test wrapping of the problems in
+;; place, there were no unit tests for this chapter. Instead the changes to
+;; the 'functions' program were worked out here and then merged in to the
+;; original "functions.scm" as "ch21--functions.scm".
+
 (print "Chapter 21 Input and Output begin 01-09...")
 
 ;; ----------------------------------------------

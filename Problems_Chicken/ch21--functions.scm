@@ -6,15 +6,22 @@
 ;; The original has been modified for some of the problems at the end of
 ;; the chapter. I also re-indented the source to get rid of tab characters.
 
-;; Assumes the simply-scheme environment is loaded. I'm also loading
-;; srfi-78 as I may add some unit tests.
-
-(import srfi-78)
-(check-reset!)
-(check-set-mode! 'report-failed)
+;; Assumes the simply-scheme environment is already loaded.
 
 ;; The modified functions program. The original function definitions are
 ;; commented out, and followed by their replacements.
+;;
+;; Code changes for 21.3 avoid redundant 'assoc' of *the-functions* and
+;; 21.5 to prefix/number argument prompts are merged in.
+;;
+;; The changes for 21.4 require adding a domain error message text to each
+;; entry in *the-functions*. That's not worth the time to me as the changes
+;; for 21.3 and 21.5 establish that I have indeed done the assignments. A
+;; new function to display the error message, a one line change to
+;; 'functions-loop', and a sample of what an entry in *the-functions*
+;; should look like are in the worked problem set file.
+
+;; functions.scm:
 
 (define (functions)
   ;; (read-line)
@@ -70,32 +77,69 @@
            (get-fn))
           (else (function-entry (first line))))))
 
-(define (get-arg)
+;; (define (get-arg)
+;;   (display "Argument: ")
+;;   (let ((line (read-line)))
+;;     (cond ((empty? line)
+;;            (show "Please type an argument!")
+;;            (get-arg))
+;;           ((and (equal? "(" (first (first line)))
+;;                 (equal? ")" (last (last line))))
+;;            (let ((sent (remove-first-paren (remove-last-paren line))))
+;;              (if (any-parens? sent)
+;;                (begin
+;;                  (show "Sentences can't have parentheses inside.")
+;;                  (get-arg))
+;;                (map booleanize sent))))
+;;           ((any-parens? line)
+;;            (show "Bad parentheses")
+;;            (get-arg))
+;;           ((empty? (bf line)) (booleanize (first line)))
+;;           (else (show "You typed more than one argument!  Try again.")
+;;                 (get-arg)))))
+
+(define (get-arg tag)
+  (display tag)
   (display "Argument: ")
   (let ((line (read-line)))
     (cond ((empty? line)
            (show "Please type an argument!")
-           (get-arg))
+           (get-arg tag))
           ((and (equal? "(" (first (first line)))
                 (equal? ")" (last (last line))))
            (let ((sent (remove-first-paren (remove-last-paren line))))
              (if (any-parens? sent)
                (begin
                  (show "Sentences can't have parentheses inside.")
-                 (get-arg))
+                 (get-arg tag))
                (map booleanize sent))))
           ((any-parens? line)
            (show "Bad parentheses")
-           (get-arg))
+           (get-arg tag))
           ((empty? (bf line)) (booleanize (first line)))
           (else (show "You typed more than one argument!  Try again.")
-                (get-arg)))))
+                (get-arg tag)))))
+
+;; (define (get-args n)
+;;   (if (= n 0)
+;;     '()
+;;     (let ((first (get-arg)))
+;;       (cons first (get-args (- n 1))))))
+
+(define *arg-prompt-tags* (list  "First " "Second " "Third "))
+
+(define (get-args-r n m)
+  (if (> m n)
+    '()
+    (let ((tag (if (= n 1)
+                   ""
+                   (item m *arg-prompt-tags*))))
+      (let ((first (get-arg tag)))
+          (cons first (get-args-r n (+ m 1)))))))
 
 (define (get-args n)
-  (if (= n 0)
-    '()
-    (let ((first (get-arg)))
-      (cons first (get-args (- n 1))))))
+  (let ((ignored (item n *arg-prompt-tags*)))
+    (get-args-r n 1)))
 
 (define (any-parens? line)
   (let ((letters (accumulate word line)))
@@ -293,3 +337,5 @@
               (lambda (x) #t))
         (list 'word word 2 (lambda (x y) (and (word? x) (word? y))))
         (list 'word? word? 1 (lambda (x) #t))))
+
+;; end functions.scm
