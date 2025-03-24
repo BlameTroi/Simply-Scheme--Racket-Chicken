@@ -16,7 +16,6 @@
 
 (print "Chapter 20 Input and Output begin 04-09...")
 
-
 ;; ----------------------------------------------
 ;; 20.4 Write a program that carries on a conversation like the following
 ;; example. User input is between > < since I don't have boldface for

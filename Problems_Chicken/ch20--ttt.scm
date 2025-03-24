@@ -1,7 +1,10 @@
 ;; copied from the text and modified as needd.
 
-;;; ttt.scm
-;;; Tic-Tac-Toe program
+;; ttt.scm -> ch20--ttt.scm
+;; The Tic-Tac-Toe program
+;;
+;; The original has been modified for some of the problems at the end of
+;; the chapter. I also re-indented the source to get rid of tab characters.
 
 (define (ttt position me)
   (ttt-choose (find-triples position) me))

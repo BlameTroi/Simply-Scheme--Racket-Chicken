@@ -2,7 +2,7 @@
 
 ;; Troy Brumley, blametroi@gmail.com, early 2025.
 
-;;; Chapter 19 Input and Output.
+;;; Chapter 21 Input and Output.
 
 ;; For Chicken 5, load "required.scm" before this to establish the text book
 ;; environment for Simply Scheme. We load srfi 78 in the exercises to support
@@ -69,9 +69,10 @@
 ;; rewrite the selectors scheme-procedure, arg-count, and so on, so that
 ;; they don't invoke assoc.
 
-
 ;; This would be easier with a global variable, but we haven't seen how to
 ;; set those yet.
+;;
+;; And I know the authors would prefer that we didn't use global variables.
 ;;
 ;; Change 'get-fn' to return the entry in the a-list instead of the name.
 ;; Then functions-loop will invoke the accessors as before, but passing the
@@ -102,6 +103,9 @@
            (show "Sorry, that's not a function.")
            (get-fn))
           (else (function-entry (first line))))))
+
+(define (function-entry x)
+  (valid-fn-name? x))
 
 (define (scheme-function fn-entry)
   (cadr fn-entry))
@@ -164,9 +168,11 @@
 ;;
 ;; The result is 6
 
+;; Add the tag parameter, a string with a trailing space, as a
+;; parameter.
 
 (define (get-arg tag)
-  (if tag (display tag) '())
+  (display tag)
   (display "Argument: ")
   (let ((line (read-line)))
     (cond ((empty? line)
@@ -187,34 +193,31 @@
           (else (show "You typed more than one argument!  Try again.")
                 (get-arg tag)))))
 
-;; the max number of arguments in the table is currently three (if).
+;; the max number of arguments in the table is currently three (if). If a
+;; function taking four arguments is added (I can't think of one off the
+;; top of my head) then 'get-args-r' will fail as 'item' checks the item
+;; number against the target list size. In a real program, the *arg-tags*
+;; list would be kept adjacent to *the-functions* in the source code.
 
-(define a-tags (list  (list 3 "First " "Second " "Third ")
-                    (list 2 "First " "Second ")))
-
-(define (tag-for n m) ;; n=>number of args  m=>number this arg
-  (let ((tags (assoc n a-tags)))
-    (if (or (< m 1) (> m n) (not tags))
-      #f
-      (cadr tags))))
+(define *arg-prompt-tags* (list  "First " "Second " "Third "))
 
 (define (get-args-r n m)
-  (if (= m 0)
+  (if (> m n)
     '()
-    (let ((first (get-arg (tag-for n m))))
-          (cons first (get-args-r n (- m 1))))))
+    (let ((tag (if (= n 1)
+                   ""
+                   (item m *arg-prompt-tags*))))
+      (let ((first (get-arg tag)))
+          (cons first (get-args-r n (+ m 1)))))))
+
+;; The binding of 'ignored' is just a quick and dirty way to catch an error
+;; if *the-functions* and *arg=prompt-prefix* aren't compatible. I prefer
+;; to throw the error here instead of making the user enter the first few
+;; parameters and then fail part way through entry.
 
 (define (get-args n)
-  (get-args-r n n))
-
-;; 2 2
-;; 2 1
-;;
-;; 1 1
-;;
-;; 3 3
-;; 3 2
-;; 3 1
+  (let ((ignored (item n *arg-prompt-tags*)))
+    (get-args-r n 1)))
 
 
 ;; ----------------------------------------------
@@ -248,7 +251,7 @@
 ;; (functions)
 
 ;; Whatever 'functions-loop' returns when the user enters the function name
-;; 'exit'. In this case, the string "Thanks for using FUNCTIONS!".
+;; of 'exit'. In this case, the string "Thanks for using FUNCTIONS!".
 
 
 ;; ----------------------------------------------
