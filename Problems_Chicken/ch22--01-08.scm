@@ -232,30 +232,30 @@
 ;; the two databases. For example, suppose we have a class roster database
 ;; in which each record includes a student's name, student ID number, and
 ;; computer account name, like this:
-
+;;
 ;;   full-name            sid   sname
 ;; ((john alec entwistle) 04397 john)
 ;; ((keith moon) 09382 kmoon)
 ;; ((peter townshend) 10428 pete)
 ;; ((roger daltrey) 01025 roger)
-
+;;
 ;; We also have a grade database in which each student's grades are stored
 ;; according to computer account name:
-
+;;
 ;;  sname grades
 ;; (john 87 90 76 68 95)
 ;; (kmoon 80 88 95 77 89)
 ;; (pete 100 92 80 65 72)
 ;; (roger 85 96 83 62 74)
-
+;;
 ;; We want to create a combined database like this:
-
+;;
 ;; joined on sname
 ;; ((john alec entwistle) 04397 john 87 90 76 68 95)
 ;; ((keith moon) 09382 kmoon 80 88 95 77 89)
 ;; ((peter townshend) 10428 pete 100 92 80 65 72)
 ;; ((roger daltrey) 01025 roger 85 96 83 62 74)
-
+;;
 ;; in which the information from the roster and grade databases has been
 ;; combined for each account name.
 ;;
@@ -263,9 +263,9 @@
 ;; numbers indicating the position of the item within each record that
 ;; should overlap between the files, and an output file name. For our
 ;; example, we'd say
-
-> (join "class-roster" "grades" 3 1 "combined-file")
-
+;;
+;; (join "class-roster" "grades" 3 1 "combined-file")
+;;
 ;; In our example, both files are in alphabetical order of computer account
 ;; name, the account name is a word, and the same account name never
 ;; appears more than once in each file. In general, you may assume that
@@ -274,55 +274,79 @@
 ;; in the other. A line should be written in the output file only for the
 ;; items that do appear in both files.
 
-;; The file merge example in the chapter is a good framework for this. The
-;; comparisons are different and the output will be reformatted, but it
-;; provides a good starting point.
+;; I decided to stretch the bounds a little and over-engineered a couple of
+;; things (fn-* to abstract some stuff out of joiner-r).
 ;;
-;; As the "database" is composed of lists, I need to use 'read' and 'show'
+;; This is taking the file merge from the text another couple of steps. As
+;; the "database" is composed of lists, I need to use 'read' and 'show'
 ;; instead of the '*-line/string' equivalents.
 ;;
-;; And I'm going to have a little fun with this ...
-;; ((john alec entwistle) 04397 john 87 90 76 68 95)
+;;  v------------------------------v file1
+;; ((john alec entwistle) 04397 john 87 90 76 68 95)  <=combined
+;;                              ^-----------------^ file2
+;;
+;; I'm going to cheat a bit here and add the constraint that the join
+;; column needs to be the last of file1 and first of file2. If I get time
+;; I'll come back and clean that up.
+;;
+;; So, notes and above and beyond in this exercise:
+;;
+;; 1. Above (hopefully) temporary constraint.
+;; 2. Abstract out key access for the join column.
+;; 3. Log any rows not joined.
+;; 4. The standard environment includes a 'before?' and has tweaked the
+;;    'equal?' to handle its data types, but has no 'after?'. So, flip
+;;    the arguments and do a 'before?'. My 'after?' isn't very robust.
+;; 5. 'Join' is part of base scheme '(join lst1 . lstn)' so I'm using a
+;;     different name.
+;; 6. I added an additional error log file.
 
-(define (join file1 file2 item1 item2 combined)
-  (let
+(define (joiner file1 file2 item1 item2 combined)
+  (let*             ;; they haven't mentioned this yet
     ((inp1 (open-input-file file1))
      (inp2 (open-input-file file2))
      (outp (open-output-file combined))
      (errp (open-output-file "unjoined"))
-     ((fn-key1 (lambda (o1) (item item1 o1)))
-      (fn-key2 (lambda (o2) (item item2 o2)))
-      (let     ;; inner let to expose fn-keyx functions.
-        (fn-cmp (lambda pred o1 o2)
-                (pred (fn-key1 o1) (fn-key2 o2)))
-        (join-r fn-cmp inp1 inp2 outp errp (read inp1) (read inp2))
-        (close-input-port inp1)
-        (close-input-port inp2)
-        (close-output-port outp)
-        (close-output-port errp)
-        'done))))
+     (fn-key1 (lambda (o1) (item item1 o1)))
+     (fn-key2 (lambda (o2) (item item2 o2)))
+     (fn-cmp (lambda (pred o1 o2)
+               (cond ((equal? pred 'after) (before? (fn-key2 o2) (fn-key1 o1)))
+                     (else
+                       (pred (fn-key1 o1) (fn-key2 o2)))))
+    (show (joiner-r fn-cmp inp1 inp2 outp errp (read inp1) (read inp2) 'ok))
+    (close-input-port inp1)
+    (close-input-port inp2)
+    (close-output-port outp)
+    (close-output-port errp)))
 
-(define (join-r cmp p1 p2 outp errp line1 line2)
-  (cond ((and (eof-object? line1) (eof-object? line2))  '())
-        ((eof-object? line1) (flush p1 errp "2" line2))
-        ((eof-object? line2) (flush p2 errp "1" line1))
-        (((cmp before?) line1 line2)
+;; A poor mans 'after?'
+(define (after? wd1 wd2)
+  (before? wd2 wd1))
+
+(define (joiner-r cmp p1 p2 outp errp line1 line2 stat)
+  (cond ((and (eof-object? line1)
+              (eof-object? line2))  stat)
+        ((eof-object? line1)
+         (flush p1 errp "2" line2) stat)
+        ((eof-object? line2)
+         (flush p2 errp "1" line1) stat)
+        ((cmp before? line1 line2)
          (show (cons "1" line1) errp)
-         (join-r cmp p1 p2 outp errp (read p1) line2))
-        (((cmp before?) line2 line1) ;; the standard environment has no 'after?'
+         (joiner-r cmp p1 p2 outp errp (read p1) line2 'errors))
+        ((cmp after? line1 line2)
          (show (cons "2" line2) errp)
-         (join-r cmp p1 p2 outp errp line1 (read p2)))
+         (joiner-r cmp p1 p2 outp errp line1 (read p2) 'errors))
         (else
-         (show (combine line1 line2) outp)
-         (join-r cmp p1 p2 outp errp (read p1) (read p2)))))
+          (show (combine line1 line2) outp)
+          (joiner-r cmp p1 p2 outp errp (read p1) (read p2) stat))))
 
 (define (flush ip op tag line)
-  (cond ((eof-object? line)      'done)
+  (cond ((eof-object? line)      'flushed)
         (else
           (show (cons tag line) op)
           (flush ip op tag (read ip)))))
 
-;; cheating here
+;; cheating here to combine the rows
 (define (combine line1 line2)
   (cons line1 (cdr line2)))
 
