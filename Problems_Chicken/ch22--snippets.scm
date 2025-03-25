@@ -1,5 +1,5 @@
-;; This file counts on simply-scheme environment being loaded.
-;; Copied from chapter 22, with modifications as I work throught the text.
+;; This file counts on simply-scheme environment being loaded. Copied from
+;; chapter 22, with modifications as I work throughout the text.
 
 ;; A Scheme expression of the classic "Input Process Output" loop.
 
@@ -18,8 +18,8 @@
       (begin (show-line (fn line) outport)
              (file-map-helper fn inport outport)))))
 
-;; Justify a line of text, as in right justify to have even
-;; left and right margins instead of ragged right.
+;; Justify a line of text, as in right justify to have even left and right
+;; margins instead of ragged right.
 
 (define (justify line width)
   (if (< (count line) 2)
@@ -50,7 +50,7 @@
     ""
     (word " " (spaces (- n 1)))))
 
-;; If you run this against a file (say the "r5rs" from the text) and then do
+;; If you run this against a file (say the "R5RS" from the text) and then do
 ;; a 'print-file' the text will not appear to be changed. That's because
 ;; spaces are not significant to 'print-file'.
 
@@ -69,7 +69,7 @@
       (begin (show stuff)
              (print-file-helper port)))))
 
-;; Here's a prodedure to merge files instead of sentences from the
+;; Here's a procedure to merge files instead of sentences from the
 ;; text.
 
 (define (filemerge file1 file2 outfile)

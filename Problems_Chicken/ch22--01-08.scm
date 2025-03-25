@@ -5,7 +5,7 @@
 ;;; Chapter 22 Files.
 
 ;; For Chicken 5, load "required.scm" before this to establish the text book
-;; environment for Simply Scheme. We load srfi 78 in the exercises to support
+;; environment for Simply Scheme. We load SRFI 78 in the exercises to support
 ;; testing.
 
 (import srfi-78)
@@ -42,7 +42,7 @@
                   (concatenate-r (cdr files) output))))))
 
 ;; There doesn't seem to be much in the way of standard error reporting for
-;; i/o. I expect a runtime error if any problems occur.
+;; i/o. I expect a run time error if any problems occur.
 
 (define (copy-in-out input output)
   (let ((got (read-char input)))
@@ -55,7 +55,7 @@
 
 ;; ----------------------------------------------
 ;; 22.2 Write a procedure to count the number of lines in a file. It should
-;; take the filename as argument and return the number.
+;; take the file name as argument and return the number.
 
 ;; I'm pretty sure the expected solutions to these are expecting us to use
 ;; the different behavior of 'read' and 'read-line' but for this and
@@ -78,7 +78,7 @@
 
 ;; ----------------------------------------------
 ;; 22.3 Write a procedure to count the number of words in a file. It should
-;; take the filename as argument and return the number.
+;; take the file name as argument and return the number.
 
 ;; This is the way to count words given what we know from the text. The
 ;; other option would be to 'read-string' and create a more correct but
@@ -102,7 +102,7 @@
 
 ;; ----------------------------------------------
 ;; 22.4 Write a procedure to count the number of characters in a file,
-;; including space characters. It should take the filename as argument and
+;; including space characters. It should take the file name as argument and
 ;; return the number.
 
 (define (char-count file)
@@ -155,13 +155,13 @@
       '()
       (begin
         (if (equal? this-line last-line)
-          '() ; nop
+          '()
           (show-line this-line output))
         (dedup-r this-line input output)))))
 
 
 ;; ----------------------------------------------
-;; 22.6 Write a lookup procedure that takes as arguments a filename and a
+;; 22.6 Write a lookup procedure that takes as arguments a file name and a
 ;; word. The procedure should print (on the screen, not into another file)
 ;; only those lines from the input file that include the chosen word.
 
@@ -186,16 +186,43 @@
 
 
 ;; ----------------------------------------------
-;; 22.7 Write a page procedure that takes a filename as argument and prints
-;; the file a screenful at a time. Assume that a screen can fit 24 lines;
+;; 22.7 Write a page procedure that takes a file name as argument and prints
+;; the file a screen full at a time. Assume that a screen can fit 24 lines;
 ;; your procedure should print 23 lines of the file and then a prompt
 ;; message, and then wait for the user to enter a (probably empty) line. It
 ;; should then print the most recent line from the file again (so that the
-;; user will see some overlap between screenfuls) and 22 more lines, and so
+;; user will see some overlap between screens) and 22 more lines, and so
 ;; on until the file ends.
 
-(define (by-page file)
-  )
+;; Line widths will be ignored, as will backward scrolling.
+
+(define (pager file)
+  (let ((input (open-input-file file)))
+    (begin (pager-r input 1 23 "Please press [enter]: " "")
+           (close-input-port input))))
+
+(define (pager-r input so-far per-page prompt last-line)
+  (let ((curr-line (read-string input)) (bumped (+ so-far 1)))
+    (cond ((eof-object? curr-line)
+           'done)
+          ((>= bumped per-page)
+           (begin
+             (display prompt)
+             (read-line)     ;; (read) won't work here.
+             (show last-line)
+             (show curr-line)
+             (pager-r input 1 per-page prompt curr-line)))
+          (else
+            (begin
+              (show curr-line)
+              (pager-r input bumped per-page prompt curr-line))))))
+
+;; I first wrote this with 'read' and not 'read-line' after the prompt, but
+;; that didn't work well. 'read' accepts a Scheme expression, so just
+;; pressing enter will not work.
+;;
+;; And 'read-string' is preferred to 'read-line' so that blank lines and
+;; indents are preserved.
 
 
 ;; ----------------------------------------------
@@ -232,9 +259,9 @@
 ;; in which the information from the roster and grade databases has been
 ;; combined for each account name.
 ;;
-;; Write a program join that takes five arguments: two input filenames, two
+;; Write a program join that takes five arguments: two input file names, two
 ;; numbers indicating the position of the item within each record that
-;; should overlap between the files, and an output filename. For our
+;; should overlap between the files, and an output file name. For our
 ;; example, we'd say
 
 > (join "class-roster" "grades" 3 1 "combined-file")
@@ -247,9 +274,57 @@
 ;; in the other. A line should be written in the output file only for the
 ;; items that do appear in both files.
 
-(define (join file1 file2 item1 item2 combined)
-  )
+;; The file merge example in the chapter is a good framework for this. The
+;; comparisons are different and the output will be reformatted, but it
+;; provides a good starting point.
+;;
+;; As the "database" is composed of lists, I need to use 'read' and 'show'
+;; instead of the '*-line/string' equivalents.
+;;
+;; And I'm going to have a little fun with this ...
+;; ((john alec entwistle) 04397 john 87 90 76 68 95)
 
+(define (join file1 file2 item1 item2 combined)
+  (let
+    ((inp1 (open-input-file file1))
+     (inp2 (open-input-file file2))
+     (outp (open-output-file combined))
+     (errp (open-output-file "unjoined"))
+     ((fn-key1 (lambda (o1) (item item1 o1)))
+      (fn-key2 (lambda (o2) (item item2 o2)))
+      (let     ;; inner let to expose fn-keyx functions.
+        (fn-cmp (lambda pred o1 o2)
+                (pred (fn-key1 o1) (fn-key2 o2)))
+        (join-r fn-cmp inp1 inp2 outp errp (read inp1) (read inp2))
+        (close-input-port inp1)
+        (close-input-port inp2)
+        (close-output-port outp)
+        (close-output-port errp)
+        'done))))
+
+(define (join-r cmp p1 p2 outp errp line1 line2)
+  (cond ((and (eof-object? line1) (eof-object? line2))  '())
+        ((eof-object? line1) (flush p1 errp "2" line2))
+        ((eof-object? line2) (flush p2 errp "1" line1))
+        (((cmp before?) line1 line2)
+         (show (cons "1" line1) errp)
+         (join-r cmp p1 p2 outp errp (read p1) line2))
+        (((cmp before?) line2 line1) ;; the standard environment has no 'after?'
+         (show (cons "2" line2) errp)
+         (join-r cmp p1 p2 outp errp line1 (read p2)))
+        (else
+         (show (combine line1 line2) outp)
+         (join-r cmp p1 p2 outp errp (read p1) (read p2)))))
+
+(define (flush ip op tag line)
+  (cond ((eof-object? line)      'done)
+        (else
+          (show (cons tag line) op)
+          (flush ip op tag (read ip)))))
+
+;; cheating here
+(define (combine line1 line2)
+  (cons line1 (cdr line2)))
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; And that's the end of this section. Report test results and reset
