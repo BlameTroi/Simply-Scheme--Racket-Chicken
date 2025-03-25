@@ -5,7 +5,7 @@
 ;;; Chapter 14-15 interlude --- spelling names of huge numbers
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -24,7 +24,7 @@
 ;; million, and so on).
 ;;
 ;; There are two irregularities, but only the handling for values in the teens
-;; is at all tedius. The magnitude for units (10^0) is not spoken.
+;; is at all tedious. The magnitude for units (10^0) is not spoken.
 
 
 ;;-----------------------------------------------
@@ -161,7 +161,7 @@
 
 (check (tail-after-n 4 '(1 2 3 4 5 6 7 8)) => '(5 6 7 8))
 
-;; When you have marker/sentinal/delimiter values in sentence.
+;; When you have marker/sentinel/delimiter values in sentence.
 
 (define (next-up-to x xs)
   (cond ((empty? xs) (se ))
@@ -237,7 +237,7 @@
 
 
 ;; ----------------------------------------------
-;; The process breaks naturaly into four pieces. Break the number into periods
+;; The process breaks naturally into four pieces. Break the number into periods
 ;; (the groups of three digits between commas), spell out the digits
 ;; (normalize) and make them properly worded (humanize by adding 'hundred' and
 ;; dealing with teens) and then inserting the magnitudes (thousand, million,

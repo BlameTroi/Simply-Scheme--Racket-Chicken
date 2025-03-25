@@ -6,7 +6,7 @@
 ;;; Chapter 6
 
 ;; For Chicken 5, load "required.scm" before this to establish the text book
-;; environment for Simply Scheme. We load srfi 78 in the exercises to support
+;; environment for Simply Scheme. We load SRFI 78 in the exercises to support
 ;; testing.
 (import srfi-78)
 (check-reset!)
@@ -242,7 +242,7 @@
 ;; What is the indefinite article of a noun (phrase)?
 ;;
 ;; We don't have to worry about silent consonant rules for 'a' vs 'an'. For a
-;; noun (phrase) of indenfite identity (people or person vs a name):
+;; noun (phrase) of indefinite identity (people or person vs a name):
 ;;
 ;; For count nouns, a or an.
 ;;
@@ -460,7 +460,7 @@
 (define (days-in-february mdy)
   (if (leap-year? (year mdy)) 29 28))
 
-;; "Thirty days hath September..." table lookups are more readable than `if' or
+;; "Thirty days hath September..." table look ups are more readable than `if' or
 ;; `cond' chains.
 
 (define (thirty-day-month? mdy) (member? (month mdy) '(9 4 6 11)))

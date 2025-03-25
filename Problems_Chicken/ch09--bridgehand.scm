@@ -6,7 +6,7 @@
 ;;; Interlude project between chapters 9 and 10, bridge hand scoring
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -18,10 +18,10 @@
 (print "Chapter 9 -- bridge hand start...")
 
 ;; Bridge hands are sentences of 13 cards. A card is suit and rank, h5 for 5 of
-;; hearts, c10 for 10 of clubs, sq for quean of spades, etc.
+;; hearts, c10 for 10 of clubs, sq for queen of spades, etc.
 
 
-;; `card-val' returns the bridge points for the card. number cards are 0, ace
+;; `card-val' returns the bridge points for the card. Number cards are 0, ace
 ;; 4, king 3, queen 2, jack 1.
 
 (define (card-val x)

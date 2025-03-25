@@ -5,7 +5,7 @@
 ;;; Chapter 12 The Leap of Faith
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -44,7 +44,7 @@
 (check (bad-acronym '(this is a test)) => 'this)
 
 (define (less-bad-acronym sent)
-  (if (= (count sent) 1)    ;; this iis probably what the original
+  (if (= (count sent) 1)    ;; this is probably what the original
       (first (first sent))  ;; intended, but i prefer an empty base case
       (word (first (first sent)) (less-bad-acronym (bf sent)))))
 

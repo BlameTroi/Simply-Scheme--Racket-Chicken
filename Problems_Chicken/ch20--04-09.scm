@@ -5,7 +5,7 @@
 ;;; Chapter 19 Input and Output.
 
 ;; For Chicken 5, load "required.scm" before this to establish the text book
-;; environment for Simply Scheme. We load srfi 78 in the exercises to support
+;; environment for Simply Scheme. We load SRFI 78 in the exercises to support
 ;; testing.
 
 (import srfi-78)
@@ -84,7 +84,7 @@
 
 (define (word-length x)
   (if (not (word? x))
-         -1               ;; better than zero imo
+         -1               ;; better than zero
         (count x)))
 
 ;; The surname is the cadar of each name (a sentence). Return the length of
@@ -130,7 +130,7 @@
 
 ;; ----------------------------------------------
 ;; 20.6 The procedure ask-user isn't robust. What happens if you type
-;; something that isn't anumber, or isn't between 1 and 9? Modify it to
+;; something that isn't a number, or isn't between 1 and 9? Modify it to
 ;; check that what the user types is a number between 1 and 9. If not, it
 ;; should print a message and ask the user to try again.
 

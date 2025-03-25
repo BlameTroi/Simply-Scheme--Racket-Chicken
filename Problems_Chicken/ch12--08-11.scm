@@ -5,7 +5,7 @@
 ;;; Chapter 12 The Leap of Faith
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -31,7 +31,7 @@
 
 
 ;; ----------------------------------------------
-;; 12.9 Write `real-words' to filter noise words out of a sentence. use the
+;; 12.9 Write `real-words' to filter noise words out of a sentence. Use the
 ;; definition of real words from chapter 1.
 
 (define (real-word? wd) (not (member? wd '(a the an in of and for to with))))
@@ -48,7 +48,7 @@
 
 ;; ----------------------------------------------
 ;; 12.10 Write `remove' that takes a word and sentence and returns the sentence
-;; with all occurances of word removed.
+;; with all occurrences of word removed.
 
 (define (remove wd sent)
   (let ((wd->nil (lambda (x) (if (equal? x wd) '() x))))

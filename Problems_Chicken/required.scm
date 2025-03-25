@@ -9,13 +9,13 @@
 ;;
 ;; I have found it helpful to load a couple of other libraries.
 ;;
-;; Troy Brumley -- blametroi@gmail.com -- Feburary 2025.
+;; Troy Brumley -- blametroi@gmail.com -- February 2025.
 
 
 ;;; Environment Requirements:
 
 ;; I've only tried Chez, Guile, and Chicken. The first two don't work.
-;; Chicken 5 supports the Scheme langauge as in R5RS which was the
+;; Chicken 5 supports the Scheme language as in R5RS which was the
 ;; active standard when _Simply_Scheme_ was published.
 
 
@@ -38,7 +38,7 @@
 ;;     it was told to do and not what the programmer meant is an early
 ;;     source of frustration. By abstracting some of the details at
 ;;     first, the opportunity for the "told vs meant" bugs is reduced
-;;     and the possible causes of the differeence are reduced,
+;;     and the possible causes of the difference are reduced,
 ;;     speeding debugging and learning.
 ;;
 ;; control structures -- are limited and common idioms are given names
@@ -53,7 +53,7 @@
 ;; Expecting the reader to climb only one learning curve at time
 ;; improves the learning experience.
 ;;
-;; I belive SICP takes a similar approach, but not to this level.
+;; I believe SICP takes a similar approach, but not to this level.
 
 
 ;;; Code:
@@ -67,17 +67,17 @@
 ;;; Additional environment setup:
 
 ;; Chicken makes many packages available via their "chicken-install". I
-;; use two regularly: srfi-78 for testing, and trace for a simple
+;; use two regularly: SRFI-78 for testing, and trace for a simple
 ;; execution trace.
 ;;
 ;; I don't know the correct commands to grab these for other Scheme
 ;; implementations.
 
 
-;;; srfi-78 -- extremely lightweight testing:
+;;; SRFI-78 -- extremely lightweight testing:
 
 ;; My personal style of development is to have many small tests. The
-;; framework in srfi-78 is very lightweight, requiring nor providing
+;; framework in SRFI-78 is very lightweight, requiring nor providing
 ;; for any real setup. This gives enough "test first" goodness without
 ;; significant overhead. It can be as simple as "(check (some
 ;; function) => expected result)"
@@ -85,12 +85,12 @@
 (import srfi-78)
 
 
-;;; trace -- runtime tracing:
+;;; trace -- run time tracing:
 
 ;; Around chapter 13 the authors begin to expose details of recursion
 ;; and they use trace to do so. The Chicken trace is pretty simple and
 ;; after loading the text's directions just work for tracing in the
-;; repl.
+;; REPL.
 
 (import trace)
 
@@ -107,11 +107,11 @@
 
 ;; Any of the following can be uncommented to work with that
 ;; particular set of procedures in the text. Or more simply, just type
-;; the load command into the repl after this file has been loaded.
+;; the load command into the REPL after this file has been loaded.
 ;;
 ;; In my limited testing, these don't all play together nicely and the
 ;; authors did not mean for anyone to load all of these at once. I
-;; treat simply.scm as a prereq for any one of the following, and if I
+;; treat simply.scm as a prerequisite for any one of the following, and if I
 ;; switch from say functions.scm to ttt.scm, I restart the REPL
 ;; session.
 ;;

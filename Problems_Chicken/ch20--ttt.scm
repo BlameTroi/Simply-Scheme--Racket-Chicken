@@ -1,4 +1,4 @@
-;; copied from the text and modified as needd.
+;; copied from the text and modified as needed.
 
 ;; ttt.scm -> ch20--ttt.scm
 ;; The Tic-Tac-Toe program

@@ -6,7 +6,7 @@
 ;;; Chapter 9 Lambda Land
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)

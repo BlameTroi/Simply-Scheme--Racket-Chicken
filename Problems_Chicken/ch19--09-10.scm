@@ -5,7 +5,7 @@
 ;;; Chapter 19 Implementing High Order Functions.
 
 ;; For Chicken 5, load "required.scm" before this to establish the text book
-;; environment for Simply Scheme. We load srfi 78 in the exercises to support
+;; environment for Simply Scheme. We load SRFI 78 in the exercises to support
 ;; testing.
 
 (import srfi-78)
@@ -28,7 +28,7 @@
 ;;
 ;; (sort '(john paul george ringo) before?) => (GEORGE JOHN PAUL RINGO)
 
-;; I lifted code from my workthrough of chapter 15 (ch15--01-04.scm) and
+;; I lifted code from my work through of chapter 15 (ch15--01-04.scm) and
 ;; stripped my commentary. At first glance it seems that the 'merge' procedure
 ;; needs a predicate parameter. The question is how best to fit that in.
 ;;
@@ -84,7 +84,7 @@
 ;; 19.10 Write tree-map, analogous to our deep-map, but for trees, using the
 ;; datum and children selectors.
 
-;; My full set of their tree api.
+;; My full set of their tree API.
 
 (define make-node cons)
 (define datum car)

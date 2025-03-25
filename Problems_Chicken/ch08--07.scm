@@ -6,7 +6,7 @@
 ;;; Chapter 8 High Order Functions
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -19,7 +19,7 @@
 
 ;; ----------------------------------------------
 ;; 8.7 Write a procedure letter-count that takes a sentence and returns the
-;; number of letters in the sentece.
+;; number of letters in the sentence.
 
 ;; One is the loneliest number:
 (define (count-1 ignored) 1)

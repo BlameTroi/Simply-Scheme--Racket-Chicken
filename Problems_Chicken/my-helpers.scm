@@ -1,14 +1,14 @@
-;;; Establish an environemnt for the exercises for _Simply_Scheme_.
+;;; Establish an environment for the exercises for _Simply_Scheme_.
 
 ;; The authors provide their own extensions in "simply.scm". I then
-;; add srfi-78 Lightweight Testing. Finally, as I come up with helpers
+;; add SRFI-78 Lightweight Testing. Finally, as I come up with helpers
 ;; that might be useful later in the text, I pull them into this
 ;; loadable file.
 ;;
 ;; These are generally short predicates or converters and they do no
 ;; error checking.
 ;;
-;; This file should load into a new Scheme repl and report no
+;; This file should load into a new Scheme REPL and report no
 ;; failures. I have only tested against Chicken.
 
 ;;; Set up the standard environment:
@@ -22,7 +22,7 @@
 (check-set-mode! 'summary)
 
 ;;; Helpers that I might carry forward to other chapters.
-;;; Assumes simply.scm and srfi-78.
+;;; Assumes simply.scm and SRFI-78.
 
 ;; Short reusable predicates and converters. These do no real error
 ;; checking.
@@ -44,7 +44,7 @@
 (check (divisible? 7 7) => #t)
 (check (divisible? 7 6) => #f)
 
-;; `second' is in "srfi-1", but not in standard Scheme. It is easy
+;; `second' is in "SRFI-1", but not in standard Scheme. It is easy
 ;; enough to create in this context:
 
 (define (second xs) (first (butfirst xs)))
@@ -69,14 +69,14 @@
 ;; (a ... b] is left open, right closed        in-right-closed
 ;;
 ;; We don't have real state in Scheme explained yet, and I believe
-;; it is avoided completley in this book, so I'm not sure how to
+;; it is avoided completely in this book, so I'm not sure how to
 ;; create a reusable "thing" here.
 ;;
 ;; What I want is to define an interval of one of the four types
 ;; with a and b provided. In OOP this would be an object. Then I
-;; could interogate the interval. Is x in the interval?
+;; could interrogate the interval. Is x in the interval?
 ;;
-;; For now, I'll specify a and b at interogation.
+;; For now, I'll specify a and b at interrogation.
 
 (define (in-open?   a b x)       (and (<= a x) (>= b x)))
 (define (in-closed? a b x)       (and (< a x) (> b x)))
@@ -130,7 +130,7 @@
 
 ;; Sometimes I want a rounded result. And I almost never want a rational
 ;; number expressed as a fraction. This has no error checking but will
-;; return the value of `orignal' with `places' digits after the decimal.
+;; return the value of `original' with `places' digits after the decimal.
 
 (define (precision places original)
   (let ((shifter (expt 10 (truncate places))))
@@ -157,7 +157,7 @@
 (check (tail-after-n 4 '(1 2 3 4 5 6 7 8)) => '(5 6 7 8))
 
 
-;; When you have marker/sentinal/delimiter values in sentence.
+;; When you have marker/sentinel/delimiter values in sentence.
 
 (define (next-up-to x xs)
   (cond ((empty? xs) (se ))

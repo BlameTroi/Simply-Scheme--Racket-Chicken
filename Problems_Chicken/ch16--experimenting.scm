@@ -1,9 +1,9 @@
-;; a scratchpad for workthrough testing
+;; a scratchpad for work through testing
 
 ;; Troy Brumley, blametroi@gmail.com, early 2025.
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -21,7 +21,7 @@
         ((empty? sent)           #f)
         ((equal? (first pattern) '?)
          (if (empty? sent)
-           (match? (bf pattern) '())            ;; if empty, does the next of pattern match empty? recursive
+           (match? (bf pattern) '())            ;; if empty, does the next of pattern match empty?
            (or (match? (bf pattern) (bf sent))  ;; either rest pattern matches rest sentence
                (match? (bf pattern) sent))))    ;; or rest pattern matches sentence
         ((equal? (first pattern) '*)

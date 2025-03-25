@@ -5,7 +5,7 @@
 ;;; Chapter 14 Common Patters in Recursive Procedures
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -18,7 +18,7 @@
 
 ;; ----------------------------------------------
 ;; 14.14 Write predicate `same-shape?' that takes two sentences as arguments.
-;; It should return #tif two conditions are met:
+;; It should return #t if two conditions are met:
 ;;
 ;; (1) the sentences have the same number of words.
 ;; (2) the corresponding words in each sentence have the same number of

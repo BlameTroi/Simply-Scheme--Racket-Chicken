@@ -5,7 +5,7 @@
 ;;; Chapter 15 Advanced Recursion
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -37,7 +37,7 @@
 ;; (digit->keypad d)
 ;;
 ;; Given a digit from a phone number, return a list of the possible letter
-;; equivalents to make phonewords. Uses the older map with no z or q. Returns
+;; equivalents to make phone words. Uses the older map with no z or q. Returns
 ;; '? for illegal input other than 0 or 1, which are returned as 0 or 1.
 
 (define (digit->keypad d)

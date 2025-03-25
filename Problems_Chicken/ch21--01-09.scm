@@ -5,16 +5,16 @@
 ;;; Chapter 21 Input and Output.
 
 ;; For Chicken 5, load "required.scm" before this to establish the text book
-;; environment for Simply Scheme. We load srfi 78 in the exercises to support
+;; environment for Simply Scheme. We load SRFI 78 in the exercises to support
 ;; testing.
 
-(import srfi-78)
+(import SRFI-78)
 (check-reset!)
 (check-set-mode! 'report-failed)
 
 ;;; Problem set:
 
-;; NOTE: While I've left the srfi-78 test wrapping of the problems in
+;; NOTE: While I've left the SRFI-78 test wrapping of the problems in
 ;; place, there were no unit tests for this chapter. Instead the changes to
 ;; the 'functions' program were worked out here and then merged in to the
 ;; original "functions.scm" as "ch21--functions.scm".
@@ -82,8 +82,8 @@
 ;; Change 'get-fn' to return the entry in the a-list instead of the name.
 ;; Then functions-loop will invoke the accessors as before, but passing the
 ;; entry instead of the name. In the accessors, remove the 'assoc' wrapping
-;; leaving jsut the c????r procedure call. Also, create an 'fn-name'
-;; accessor function.
+;; leaving just the c????r procedure call. Also, create an 'fn-name'
+;; accessors function.
 
 (define (functions-loop)
   (let ((fn-entry (get-fn)))
@@ -136,12 +136,12 @@
 ;; functions to look up and print this error message along with
 ;; "argument(s) not in domain."
 
-;; I would prefer to create another alist for the 'in-domain?' function to
-;; query, but (1) that's not the assignment, and (2) parallel alists can
+;; I would prefer to create another a-list for the 'in-domain?' function to
+;; query, but (1) that's not the assignment, and (2) parallel a-lists can
 ;; get out of sync (and thus the program is less robust).
 ;;
-;; Add a string to the end of each entry in the *the-functions* alist. Then
-;; add a new accessor. Finally, change the failurearm of the domain check
+;; Add a string to the end of each entry in the *the-functions* a-list. Then
+;; add a new accessor. Finally, change the failure arm of the domain check
 ;; in 'functions-loop' from (show "literal") to (show (domain-error-msg
 ;; fn-entry), assuming the changes in 21.3 have already been made.
 
@@ -216,7 +216,7 @@
           (cons first (get-args-r n (+ m 1)))))))
 
 ;; The binding of 'ignored' is just a quick and dirty way to catch an error
-;; if *the-functions* and *arg=prompt-prefix* aren't compatible. I prefer
+;; if *the-functions* and *arg-prompt-prefix* aren't compatible. I prefer
 ;; to throw the error here instead of making the user enter the first few
 ;; parameters and then fail part way through entry.
 
@@ -232,12 +232,12 @@
 
 ;; Indeed, (caddr #f) is an error. However, 'get-fn' will not return
 ;; anything but the name of a function (or after the above, an entry from
-;; the alist). Until the user enters a function name in the alist, 'get-fn'
+;; the alist). Until the user enters a function name in the a-list, 'get-fn'
 ;; will not return.
 
 
 ;; ----------------------------------------------
-;; 21.7 Why is the domain-checking predicate for the word? function
+;; 21.7 Why is the domain-checking predicate for the word? function:
 ;;
 ;; (lambda (x) #t)
 ;;

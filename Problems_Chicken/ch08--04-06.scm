@@ -6,7 +6,7 @@
 ;;; Chapter 8 High Order Functions
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -31,7 +31,7 @@
 
 ;; ----------------------------------------------
 ;; 8.5 Write a procedure transform-beatles that takes a function, applies it to
-;; each of the beatles, and returns a sentence of the results.
+;; each of the Beatles, and returns a sentence of the results.
 
 (define (transform-beatles fn)
   (every fn '(john paul george ringo)))

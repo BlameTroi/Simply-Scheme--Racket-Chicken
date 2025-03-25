@@ -6,7 +6,7 @@
 ;;; Chapter 7 Variables
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -99,7 +99,7 @@
 ;; names (left hand side). This prevents side effects while computing values.
 ;;
 ;; This could not be done outside the `let' because the (+ *) would take effect
-;; before (* +) is evaluated. Using the substition model, at the end of the
+;; before (* +) is evaluated. Using the substitution model, at the end of the
 ;; sequence, + would be *, and * would be ... *. Within the scope of the `let'
 ;; their meanings are exchanged.
 

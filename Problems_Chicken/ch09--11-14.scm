@@ -6,7 +6,7 @@
 ;;; Chapter 9 Lambda Land
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -40,7 +40,7 @@
 
 
 ;; ----------------------------------------------
-;; 9.12 Write `first-last' which takes a sentance and returns only the words
+;; 9.12 Write `first-last' which takes a sentence and returns only the words
 ;; with the same first and last letter.
 
 (define (first-last sent)
@@ -68,7 +68,7 @@
 
 ;; ----------------------------------------------
 ;; 9.14 Write `substitute' taking three parameters, new-word, old-word, and
-;; target-sent. Replace every occurance of old-word with new-word. I'd prefer a
+;; target-sent. Replace every occurrence of old-word with new-word. I'd prefer a
 ;; different ordering, but meh. It's a variation the above, with `letterwords'
 ;; being a good template.
 

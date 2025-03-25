@@ -6,7 +6,7 @@
 ;;; Chapter 8 High Order Functions
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -50,7 +50,7 @@
 ;; function that accepts just one argument. The return from `h' is also a
 ;; function that accepts just one argument, which as this is written will be a
 ;; function that takes a single function argument and returns a function that
-;; takes a single argument and ... so on, very recursive.
+;; takes a single argument and ... very recursive.
 ;;
 ;; Better:
 ;;
@@ -67,13 +67,13 @@
 ;; At first glance, `i' is a function that takes a sentence/list of numbers as
 ;; an argument and returns the average of the values of the list.
 ;;
-;; Domain ... a non-empty list of numbers.
-;; Range ... a single number.
+;; Domain ... A non-empty list of numbers.
+;; Range ... A single number.
 
 ;; accumulate
 
 ;; `accumulate' is a function that takes a two argument function and a list of
-;; items that are in the domain of that two argument function. it returns the
+;; items that are in the domain of that two argument function. It returns the
 ;; result of applying the two argument function pairwise through the list: (f
 ;; (f first element, second element), third element ...).
 ;;
@@ -92,7 +92,7 @@
 ;; `count' of times to apply that function to some `value'. It returns a
 ;; function that applies `function' to some value `count' times in succession.
 ;;
-;; Domain ... pretty much any function with a range compatible with
+;; Domain ... Pretty much any function with a range compatible with
 ;;            its domain.
 ;; Range  ... A function with the same domain and range as its argument
 ;;            function.
@@ -105,7 +105,7 @@
 ;;(repeated even? 2)
 
 ;; A function that I think won't work. The functions domain should be numbers,
-;; and its range is a boolean. As a boolean lies outside the domain of `even?',
+;; and its range is a Boolean. As a Boolean lies outside the domain of `even?',
 ;; it errors.
 
 ;;(repeated first 2)
@@ -115,8 +115,8 @@
 ;; '(this is a test)) will return 't. While it might appear that the each item
 ;; in the list should also be enumerable, `first' handles atoms rationally.
 ;;
-;; Domain ... any enumerable type (list/sentence, word).
-;; Range .... any item that could be in the domain.
+;; Domain ... Any enumerable type (list/sentence, word).
+;; Range .... Any item that could be in the domain.
 
 ;;(repeated (repeated bf 3) 2)
 

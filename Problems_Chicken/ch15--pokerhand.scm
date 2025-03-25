@@ -5,7 +5,7 @@
 ;;; Chapter 15 Project Poker Hands
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -341,7 +341,7 @@
 ;;; -----------------------------------------------
 ;;; Hand classification tests:
 
-;; Due to interdependcies, some of these tests can't be placed immediately
+;; Due to inter dependencies, some of these tests can't be placed immediately
 ;; after their predicate's definition.
 
 ;; Royal Flush (A K J Q 10) same suit.

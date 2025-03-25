@@ -5,7 +5,7 @@
 ;;; Chapter 14 Common Patters in Recursive Procedures
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -33,7 +33,7 @@
        => '(good good morning)) ;; Or '(good morning good)
 ;;                              ;; if approached backwards.
 
-;; This is waaay to much testing:
+;; This is way to much testing:
 
 (check (remove-once 'morning '(good good good)) => '(good good good))
 (check (remove-once 'morning '(morning is good every morning)) => '(is good every morning))
@@ -61,7 +61,7 @@
       (se )
       (se (first wrd) (up-r (first wrd) (butfirst wrd)))))
 
-;; edge cases are empty or single letter. this happens to do something somewhat
+;; Edge cases are empty or single letter. This happens to do something somewhat
 ;; reasonable for a sentence.
 
 (check (up 'town) => '(t to tow town))

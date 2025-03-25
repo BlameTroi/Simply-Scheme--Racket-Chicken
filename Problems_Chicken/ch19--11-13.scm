@@ -5,7 +5,7 @@
 ;;; Chapter 19 Implementing High Order Functions.
 
 ;; For Chicken 5, load "required.scm" before this to establish the text book
-;; environment for Simply Scheme. We load srfi 78 in the exercises to support
+;; environment for Simply Scheme. We load SRFI 78 in the exercises to support
 ;; testing.
 
 (import srfi-78)
@@ -22,7 +22,7 @@
 
 ;; I disagree, it's only hard if you overthink it. Of course, I overthought it.
 ;;
-;; As their runtime defines repeated, I'll write this as repeater.
+;; As their run time defines repeated, I'll write this as repeater.
 ;;
 ;; I'll pull examples from Chapter 8 to use as test cases.
 
@@ -105,7 +105,7 @@
 ;; it.
 ;;
 ;; I'm not thrilled with this even though it works. The one solution I found
-;; on Github did it in two functions by pulling tree-reduce-r into tree-reduce.
+;; on GitHub did it in two functions by pulling tree-reduce-r into tree-reduce.
 ;; I get it, but I'll stick with my three function solution.
 
 (define (tree-reduce fn tree)

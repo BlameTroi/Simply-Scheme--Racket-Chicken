@@ -5,7 +5,7 @@
 ;;; Chapter 12 The Leap of Faith
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
@@ -19,7 +19,7 @@
 ;; ----------------------------------------------
 ;; 12.12 Write `arabic' to convert Roman numerals to Arabic.
 ;;
-;; I've gone one of these in elisp laying around somewhere that takes a
+;; I've gone one of these in Elisp laying around somewhere that takes a
 ;; different approach, but I'll do this within the framework of the text.
 ;;
 ;; Assumes reasonable input (symbol or string) and that `butfirst" of the last

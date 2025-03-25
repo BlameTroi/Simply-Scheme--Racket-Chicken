@@ -6,13 +6,13 @@
 ;;; Chapter 11 Introduction to Recursion
 
 ;; For Chicken 5, load "required.scm" before this to establish the
-;; text book environment for Simply Scheme. We load srfi 78 in the
+;; text book environment for Simply Scheme. We load SRFI 78 in the
 ;; exercises to support testing.
 (import srfi-78)
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-;; Chapter 10 was a code walkthrough. Chapter 11 is rather small and all the
+;; Chapter 10 was a code walk through. Chapter 11 is rather small and all the
 ;; problems fit in one file.
 
 

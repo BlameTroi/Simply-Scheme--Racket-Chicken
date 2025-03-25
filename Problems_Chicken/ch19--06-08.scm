@@ -5,7 +5,7 @@
 ;;; Chapter 19 Implementing High Order Functions.
 
 ;; For Chicken 5, load "required.scm" before this to establish the text book
-;; environment for Simply Scheme. We load srfi 78 in the exercises to support
+;; environment for Simply Scheme. We load SRFI 78 in the exercises to support
 ;; testing.
 
 (import srfi-78)
@@ -32,7 +32,7 @@
 (define (true-for-any-pair? pred sent)
   (cond ((empty? sent) #f)                   ;; empty
         ((empty? (cdr sent)) #f)             ;; only one item, no pairs
-        ((pred (car sent) (cadr sent))   #t) ;; satisifed at least once
+        ((pred (car sent) (cadr sent))   #t) ;; satisfied at least once
         (else (true-for-any-pair? pred (cdr sent)))))
 
 ;; Boundary conditions:
