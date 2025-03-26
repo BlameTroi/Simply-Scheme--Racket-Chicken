@@ -310,8 +310,6 @@
      (fn-key1 (lambda (o1) (item item1 o1)))
      (fn-key2 (lambda (o2) (item item2 o2)))
      (fn-cmp (lambda (pred o1 o2)
-               (cond ((equal? pred 'after) (before? (fn-key2 o2) (fn-key1 o1)))
-                     (else
                        (pred (fn-key1 o1) (fn-key2 o2)))))
     (show (joiner-r fn-cmp inp1 inp2 outp errp (read inp1) (read inp2) 'ok))
     (close-input-port inp1)
@@ -347,8 +345,15 @@
           (flush ip op tag (read ip)))))
 
 ;; cheating here to combine the rows
+
 (define (combine line1 line2)
-  (cons line1 (cdr line2)))
+  (combine-r line1 (butfirst line2)))
+
+(define (combine-r from to)
+  (cond ((empty? from) to)
+        (else
+          (combine-r (butlast from) (cons (last from) to)))))
+
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; And that's the end of this section. Report test results and reset
