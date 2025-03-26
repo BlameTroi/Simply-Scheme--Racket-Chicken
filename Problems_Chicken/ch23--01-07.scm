@@ -51,7 +51,7 @@
 ;;
 ;; Write vector-fill!. (It doesn't matter what value it returns.)
 
-;; 'vector-fill!' exists in Chicken 5, so I'm using the name
+;; NOTE: 'vector-fill!' exists in Chicken 5, so I'm using the name
 ;; 'vector-flood!'.
 
 (define (vector-flood! v x)
@@ -142,8 +142,8 @@
          (vr (cdr (cdr vargs))))
         (apply vector-append (cons (append-2-vectors v1 v2) vr))))))
 
-(define v #(1 2 3))
-(define u #(4 4 6))
+(define u #(1 2 3))
+(define v #(4 5 6))
 (define w #(7 8 9))
 (check (vector-append) => #())
 (check (vector-append u) => #(1 2 3))
@@ -156,7 +156,8 @@
 ;; ----------------------------------------------
 ;; 23.4  Write vector->list.
 
-;; NOTE: vector->list is in the Chicken base.
+;; NOTE: 'vector->list' is in the Chicken base. I'm using the same name so
+;; that if I need a 'vector->list' in the exercises, I'll be using mine.
 
 (define (vector->list v)
   (vector->list-r v '() (vector-length v)))
@@ -181,6 +182,9 @@
     (vector-map-r fn dv (vector-length dv))))
 
 ;; I'm updating in place, but it's a copy of the original.
+;;
+;; As it turns out, this helper can be used for 'vector-map!' in the next
+;; exercise.
 
 (define (vector-map-r fn v curr)
   (if (= curr 0)
@@ -206,6 +210,8 @@
 (define (vector-map! fn v)
     (vector-map-r fn v (vector-length v)))
 
+;; we can reuse the helper for 23.5 directly!
+
 (define v #(1 2 3))
 (define (p1 n) (+ n 1))
 (check (vector-map! p1 v) => #(2 3 4))
@@ -215,6 +221,24 @@
 ;; ----------------------------------------------
 ;; 23.7 Could you write vector-filter? How about vector-filter!? Explain
 ;; the issues involved.
+
+;; I'm not convinced there is a reason to do so. What do you do with slots
+;; that don't pass the filter? Does the filtering function receive the
+;; current entry in the vector or the vector and an offset?
+;;
+;; While it seems possible to define 'vector-filter' and the filtering
+;; function to have a useful and sensible behavior, the 'vector-filter!'
+;; variant would require that we update the vector in place. Can we do
+;; something analogous to the OOP 'become'? Do we left shift out the items
+;; that don't pass the filter and have a way to truncate the vector?
+;;
+;; My conclusion is that 'vector-filter?' can be written such that the
+;; filtering function receives only the value of the current entry in the
+;; vector. The result would be a new vector made up of the elements that
+;; pass the filter, but could be shorter than the original vector.
+;;
+;; The semantics of 'vector-filter!' just don't work for me. I wouldn't
+;; write it.
 
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
