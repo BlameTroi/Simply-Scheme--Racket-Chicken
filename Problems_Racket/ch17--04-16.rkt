@@ -6,7 +6,7 @@
 ;;; Chapter 17 Lists begin ...
 
 ;; For Chicken 5, load "required.scm" before this to establish the text book
-;; environment for Simply Scheme. We load srfi 78 in the exercises to support
+;; environment for Simply Scheme. We load SRFI 78 in the exercises to support
 ;; testing.
 
 (require srfi/78)
@@ -18,7 +18,7 @@
 (print "Chapter 17 Lists begin...")
 
 ;; A general note: We're starting to hit name collisions. To avoid accidentally
-;; running built in code I'm weirding up the names a bit.
+;; running built in code I'm changing up the names a bit.
 
 
 ;; --------------------------------------------------------
@@ -64,7 +64,7 @@
 ;; to turn an atom into a list instead of the 'list' procedure.
 ;;
 ;; Unhappy about using 'butlast' and 'last', I looked for other ways to get
-;; things in the right sequence and found that 'reverse' is an R5R6 built-in.
+;; things in the right sequence and found that 'reverse' is an R5RS built-in.
 
 (define (append-2-r lfirst lsecond)
   (cond ((empty? lfirst)           lsecond)
@@ -106,7 +106,7 @@
 
 ;; --------------------------------------------------------
 ;; 17.7 This assignment is to use out 'append' to write 'sentence'. I've
-;; already acomplished that by dealing with atoms in addition to lists in my
+;; already accomplished that by dealing with atoms in addition to lists in my
 ;; 'append'. So, for me, this becomes:
 
 (define (sentenced . args) (apply appendage args))
@@ -170,7 +170,7 @@
 (check (before-in-list-mk1? '(a b c d) 'd 'c) => #f)
 (check (before-in-list-mk1? '(a b c d) 'c 'd) => #t)
 
-;; Of couse the authors would prefer that we do this in a smaller recursive
+;; Of course the authors would prefer that we do this in a smaller recursive
 ;; procedure. Even though the above works, it can make four separate passes
 ;; through the target list. To reduce that, here is a recursive solution.
 
@@ -193,8 +193,8 @@
 
 ;; --------------------------------------------------------
 ;; 17.12 Write a procedure called flatten that takes as its argument a list,
-;; possibly including sublists, but whose ultimate building blocks are words
-;; (not Booleans or procedures). It should return a sentence containing all the
+;; possibly including sub lists, but whose ultimate building blocks are words
+;; (not Booleans nor procedures). It should return a sentence containing all the
 ;; words of the list, in the order in which they appear in the original:
 
 (define (flatten-r xs)
@@ -224,7 +224,7 @@
 
 ;; Although this procedure works, it's too complicated. Simplify it.
 
-;; First try is pretty feeble. DIfferent, but not appreciably better.
+;; First try is pretty feeble. Different, but not appreciably better.
 
 (define (deeper-count lst)
   (if (null? lst)
@@ -306,14 +306,14 @@
 ;; 17.16 Write a predicate valid-infix? that takes a list as argument and
 ;; returns #t if and only if the list is a legitimate infix arithmetic
 ;; expression (alternating operands and operators, with parentheses—that is,
-;; sublists—allowed for grouping).
+;; sub lists—allowed for grouping).
 ;;
 ;;       (valid-infix? '(4 + 3 * (5 - 2))) => #t
 ;;       (valid-infix? '(4 + 3 * (5 2))) => #f
 ;;
 ;; I'm not seeing this as needing much beyond 'flatten(er)'. We aren't asked to
 ;; actually evaluate the expression, so this isn't a parsing problem. Nor do
-;; they mention leaing negation, so...
+;; they mention leading negation, so...
 
 (define (operator? x) (member? x '(* + / -)))
 

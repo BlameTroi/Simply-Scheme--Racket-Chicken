@@ -246,7 +246,7 @@
 ;; What is the indefinite article of a noun (phrase)?
 ;;
 ;; We don't have to worry about silent consonant rules for 'a' vs 'an'. For a
-;; noun (phrase) of indenfite identity (people or person vs a name):
+;; noun (phrase) of indefinite identity (people or person vs a name):
 ;;
 ;; For count nouns, a or an.
 ;;
@@ -464,7 +464,7 @@
 (define (days-in-february mdy)
   (if (leap-year? (year mdy)) 29 28))
 
-;; "Thirty days hath September..." table lookups are more readable than `if' or
+;; "Thirty days hath September..." table look ups are more readable than `if' or
 ;; `cond' chains.
 
 (define (thirty-day-month? mdy) (member? (month mdy) '(9 4 6 11)))

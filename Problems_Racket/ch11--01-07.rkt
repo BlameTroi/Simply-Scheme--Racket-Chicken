@@ -8,12 +8,12 @@
 ;;; Chapter 11 Introduction to Recursion
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
 
-;; Chapter 10 was a code walkthrough. Chapter 11 is rather small and all the
+;; Chapter 10 was a code walk through. Chapter 11 is rather small and all the
 ;; problems fit in one file.
 
 

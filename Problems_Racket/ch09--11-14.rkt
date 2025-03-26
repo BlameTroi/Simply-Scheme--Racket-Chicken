@@ -8,7 +8,7 @@
 ;;; Chapter 9 Lambda Land
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
@@ -41,7 +41,7 @@
 
 
 ;; ----------------------------------------------
-;; 9.12 Write `first-last' which takes a sentance and returns only the words
+;; 9.12 Write `first-last' which takes a sentence and returns only the words
 ;; with the same first and last letter.
 
 (define (first-last sent)
@@ -69,7 +69,7 @@
 
 ;; ----------------------------------------------
 ;; 9.14 Write `substitute' taking three parameters, new-word, old-word, and
-;; target-sent. Replace every occurance of old-word with new-word. I'd prefer a
+;; target-sent. Replace every occurrence of old-word with new-word. I'd prefer a
 ;; different ordering, but meh. It's a variation the above, with `letterwords'
 ;; being a good template.
 

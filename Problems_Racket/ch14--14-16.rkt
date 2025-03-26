@@ -6,7 +6,7 @@
 ;;; Chapter 14 Common Patters in Recursive Procedures
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
@@ -18,7 +18,7 @@
 
 ;; ----------------------------------------------
 ;; 14.14 Write predicate `same-shape?' that takes two sentences as arguments.
-;; It should return #tif two conditions are met:
+;; It should return #t if two conditions are met:
 ;;
 ;; (1) the sentences have the same number of words.
 ;; (2) the corresponding words in each sentence have the same number of

@@ -100,7 +100,7 @@
 ;; names (left hand side). This prevents side effects while computing values.
 ;;
 ;; This could not be done outside the `let' because the (+ *) would take effect
-;; before (* +) is evaluated. Using the substition model, at the end of the
+;; before (* +) is evaluated. Using the substitution model, at the end of the
 ;; sequence, + would be *, and * would be ... *. Within the scope of the `let'
 ;; their meanings are exchanged.
 

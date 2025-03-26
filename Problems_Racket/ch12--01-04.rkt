@@ -6,7 +6,7 @@
 ;;; Chapter 12 The Leap of Faith
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
@@ -44,7 +44,7 @@
 (check (bad-acronym '(this is a test)) => 'this)
 
 (define (less-bad-acronym sent)
-  (if (= (count sent) 1)    ;; this iis probably what the original
+  (if (= (count sent) 1)    ;; this is probably what the original
       (first (first sent))  ;; intended, but i prefer an empty base case
       (word (first (first sent)) (less-bad-acronym (bf sent)))))
 

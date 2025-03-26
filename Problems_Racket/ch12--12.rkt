@@ -6,7 +6,7 @@
 ;;; Chapter 12 The Leap of Faith
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
@@ -19,7 +19,7 @@
 ;; ----------------------------------------------
 ;; 12.12 Write `arabic' to convert Roman numerals to Arabic.
 ;;
-;; I've gone one of these in elisp laying around somewhere that takes a
+;; I've gone one of these in Elisp laying around somewhere that takes a
 ;; different approach, but I'll do this within the framework of the text.
 ;;
 ;; Assumes reasonable input (symbol or string) and that `butfirst" of the last

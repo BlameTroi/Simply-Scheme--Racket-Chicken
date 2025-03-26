@@ -6,7 +6,7 @@
 ;;; Chapter 15 Project Poker Hands
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
@@ -341,7 +341,7 @@
 ;;; -----------------------------------------------
 ;;; Hand classification tests:
 
-;; Due to interdependcies, some of these tests can't be placed immediately
+;; Due to inter dependencies, some of these tests can't be placed immediately
 ;; after their predicate's definition.
 
 ;; Royal Flush (A K J Q 10) same suit.

@@ -8,7 +8,7 @@
 ;;; Chapter 8 High Order Functions
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
@@ -32,7 +32,7 @@
 
 ;; ----------------------------------------------
 ;; 8.5 Write a procedure transform-beatles that takes a function, applies it to
-;; each of the beatles, and returns a sentence of the results.
+;; each of the Beatles, and returns a sentence of the results.
 
 (define (transform-beatles fn)
   (every fn '(john paul george ringo)))

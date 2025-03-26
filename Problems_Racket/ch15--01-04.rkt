@@ -6,7 +6,7 @@
 ;;; Chapter 15 Advanced Recursion
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
@@ -73,7 +73,7 @@
 ;; Once you have a procedure that works, trust it to work.
 
 
-;; They now provide one of the best descriptions and walkthroughs of a merge
+;; They now provide one of the best descriptions and walk throughs of a merge
 ;; sort that I have ever seen. This is precisely because of that leap of faith
 ;; concept.
 
@@ -117,7 +117,7 @@
 (check (other-half '(a b c d e)) => '(b d))
 
 
-;; A decent walkthrough of figuring out how to get every combination of the
+;; A decent walk through of figuring out how to get every combination of the
 ;; letters in a word is followed by a rare mention of efficiency. The obvious
 ;; solution has a redundancy that matters and so show how to cache the result
 ;; without ever saying 'cache' or 'memoize'.
@@ -178,7 +178,7 @@
 ;; NOTE: Due to the "strings are numbers" behavior of the book framework, a
 ;; result with leading zeros is returned as a string. If the result is properly
 ;; fitted and the first digit is a one, the result appears to be a binary
-;; number but is really in whatever radix is active in your repl. This is not
+;; number but is really in whatever radix is active in your REPL. This is not
 ;; an issue within the book framework.
 
 (define (to-binary-r num pow)
@@ -257,8 +257,8 @@
 ;;
 ;; (substrings-r wd)
 ;;
-;; Recursive helper for substrings that returns the substrings in wd by
-;; repeatedly triming the tail.
+;; Recursive helper for sub strings that returns the sub strings in wd by
+;; repeatedly trimming the tail.
 
 (define (substrings-r wd)
   (cond ((< (count wd) 1)               (se ))
@@ -266,7 +266,7 @@
 
 ;; (substrings wd)
 ;;
-;; Return all the substrings within word.
+;; Return all the sub strings within word.
 
 (define (substrings wd)
   (cond ((< (count wd) 1)               (se ))
@@ -278,7 +278,7 @@
 
 ;; ----------------------------------------------
 ;; 15.4 Write predicate (substring? wd). See 15.3 for the definition of
-;; substring.
+;; sub string.
 ;;
 ;; (prefix? pre str)
 ;;

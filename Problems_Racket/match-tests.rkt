@@ -26,7 +26,7 @@
 (check (match '(*x me *y) '(love me do)) => '(x love ! y do !)) ;; captures
 (check (match '(*x me *y) '(me do)) => '(x ! y do !)) ;; captures
 (check (match '(*x me *y) '(love me)) => '(x love ! y !))
-(check (match '(*x me *y) '(me)) => '(x ! y !)) 
+(check (match '(*x me *y) '(me)) => '(x ! y !))
 (check (match '(love *) '(love me do)) => '())
 (check (match '(love &) '(love me do)) => '())
 (check (match '(love &) '(love me)) => '())

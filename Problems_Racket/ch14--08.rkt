@@ -6,7 +6,7 @@
 ;;; Chapter 14 Common Patters in Recursive Procedures
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)

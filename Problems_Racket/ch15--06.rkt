@@ -6,7 +6,7 @@
 ;;; Chapter 15 Advanced Recursion
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
@@ -30,7 +30,7 @@
 ;; '(this is the girl that saw the boy that owned the dog that chased the cat that bit the rat))
 ;;
 ;; So we have 'the noun' some number of times, followed by 'verb's, one fewer
-;; time, and the whole thing is preceeded by "this is" which is mostly noise,
+;; time, and the whole thing is preceded by "this is" which is mostly noise,
 ;; and the pivot of "that" is inserted before the nouns.
 ;;
 ;; It's kind of a stack operation:
@@ -51,7 +51,7 @@
 (define sent-girl '(this is the rat the cat the dog the boy the girl saw owned chased bit))
 
 
-;; Collect the nouns from the sentence. They can be identified by a preceeding
+;; Collect the nouns from the sentence. They can be identified by a preceding
 ;; "the". Pull from the sentence two at a time, saving only the noun, until we
 ;; either hit the end (which is an error) or a non "the".
 
@@ -61,7 +61,7 @@
         (else (collect-nouns (bf sent)))))
 
 
-;; Collect verbs from the sentence. We are given the original SENTence and the
+;; Collect verbs from the sentence. We are given the original sentence and the
 ;; list of NOUNS found previously. For every noun, skip two words ("the" and
 ;; noun) in the sentence. Once the nouns are exhausted, the remainder of the
 ;; sentence should be only the verbs.
@@ -84,15 +84,15 @@
 
 ;; Unscramble a nested sentence of the pattern:
 ;;
-;; this is the noun3 the noun2 the noun1 verb1 verb2
+;; this is the noun 3 the noun 2 the noun 1 verb 1 verb 2
 ;;
-;; The order is reversed from the ends: ie, verb1 goes with noun1, verb2 with
-;; noun2, and noun3 follows noun2 with no verb. More cleanly stated, a two
+;; The order is reversed from the ends: IE, verb 1 goes with noun 1, verb 2 with
+;; noun 2, and noun 3 follows noun 2 with no verb. More cleanly stated, a two
 ;; stacks, pushing down from the ends, meeting in the middle.
 ;;
 ;; Unscrambled that would be:
 ;;
-;; this is the noun1 that verb1 the noun2 that verb2 verb3.
+;; this is the noun 1 that verb 1 the noun 2 that verb 2 verb 3.
 ;;
 ;; There is no error checking and we are allowed to assume that the noun
 ;; pattern will be 'the noun' throughout.

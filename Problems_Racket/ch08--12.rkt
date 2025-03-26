@@ -8,7 +8,7 @@
 ;;; Chapter 8 High Order Functions
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFi-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)

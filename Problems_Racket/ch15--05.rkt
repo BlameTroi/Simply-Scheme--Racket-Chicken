@@ -6,7 +6,7 @@
 ;;; Chapter 15 Advanced Recursion
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
@@ -37,7 +37,7 @@
 ;; (digit->keypad d)
 ;;
 ;; Given a digit from a phone number, return a list of the possible letter
-;; equivalents to make phonewords. Uses the older map with no z or q. Returns
+;; equivalents to make phone words. Uses the older map with no z or q. Returns
 ;; '? for illegal input other than 0 or 1, which are returned as 0 or 1.
 
 (define (digit->keypad d)

@@ -6,7 +6,7 @@
 ;;; Chapter 16 Example Pattern Matcher
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
@@ -23,11 +23,11 @@
 ;; I'll have to fix it as I work through the text.
 ;;
 ;; After much head banging and many false starts, it does work but I've got a
-;; couple of traces in Racket that returned different results in Chicken5. My
+;; couple of traces in Racket that returned different results in Chicken 5. My
 ;; code diff showed no changes besides numbering the various 'failed points.
 ;; Recopied the match.scm code in and now it works? I dunno what I broke.
 ;;
-;; To match the book, I added 'match?' to return a boolean for queries for
+;; To match the book, I added 'match?' to return a Boolean for queries for
 ;; quick tests. It's just a wrapper over 'match'.
 ;;
 ;; I'll keep watch for a return of errors, but I'm going to assume that I
@@ -36,8 +36,8 @@
 ;; base match.scm
 
 
-;; 'match?' added for boolean results. Use it when working through the text
-;; when booleans are expected in the walkthrough.
+;; 'match?' added for Boolean results. Use it when working through the text
+;; when Booleans are expected in the walk through.
 
 (define (match? pattern sent)
   (if (equal? (match pattern sent) 'failed) #f #t))
@@ -78,7 +78,7 @@
            (longest-match name pattern-rest sent 0 #f known-values))
           ((equal? howmany '&)
            (longest-match name pattern-rest sent 1 #f known-values))
-          (else 'blarg)))) ;; do we ever fall out of the cond? apparently not.
+          (else 'blarg)))) ;; do we ever fall out of the cond? Apparently not.
 
 (define (length-ok? value howmany)
   (cond ((empty? value) (member? howmany '(? *)))
@@ -164,7 +164,7 @@
 ;; (trace lm-helper)
 
 
-;; Tests with results as seen in unaltered match.scm with Chicken5.
+;; Tests with results as seen in unaltered match.scm with Chicken 5.
 ;; Working ok (now) in Racket.
 
 (check (match '(* me) '(love me)) => '())

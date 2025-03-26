@@ -8,7 +8,7 @@
 ;;; Interlude project between chapters 9 and 10, bridge hand scoring
 
 ;; The #lang command loads the racket language definition for
-;; the text. Then we just need srfi-78.
+;; the text. Then we just need SRFI-78.
 (require srfi/78)
 (check-reset!)
 (check-set-mode! 'report-failed)
@@ -19,10 +19,10 @@
 (print "Chapter 9 -- bridge hand start...")
 
 ;; Bridge hands are sentences of 13 cards. A card is suit and rank, h5 for 5 of
-;; hearts, c10 for 10 of clubs, sq for quean of spades, etc.
+;; hearts, c10 for 10 of clubs, sq for queen of spades, etc.
 
 
-;; `card-val' returns the bridge points for the card. number cards are 0, ace
+;; `card-val' returns the bridge points for the card. Number cards are 0, ace
 ;; 4, king 3, queen 2, jack 1.
 
 (define (card-val x)
