@@ -134,6 +134,25 @@ common load file or module is a better solution but would not be in
 the spirit of the text or my work through.
 
 
+Notes and To Do:
+---------------
+
+1. Updates for Racket lag, but they really boil down to changing the
+   reference to SRFI-78 and adding #lang simply_scheme. 
+
+2. I may try this in scheme48, or at least do enough to determine if
+   this could be done in scheme48.
+
+3. Consistency in using SRFI-78 'check' could be better.
+
+4. Problems 20.8 and 20.9 involve fleshing out the tic-tac-toe
+   program. I haven't done that yet and I'm not really motivated to
+   get it done.
+
+5. Problem 23.15 (n-dimensional matrix via vectors) isn't done yet.
+   The two-dimensional matrix in 23.14 is done.
+
+
 Licensing:
 ---------
 
