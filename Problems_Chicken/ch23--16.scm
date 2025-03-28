@@ -141,13 +141,66 @@
 (check (empty? '(c d)) => #f)
 
 
+;; Some accessors are needed before we define the constructors:
+
+(define (first sent)
+  (cond ((sentence? sent) (vector-ref sent 0))
+        ((list? sent) (car sent))
+        (else 'error)))
+
+(check (first #(a b c)) => 'a)
+(check (first '(a b c)) => 'a)
+(check (first 'abc) => 'error)      ;; we've had to break word support
+
+(define (last sent)
+  (cond ((sentence? sent) (vector-ref sent (- (vector-length sent) 1)))
+        (else 'error)))
+
+(check (last #(a b c)) => 'c)
+(check (last '(a b c)) => 'error)      ;; not doing last for lists atm
+(check (last 'abc) => 'error)          ;; and as before, word support broken
+
+(define (bf sent)
+  (if (empty? sent)
+    #()
+    (bf-r 1 sent (make-vector (- (vector-length sent) 1)))))
+
+(define butfirst bf)
+
+(define (bf-r idx sent1 sent2)
+  (let ((my-vec-set! (lambda (v s a) (vector-set! v s a) v)))
+    (if (= idx (vector-length sent1))
+      sent2
+      (bf-r (+ idx 1)
+            sent1
+            (my-vec-set! sent2
+                         (- idx 1)
+                         (vector-ref sent1 idx))))))
+
+(check (bf #(a b c)) => #(b c))
+(check (bf #(a)) => #())
+(check (bf #()) => #())
+
 ;; Create and combine:
+
+;; A sentence constructor can include other sentences. This leads to a mix
+;; of lists (for the variable arity arguments) that can hold sentences
+;; (vectors). Flatten the list in case the user has mixed in "old style"
+;; sentences along with the vector variety. Then move each "word" into
+;; a new vector large enough to hold the words.
+;;
+;; (se 'a 'b #(c d) '(e f #(g h))) becomes
+;; (se 'a 'b #(c d) 'e 'f #(g h)) becomes
+;; #(a b c d e f g h)
+;;
+;; Sentences (list or vector variety) are not really allowed hold a nested
+;; sentence.
 
 (define se
   (lambda parts
     (let* ((flat (flatten parts))
-           (needed (symbols-and-vectors-in flat))
-           (alloced (make-vector needed)))
+           (needed (words-and-sentences-in flat))
+           (alloced (make-vector needed '())))
       (se-r alloced 0 flat))))
 
 (define sentence se)
@@ -163,42 +216,25 @@
         (else (w-a-s-i-r (+ count 1) (cdr xs)))))
 
 (define (se-r vec slot words)
-  (cond ((empty? words)
-         vec)
-        ((not (sentence? (car words)))
-         (se-r
-           ((vector-set! vec slot (car words)) vec)
-           (+ slot 1)
-           (cdr words)))
-        ;; from here we know we have a vector to empty into the sentence
-        ((empty? (car words))          ;; we've emptied the vector
-         (se-r vec slot (cdr words)))
-        (else    ;; take word from front of vector
-         (se-r
-           ((vector-set! vec slot (first (car words))) vec)
-           (+ slot 1)
-           (cons (bf (car words)) (cdr words))))))
+  (let ((my-vec-set! (lambda (v s a) (vector-set! v s a) v)))
+        (cond ((empty? words)
+               vec)
+              ((not (sentence? (car words)))
+               (begin (show vec) (show slot) (show (car words)))
+               (se-r
+                 (my-vec-set! vec slot (car words)) ;; returns vec
+                 (+ slot 1)
+                 (cdr words)))
+              ;; from here we know we have a vector to empty into the sentence
+              ((empty? (car words))          ;; we've emptied the vector
+               (se-r vec slot (cdr words)))
+              (else    ;; take word from front of vector
+                (se-r
+                  (my-vec-set! vec slot (first (car words)))
+                  (+ slot 1)
+                  (cons (bf (car words)) (cdr words)))))))
 
 ;; Query and extract:
-
-(define (first sent)
-  (cond ((sentence? sent) (vector-ref sent 0))
-        ((list? sent) (car sent))
-        (else 'error)))
-
-(define (last sent)
-  (cond ((sentence? sent) (vector-ref sent (- (vector-length sent) 1)))
-        (else 'error)))
-
-(define (bf sent)
-  (bf-r 1 sent (make-vector (- (vector-length sent) 1))))
-
-(define butfirst bf)
-
-(define (bf-r idx sent1 sent2)
-  (if (= idx (vector-length sent1))
-    sent2
-    (bf-r (+ idx 1) sent1 ((vector-set! sent2 idx (vector-ref sent1 idx)) sent2))))
 
 ;; still to do
 
