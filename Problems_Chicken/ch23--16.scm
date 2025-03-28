@@ -88,35 +88,96 @@
 ;; made. You almost certainly want to restart your Scheme after you are
 ;; done with this code:
 
-;; Utilities from other problems:
+;; Some rules:
+;;
+;; A sentence is a vector holding zero or more words.
+;; A word is pretty much what the standard environment thinks one is.
+;; A list may be passed to the sentence constructor.
+;; A list may contain a nested sentence.
+;; A sentence may not contain a nested sentence.
+;; A sentence may be empty (zero length).
 
-(define (copy-into-vector! v1 start len v2)
-  (copy-into-vector!-r v1 start len 0 v2))
+;; Predicates and queries:
 
-(define (copy-into-vector!-r v1 start len curr v2)
-  (cond ((= len curr) v1)
-        (else
-          (vector-set! v1 (+ start curr) (vector-ref v2 curr))
-          (copy-into-vector!-r v1 start len (+ curr 1) v2))))
+(define (sentence? thing)
+  (vector? thing))
 
-;; Predicates:
+(check (sentence? 'a) => #f)
+(check (sentence? '(a b c)) => #f)
+(check (sentence? #(a b c)) => #t)
 
-(define (sentence? x) (vector? x))
+
+(define (sentence-length thing)
+  (if (sentence? thing)
+    (vector-length thing)
+    'error))
+
+(check (sentence-length (list 1 2 3)) => 'error)
+(check (sentence-length 'word) => 'error)
+(check (sentence-length #(a b c d)) => 4)
+(check (sentence-length #()) => 0)
+
 
 (define (word? thing)
-  (cond ((sentence? thing) #f)
-        ((list? thing) #f)
-        (else #t)))
+  (and (not (sentence? thing)) (not (list? thing))))
+
+(check (word? 'thing) => #t)
+(check (word? #(a b c)) => #f)
+(check (word? '(a b c)) => #f)
+(check (word? 3.14159) => #t)
+
 
 (define (empty? thing)
-  (cond ((sentence? thing) (= (vector-ref thing 0) 0))
-        (else (equal? thing '()))))
+  (if (sentence? thing)
+    (= (sentence-length thing) 0)
+    (if (list? thing)
+      (= (count thing) 0)
+      (equal? thing '()))))
+
+(check (empty? #()) => #t)
+(check (empty? '()) => #t)
+(check (empty? 'word) => #f)
+(check (empty? #(a b)) => #f)
+(check (empty? '(c d)) => #f)
+
 
 ;; Create and combine:
 
-(define se (lambda parts (list->vector parts)))
-;; The parts comes in as a list this way. Flatten and then scan for embedded
-;; vectors, expand those to lists, then re squeeze.
+(define se
+  (lambda parts
+    (let* ((flat (flatten parts))
+           (needed (symbols-and-vectors-in flat))
+           (alloced (make-vector needed)))
+      (se-r alloced 0 flat))))
+
+(define sentence se)
+
+(define (words-and-sentences-in parts)
+  (w-a-s-i-r 0 parts))
+
+(define (w-a-s-i-r count xs)
+  (cond ((empty? xs)
+         count)
+        ((vector? (car xs))
+         (w-a-s-i-r (+ count (vector-length (car xs))) (cdr xs)))
+        (else (w-a-s-i-r (+ count 1) (cdr xs)))))
+
+(define (se-r vec slot words)
+  (cond ((empty? words)
+         vec)
+        ((not (sentence? (car words)))
+         (se-r
+           ((vector-set! vec slot (car words)) vec)
+           (+ slot 1)
+           (cdr words)))
+        ;; from here we know we have a vector to empty into the sentence
+        ((empty? (car words))          ;; we've emptied the vector
+         (se-r vec slot (cdr words)))
+        (else    ;; take word from front of vector
+         (se-r
+           ((vector-set! vec slot (first (car words))) vec)
+           (+ slot 1)
+           (cons (bf (car words)) (cdr words))))))
 
 ;; Query and extract:
 
@@ -129,18 +190,20 @@
   (cond ((sentence? sent) (vector-ref sent (- (vector-length sent) 1)))
         (else 'error)))
 
-;; still to do
+(define (bf sent)
+  (bf-r 1 sent (make-vector (- (vector-length sent) 1))))
 
-(define (bf sent) )
+(define butfirst bf)
+
+(define (bf-r idx sent1 sent2)
+  (if (= idx (vector-length sent1))
+    sent2
+    (bf-r (+ idx 1) sent1 ((vector-set! sent2 idx (vector-ref sent1 idx)) sent2))))
+
+;; still to do
 
 (define (bl sent) )
 
-
-
-;; synonyms
-
-(define sentence se)
-(define butfirst bf)
 (define butlast bl)
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
