@@ -155,7 +155,9 @@
 
 (define (order table dish)
   (if (and (> table -1) (< table (vector-length *tables*)) (assoc dish *menu*))
-    (vector-set! *tables* table (+ (vector-ref *tables* table) (cadr (assoc dish *menu*))))
+    (vector-set! *tables* table
+                 (+ (vector-ref *tables* table)
+                    (cadr (assoc dish *menu*))))
     'error))
 
 (define (bill table)
@@ -314,103 +316,6 @@
 ;; is to create the 4 vector, then the 5 vectors, and then the 6 vectors,
 ;; but should we build from 6 to 5 to 4 instead? What is the base case?
 
-
-;; ----------------------------------------------
-;; 23.16 We want to reimplement sentences as vectors instead of lists.
-;;
-;; (a) Write versions of 'sentence', 'empty?', 'first', 'butfirst', 'last,
-;; and 'butlast' that use vectors. Your selectors need only work for
-;; sentences, not for words.
-;;
-;; (sentence 'a 'b 'c) => #(A B C)
-;; (butfirst (sentence 'a 'b 'c)) => #(B C)
-;;
-;; (You don't have to make these procedures work on lists as well as vectors!)
-;;
-;; (b) Does the following program still work with the new implementation of
-;; sentences? If not, fix the program.
-;;
-;; (define (praise stuff)
-;;   (sentence stuff '(is good)))
-;;
-;; (c) Does the following program still work with the new implementation of
-;; sentences? If not, fix the program.
-;;
-;; (define (praise stuff)
-;;   (sentence stuff 'rules!))
-;;
-;; (d) Does the following program still work with the new implementation of
-;; sentences? If not, fix the program. If so, is there some optional
-;; rewriting that would improve its performance?
-;;
-;; (define (item n sent)
-;;   (if (= n 1)
-;;       (first sent)
-;;       (item (- n 1) (butfirst sent))))
-;;
-;; (e) Does the following program still work with the new implementation of
-;; sentences? If not, fix the program. If so, is there some optional
-;; rewriting that would improve its performance?
-;;
-;; (define (every fn sent)
-;;   (if (empty? sent)
-;;     sent
-;;     (sentence (fn (first sent))
-;;               (every fn (butfirst sent)))))
-;;
-;; (f) In what ways does using vectors to implement sentences affect the
-;; speed of the selectors and constructor? Why do you think we chose to use
-;; lists?
-
-;; (a) Write versions of 'sentence', 'empty?', 'first', 'butfirst', 'last,
-;; and 'butlast' that use vectors. Your selectors need only work for
-;; sentences, not for words.
-
-;; This is definitely *not* robust.
-
-;; predicates:
-
-(define (sentence? x) (vector? x))
-
-(define (word? thing)
-  (cond ((sentence? thing) #f)
-        ((list? thing) #f)
-        (else #t)))
-
-(define (empty? thing)
-  (cond ((sentence? thing) (= (vector-ref thing 0) 0))
-        (else (equal? thing '()))))
-
-;; create, combine:
-
-(define se (lambda parts (list->vector parts)))
-;; The parts comes in as a list this way. Flatten and then scan for embedded
-;; vectors, expand those to lists, then re squeeze.
-
-;; query, extract:
-
-(define (first sent)
-  (cond ((sentence? sent) (vector-ref sent 0))
-        ((list? sent) (car sent))
-        (else 'error)))
-
-(define (last sent)
-  (cond ((sentence? sent) (vector-ref sent (- (vector-length sent) 1)))
-        (else 'error)))
-
-;; still to do
-
-(define (bf sent) )
-
-(define (bl sent) )
-
-
-
-;; synonyms
-
-(define sentence se)
-(define butfirst bf)
-(define butlast bl)
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; And that's the end of this section. Report test results and reset
