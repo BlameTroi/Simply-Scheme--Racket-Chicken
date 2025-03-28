@@ -234,6 +234,7 @@
 ;; I need to write a bunch of code but I'm not in the mood for this
 ;; particular project. Deferring.
 
+;; TODO: 20.8
 
 ;; ----------------------------------------------
 ;; 20.9 The way we invoke the game program isn't very user-friendly. Write
@@ -246,6 +247,7 @@
 
 ;; Same as 20.8.
 
+;; TODO: 20.9
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; And that's the end of this section. Report test results and reset

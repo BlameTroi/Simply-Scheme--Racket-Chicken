@@ -41,52 +41,12 @@
 ;; (butfirst (sentence 'a 'b 'c)) => #(B C)
 ;;
 ;; (You don't have to make these procedures work on lists as well as vectors!)
-;;
-;; (b) Does the following program still work with the new implementation of
-;; sentences? If not, fix the program.
-;;
-;; (define (praise stuff)
-;;   (sentence stuff '(is good)))
-;;
-;; (c) Does the following program still work with the new implementation of
-;; sentences? If not, fix the program.
-;;
-;; (define (praise stuff)
-;;   (sentence stuff 'rules!))
-;;
-;; (d) Does the following program still work with the new implementation of
-;; sentences? If not, fix the program. If so, is there some optional
-;; rewriting that would improve its performance?
-;;
-;; (define (item n sent)
-;;   (if (= n 1)
-;;       (first sent)
-;;       (item (- n 1) (butfirst sent))))
-;;
-;; (e) Does the following program still work with the new implementation of
-;; sentences? If not, fix the program. If so, is there some optional
-;; rewriting that would improve its performance?
-;;
-;; (define (every fn sent)
-;;   (if (empty? sent)
-;;     sent
-;;     (sentence (fn (first sent))
-;;               (every fn (butfirst sent)))))
-;;
-;; (f) In what ways does using vectors to implement sentences affect the
-;; speed of the selectors and constructor? Why do you think we chose to use
-;; lists?
-
-;; (a) Write versions of 'sentence', 'empty?', 'first', 'butfirst', 'last,
-;; and 'butlast' that use vectors. Your selectors need only work for
-;; sentences, not for words.
-
-;; This is definitely *not* robust. I decided to reuse my copy-into-vector
-;; from 23.3 to help with butfirst and butlast:
 
 ;; NOTE: No attempt to stay compatible with the standard environment is
 ;; made. You almost certainly want to restart your Scheme after you are
 ;; done with this code:
+;; -->
+;; THIS IS NOT ROBUST!
 
 ;; Some rules:
 ;;
@@ -96,6 +56,7 @@
 ;; A list may contain a nested sentence.
 ;; A sentence may not contain a nested sentence.
 ;; A sentence may be empty (zero length).
+
 
 ;; Predicates and queries:
 
@@ -181,6 +142,29 @@
 (check (bf #(a)) => #())
 (check (bf #()) => #())
 
+
+(define (bl sent)
+  (if (empty? sent)
+    #()
+    (bl-r 0 sent (make-vector (- (vector-length sent) 1)))))
+
+(define butlast bl)
+
+(define (bl-r idx sent1 sent2)
+  (let ((my-vec-set! (lambda (v s a) (vector-set! v s a) v)))
+    (if (= idx (vector-length sent2))
+      sent2
+      (bl-r (+ idx 1)
+            sent1
+            (my-vec-set! sent2
+                         idx
+                         (vector-ref sent1 idx))))))
+
+(check (bl #(a b c)) => #(a b))
+(check (bl #(a)) => #())
+(check (bl #()) => #())
+
+
 ;; Create and combine:
 
 ;; A sentence constructor can include other sentences. This leads to a mix
@@ -200,47 +184,123 @@
   (lambda parts
     (let* ((flat (flatten parts))
            (needed (words-and-sentences-in flat))
-           (alloced (make-vector needed '())))
-      (se-r alloced 0 flat))))
+           (sent (make-vector needed '())))
+      (se-r sent 0 flat))))
 
 (define sentence se)
 
-(define (words-and-sentences-in parts)
-  (w-a-s-i-r 0 parts))
+(define (words-and-sentences-in flat)
+  (w-a-s-i-r 0 flat))
 
-(define (w-a-s-i-r count xs)
-  (cond ((empty? xs)
+(define (w-a-s-i-r count flat)
+  (cond ((empty? flat)
          count)
-        ((vector? (car xs))
-         (w-a-s-i-r (+ count (vector-length (car xs))) (cdr xs)))
-        (else (w-a-s-i-r (+ count 1) (cdr xs)))))
+        ((vector? (car flat))
+         (w-a-s-i-r (+ count (vector-length (car flat))) (cdr flat)))
+        (else (w-a-s-i-r (+ count 1) (cdr flat)))))
 
-(define (se-r vec slot words)
+(define (se-r sent slot flat)
   (let ((my-vec-set! (lambda (v s a) (vector-set! v s a) v)))
-        (cond ((empty? words)
-               vec)
-              ((not (sentence? (car words)))
-               (begin (show vec) (show slot) (show (car words)))
+        (cond ((empty? flat)
+               sent)
+              ((not (sentence? (car flat)))
                (se-r
-                 (my-vec-set! vec slot (car words)) ;; returns vec
+                 (my-vec-set! sent slot (car flat)) ;; returns sent
                  (+ slot 1)
-                 (cdr words)))
+                 (cdr flat)))
               ;; from here we know we have a vector to empty into the sentence
-              ((empty? (car words))          ;; we've emptied the vector
-               (se-r vec slot (cdr words)))
+              ((empty? (car flat))          ;; we've emptied the vector
+               (se-r sent slot (cdr flat)))
               (else    ;; take word from front of vector
                 (se-r
-                  (my-vec-set! vec slot (first (car words)))
+                  (my-vec-set! sent slot (first (car flat)))
                   (+ slot 1)
-                  (cons (bf (car words)) (cdr words)))))))
+                  (cons (bf (car flat)) (cdr flat)))))))
 
-;; Query and extract:
+(check (se 'a 'b 'c) => #(a b c))
+(check (se ) => #())
+(check (se 'a 'b 'c '(d e f) '(g h i) #(q w e r t y)) => #(a b c d e f g h i q w e r t y))
+(check (se 'a 'b (se 'c 'd)) => #(a b c d))
 
-;; still to do
 
-(define (bl sent) )
+;; The tests listed in the problem:
 
-(define butlast bl)
+(check (sentence 'a 'b 'c) => #(a b c))
+(check (butfirst (sentence 'a 'b 'c)) => #(b c))
+
+
+;; (b) Does the following program still work with the new implementation of
+;; sentences? If not, fix the program.
+;;
+;; (define (praise stuff)
+;;   (sentence stuff '(is good)))
+
+;; Mine does. Possibilities with less comprehensive implementations are (se
+;; stuff #(is good)) and (se stuff 'is 'good)
+
+
+;; (c) Does the following program still work with the new implementation of
+;; sentences? If not, fix the program.
+;;
+;; (define (praise stuff)
+;;   (sentence stuff 'rules!))
+
+;; Mine does. See (b) above.
+
+
+;; (d) Does the following program still work with the new implementation of
+;; sentences? If not, fix the program. If so, is there some optional
+;; rewriting that would improve its performance?
+;;
+;; (define (item n sent)
+;;   (if (= n 1)
+;;       (first sent)
+;;       (item (- n 1) (butfirst sent))))
+
+;; Yes, it works with my implementation and probably with the less
+;; comprehensive one that most would write. The obvious optimization is
+;; that we have direct access via index into the vector, so a better
+;; implementation (but also more tightly coupled to a sentence definition)
+;; is:
+
+(define (item n sent)
+  (vector-ref sent (- n 1)))
+
+
+;; (e) Does the following program still work with the new implementation of
+;; sentences? If not, fix the program. If so, is there some optional
+;; rewriting that would improve its performance?
+;;
+;; (define (every fn sent)
+;;   (if (empty? sent)
+;;     sent
+;;     (sentence (fn (first sent))
+;;               (every fn (butfirst sent)))))
+
+;; It works, a better solution would be to duplicate the sentence and
+;; loop through the duplicate item by item and apply the function.
+
+
+;; (f) In what ways does using vectors to implement sentences affect the
+;; speed of the selectors and constructor? Why do you think we chose to use
+;; lists?
+
+;; I think it's a wash for grabbing off the front of a sentence, and even
+;; for grabbing off the end. My constructor has the overhead of casting the
+;; a list item by item into a vector, but I preallocated the vector.
+;;
+;; It is easier to grow and shrink a list based sentence. If you are
+;; combining sentence parts, list operators probably be faster.
+;;
+;; A vector implementation has to choose between an exact fit of items
+;; (words) to slots, or a [count][word]....[maybe free space] structure.
+;; The easier implementation to code is that a sentence is an exactly sized
+;; vector, and any changes are applied to a copy which can grow or shrink.
+;;
+;; The list implementation is much simpler in concept and code. You
+;; couldn't present the 'lisp/scheme-ness of scheme' using vectors and
+;; state.
+
 
 ;;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; And that's the end of this section. Report test results and reset
