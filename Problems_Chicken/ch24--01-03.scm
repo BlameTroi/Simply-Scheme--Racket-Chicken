@@ -2,7 +2,7 @@
 
 ;; Troy Brumley, blametroi@gmail.com, early 2025.
 
-;;; Chapter 23 Vectors.
+;;; Chapter 24 Spreadsheet Application.
 
 ;; For Chicken 5, load "required.scm" before this to establish the text book
 ;; environment for Simply Scheme. We load SRFI 78 in the exercises to support
@@ -131,4 +131,4 @@
 (put "and so on" z30)
 
 ;;;;;;;;;;;;
-;; end ch24 1-3, no real code or tests.
+;; end chapter 24 1-3, no real code or tests.
